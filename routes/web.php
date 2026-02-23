@@ -14,6 +14,7 @@ use App\Http\Controllers\PublicController;
 Route::get('/', [PublicController::class, 'index'])->name('welcome');
 Route::get('/about', [PublicController::class, 'about'])->name('about');
 Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
+Route::get('/department/{code}', [PublicController::class, 'department'])->name('department.show');
 
 // Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
