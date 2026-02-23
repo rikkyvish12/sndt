@@ -195,62 +195,10 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans overflow-x-hidden">
-    <!-- Navigation -->
-    <nav class="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <div class="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg animate-pulse-slow">
-                            <span class="text-purple-600 font-bold text-xl">S</span>
-                        </div>
-                        <div class="ml-3">
-                            <h1 class="text-xl font-bold text-white">SNDT Women's University</h1>
-                            <p class="text-xs text-purple-100">Empowering Women Since 1976</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('welcome') }}" class="text-white hover:text-yellow-200 font-medium transition-all duration-300 hover:scale-105">Home</a>
-                    <a href="{{ route('about') }}" class="text-white hover:text-yellow-200 font-medium transition-all duration-300 hover:scale-105">About</a>
-                    <a href="{{ route('contact') }}" class="text-white hover:text-yellow-200 font-medium transition-all duration-300 hover:scale-105">Contact</a>
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/admin/dashboard') }}" class="bg-white text-purple-600 px-4 py-2 rounded-lg hover:bg-yellow-100 font-medium transition-all duration-300 hover:scale-105 shadow-md">Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}" class="bg-white text-purple-600 px-4 py-2 rounded-lg hover:bg-yellow-100 font-medium transition-all duration-300 hover:scale-105 shadow-md">Login</a>
-                        @endauth
-                    @endif
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-white hover:text-yellow-200 focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div class="min-h-screen flex flex-col">
+        @include('partials.header')
         
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-purple-700 bg-opacity-95">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="{{ route('welcome') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600">Home</a>
-                <a href="{{ route('about') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600">About</a>
-                <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600">Contact</a>
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-600">Login</a>
-                    @endauth
-                @endif
-            </div>
-        </div>
-    </nav>
-    
-    <div class="relative min-h-screen overflow-hidden">
+        <div class="relative flex-grow overflow-hidden">
         <!-- Animated background elements -->
         <div class="absolute top-20 left-10 w-32 h-32 md:w-64 md:h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
         <div class="absolute top-40 right-10 w-32 h-32 md:w-64 md:h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float animation-delay-2000"></div>
@@ -285,60 +233,14 @@
             </div>
         </div>
 
-        <!-- Quick Navigation -->
-        <div class="bg-white shadow-lg">
-            <div class="px-4 sm:px-6 lg:px-8 py-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-4">Quick Navigation</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
-                    <a href="#about" class="px-3 py-2 text-sm font-medium rounded-lg bg-purple-100 text-purple-700 text-center hover:bg-purple-200 transition-colors">
-                        About
-                    </a>
-                    <a href="#vision" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Vision & Mission
-                    </a>
-                    <a href="#po" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        PO/PSO/PEO
-                    </a>
-                    <a href="#hod" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        HOD's Desk
-                    </a>
-                    <a href="#committee" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Committee
-                    </a>
-                    <a href="#faculty" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Faculty
-                    </a>
-                    <a href="#laboratory" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Laboratory
-                    </a>
-                    <a href="#mou" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        MOU
-                    </a>
-                    <a href="#industry" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Industry
-                    </a>
-                    <a href="#gallery" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Gallery
-                    </a>
-                    <a href="#events" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Events
-                    </a>
-                    <a href="#alumnae" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Alumnae
-                    </a>
-                    <a href="#social" class="px-3 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-100 text-center hover:bg-purple-50 hover:text-purple-600 transition-colors">
-                        Social Media
-                    </a>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Main Content Area -->
         <div class="px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex flex-col lg:flex-row gap-6 content-with-sidebar">
                 <!-- Sidebar Navigation -->
                 <div class="lg:w-1/4">
-                    <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                    <div class="bg-white rounded-xl shadow-lg p-6 lg:max-w-md w-full">
                         <h3 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Detailed Navigation</h3>
                         <nav class="space-y-2">
                             <a href="#about" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
@@ -923,239 +825,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
-            <div class="absolute inset-0 bg-black opacity-30"></div>
-            <div class="absolute top-0 left-0 w-32 h-32 md:w-64 md:h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse-slow"></div>
-            <div class="absolute bottom-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse-slow animation-delay-3000"></div>
-            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <div class="col-span-1 md:col-span-2">
-                        <div class="flex items-center animate-slide-right">
-                            <div class="h-16 w-16 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-300">
-                                <span class="text-white font-bold text-2xl">S</span>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-2xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">SNDT Women's University</h3>
-                                <p class="text-purple-200 text-sm font-medium">Empowering Women Since 1976</p>
-                            </div>
-                        </div>
-                        <p class="mt-6 text-purple-100 max-w-md animate-slide-right animation-delay-200">
-                            A premier institution dedicated to providing quality education and empowering women to become leaders in their respective fields.
-                        </p>
-                    </div>
-                    <div class="animate-slide-up animation-delay-300">
-                        <h4 class="text-lg font-semibold mb-6 text-white">Quick Links</h4>
-                        <ul class="space-y-3">
-                            <li><a href="{{ route('welcome') }}" class="text-purple-200 hover:text-white transition-colors duration-300 flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                                </svg>
-                                Home
-                            </a></li>
-                            <li><a href="{{ route('about') }}" class="text-purple-200 hover:text-white transition-colors duration-300 flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                About Us
-                            </a></li>
-                            <li><a href="{{ route('contact') }}" class="text-purple-200 hover:text-white transition-colors duration-300 flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                                Contact
-                            </a></li>
-                            <li><a href="{{ route('department.show', $department->code) }}" class="text-purple-200 hover:text-white transition-colors duration-300 flex items-center">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
-                                {{ $department->name }}
-                            </a></li>
-                        </ul>
-                    </div>
-                    <div class="animate-slide-up animation-delay-400">
-                        <h4 class="text-lg font-semibold mb-6 text-white">Contact Info</h4>
-                        <ul class="space-y-3 text-purple-200">
-                            <li class="flex items-start">
-                                <svg class="w-4 h-4 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                <span>University Campus, Mumbai</span>
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                                <span>+91 22 1234 5678</span>
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                                <span>info@sndt.edu.in</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt-12 pt-8 border-t border-purple-800 text-center text-purple-300 animate-fade-in">
-                    <p>&copy; 2026 SNDT Women's University. All rights reserved.</p>
-                </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
-        <!-- Footer -->
-        <footer class="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
-            <div class="absolute inset-0 bg-black opacity-30"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">SNDT Women's University</h3>
-                        <p class="text-purple-200">Empowering women through education since 1976</p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                        <ul class="space-y-2 text-purple-200">
-                            <li><a href="{{ route('welcome') }}" class="hover:text-white transition-colors">Home</a></li>
-                            <li><a href="{{ route('about') }}" class="hover:text-white transition-colors">About</a></li>
-                            <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
-                        <ul class="space-y-2 text-purple-200">
-                            <li class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                                <span>+91 9876543210</span>
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                                <span>info@sndt.edu.in</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt-12 pt-8 border-t border-purple-800 text-center text-purple-300 animate-fade-in">
-                    <p>&copy; 2026 SNDT Women's University. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-    </div>
-
-    <script>
-        // Sidebar navigation active state
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarLinks = document.querySelectorAll('.sidebar-link');
-            const sections = document.querySelectorAll('div[id]');
-            
-            function setActiveLink() {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (pageYOffset >= (sectionTop - 120)) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                sidebarLinks.forEach(link => {
-                    link.classList.remove('bg-purple-50', 'text-purple-600');
-                    link.classList.add('text-gray-700');
-                    if (link.getAttribute('href') === '#' + current) {
-                        link.classList.remove('text-gray-700');
-                        link.classList.add('bg-purple-50', 'text-purple-600');
-                    }
-                });
-            }
-            
-            window.addEventListener('scroll', setActiveLink);
-            setActiveLink(); // Set initial state
-        });
-        
-        // ScrollReveal animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize ScrollReveal
-            ScrollReveal().reveal('.stats-item', {
-                origin: 'bottom',
-                distance: '30px',
-                duration: 800,
-                delay: 200,
-                interval: 100,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-            
-            ScrollReveal().reveal('.overview-content', {
-                origin: 'left',
-                distance: '50px',
-                duration: 1000,
-                delay: 300,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-            
-            ScrollReveal().reveal('.faculty-card', {
-                origin: 'bottom',
-                distance: '30px',
-                duration: 800,
-                delay: 200,
-                interval: 150,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-            
-            ScrollReveal().reveal('.course-card', {
-                origin: 'bottom',
-                distance: '30px',
-                duration: 800,
-                delay: 200,
-                interval: 150,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-            
-            ScrollReveal().reveal('.cta-content', {
-                origin: 'left',
-                distance: '50px',
-                duration: 1000,
-                delay: 300,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-            
-            ScrollReveal().reveal('.cta-buttons', {
-                origin: 'bottom',
-                distance: '30px',
-                duration: 800,
-                delay: 500,
-                opacity: 0,
-                easing: 'ease-out'
-            });
-        });
-    </script>
+    </div> <!-- Close flex-grow div -->
+    </div> <!-- Close min-h-screen flex div -->
     
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    </script>
+    @include('partials.scripts')
+    @include('partials.footer')
 </body>
 </html>

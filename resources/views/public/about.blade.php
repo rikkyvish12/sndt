@@ -36,18 +36,22 @@
                             700: '#6d28d9',
                         },
                         accent: {
-                            500: '#ec4899',
-                            600: '#db2777',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        success: {
+                            500: '#10b981',
+                            600: '#059669',
                         }
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'slide-left': 'slideLeft 0.6s ease-out',
-                        'slide-right': 'slideRight 0.6s ease-out',
-                        'bounce-slow': 'bounce 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-left': 'slideLeft 0.5s ease-out',
+                        'slide-right': 'slideRight 0.5s ease-out',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -55,88 +59,47 @@
                             '100%': { opacity: '1' },
                         },
                         slideUp: {
-                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
                         slideLeft: {
-                            '0%': { transform: 'translateX(-30px)', opacity: '0' },
+                            '0%': { transform: 'translateX(-20px)', opacity: '0' },
                             '100%': { transform: 'translateX(0)', opacity: '1' },
                         },
                         slideRight: {
-                            '0%': { transform: 'translateX(30px)', opacity: '0' },
+                            '0%': { transform: 'translateX(20px)', opacity: '0' },
                             '100%': { transform: 'translateX(0)', opacity: '1' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
             }
         }
     </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance {
+                text-wrap: balance;
+            }
+        }
+    </style>
     
     <!-- ScrollReveal.js -->
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 font-sans">
-    <div class="relative min-h-screen overflow-hidden">
+    <div class="min-h-screen flex flex-col">
+        @include('partials.header')
+        
+        <div class="relative flex-grow overflow-hidden">
         <!-- Animated background elements -->
         <div class="absolute top-20 left-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
         <div class="absolute top-40 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float animation-delay-2000"></div>
         <div class="absolute bottom-20 left-1/4 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float animation-delay-4000"></div>
         <div class="absolute bottom-40 right-1/3 w-60 h-60 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float animation-delay-1000"></div>
-    <!-- Navigation -->
-    <nav class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-white/20 animate-fade-in">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center animate-slide-right">
-                        <div class="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
-                            <span class="text-white font-bold text-xl">S</span>
-                        </div>
-                        <div class="ml-3">
-                            <h1 class="text-xl font-bold text-gray-900">SNDT Women's University</h1>
-                            <p class="text-xs text-gray-500">Empowering Women Since 1976</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8 animate-slide-left">
-                    <a href="{{ route('welcome') }}" class="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-purple-50">Home</a>
-                    <a href="{{ route('about') }}" class="text-purple-600 font-medium border-b-2 border-purple-600 px-3 py-2">About</a>
-                    <a href="{{ route('contact') }}" class="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-purple-50">Contact</a>
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/admin/dashboard') }}" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-pink-600 font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-pink-600 font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">Login</a>
-                        @endauth
-                    @endif
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-gray-700 hover:text-purple-600 transition-colors duration-300">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="md:hidden hidden animate-slide-up">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-md border-t border-white/20">
-                <a href="{{ route('welcome') }}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-colors duration-300">Home</a>
-                <a href="{{ route('about') }}" class="block px-3 py-2 text-purple-600 font-medium border-l-4 border-purple-600 bg-purple-50">About</a>
-                <a href="{{ route('contact') }}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-colors duration-300">Contact</a>
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/admin/dashboard') }}" class="block px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg hover:from-purple-700 hover:to-pink-600 font-medium text-center mt-2 shadow-lg transition-all duration-300">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="block px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg hover:from-purple-700 hover:to-pink-600 font-medium text-center mt-2 shadow-lg transition-all duration-300">Login</a>
-                    @endauth
-                @endif
-            </div>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
     <div class="relative bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 py-24 overflow-hidden animate-fade-in">
@@ -364,48 +327,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 text-white animate-fade-in">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center animate-slide-right">
-                        <div class="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center shadow-lg">
-                            <span class="text-white font-bold text-xl">S</span>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-xl font-bold">SNDT Women's University</h3>
-                            <p class="text-gray-300 text-sm">Empowering Women Since 1976</p>
-                        </div>
-                    </div>
-                    <p class="mt-4 text-gray-300 max-w-md animate-slide-right animation-delay-200">
-                        A premier institution dedicated to providing quality education and empowering women to become leaders in their respective fields.
-                    </p>
-                </div>
-                <div class="animate-slide-up animation-delay-300">
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('welcome') }}" class="text-gray-300 hover:text-white transition-colors duration-300">Home</a></li>
-                        <li><a href="{{ route('about') }}" class="text-gray-300 hover:text-white transition-colors duration-300">About Us</a></li>
-                        <li><a href="{{ route('contact') }}" class="text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">Admissions</a></li>
-                    </ul>
-                </div>
-                <div class="animate-slide-up animation-delay-400">
-                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>📍 University Campus, Mumbai</li>
-                        <li>📞 +91 22 1234 5678</li>
-                        <li>✉️ info@sndt.edu.in</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 animate-fade-in">
-                <p>&copy; 2026 SNDT Women's University. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
     
     <!-- Close the main container -->
     </div>
@@ -459,6 +380,10 @@
                 easing: 'ease-out'
             });
         });
-    </script>
+        </script>
+    @include('partials.scripts')
+    @include('partials.footer')
+    </div> <!-- Close flex-grow div -->
+    </div> <!-- Close min-h-screen flex div -->
 </body>
 </html>
