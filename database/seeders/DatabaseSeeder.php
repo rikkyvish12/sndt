@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         // Run seeders in order
-        \$this->call([
+        $this->call([
             AdminUserSeeder::class,
             SettingSeeder::class,
             DepartmentSeeder::class,
