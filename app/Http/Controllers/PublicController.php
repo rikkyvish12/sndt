@@ -42,4 +42,18 @@ class PublicController extends Controller
     {
         return view('public.contact');
     }
+    
+    public function department($code)
+    {
+        $department = Department::where('code', strtoupper($code))
+            ->where('is_active', true)
+            ->with(['faculty', 'courses'])
+            ->firstOrFail();
+            
+        $departments = Department::where('is_active', true)->count();
+        $facultyCount = Faculty::where('is_active', true)->count();
+        $coursesCount = Course::where('is_active', true)->count();
+        
+        return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount'));
+    }
 }
