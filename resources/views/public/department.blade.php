@@ -416,34 +416,67 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 shadow-lg vision-card">
-                        <div class="flex items-center mb-6">
-                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center">
-                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
+                    @if(isset($dynamicContents['vision']))
+                        <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 shadow-lg vision-card">
+                            <div class="flex items-center mb-6">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Vision</h3>
                             </div>
-                            <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Vision</h3>
+                            <p class="text-gray-700 text-lg">
+                                {!! $dynamicContents['vision']->content !!}
+                            </p>
                         </div>
-                        <p class="text-gray-700 text-lg">
-                            To be a globally recognized center of excellence in {{ strtolower(str_replace('Department', '', $department->name)) }} education, research, and innovation, producing graduates who contribute meaningfully to society and inspire future generations.
-                        </p>
-                    </div>
+                    @else
+                        <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 shadow-lg vision-card">
+                            <div class="flex items-center mb-6">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Vision</h3>
+                            </div>
+                            <p class="text-gray-700 text-lg">
+                                To be a globally recognized center of excellence in {{ strtolower(str_replace('Department', '', $department->name)) }} education, research, and innovation, producing graduates who contribute meaningfully to society and inspire future generations.
+                            </p>
+                        </div>
+                    @endif
                     
-                    <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
-                        <div class="flex items-center mb-6">
-                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                </svg>
+                    @if(isset($dynamicContents['mission']))
+                        <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
+                            <div class="flex items-center mb-6">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
                             </div>
-                            <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
+                            <p class="text-gray-700 text-lg">
+                                {!! $dynamicContents['mission']->content !!}
+                            </p>
                         </div>
-                        <p class="text-gray-700 text-lg">
-                            To provide quality {{ strtolower(str_replace('Department', '', $department->name)) }} education, foster intellectual and personal growth, and prepare students to become leaders and change-makers in society through innovative teaching, research, and community engagement.
-                        </p>
-                    </div>
+                    @else
+                        <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
+                            <div class="flex items-center mb-6">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
+                            </div>
+                            <p class="text-gray-700 text-lg">
+                                To provide quality {{ strtolower(str_replace('Department', '', $department->name)) }} education, foster intellectual and personal growth, and prepare students to become leaders and change-makers in society through innovative teaching, research, and community engagement.
+                            </p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -601,36 +634,38 @@
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Meet the experts leading our department</p>
                 </div>
                 
-                @if($department->faculty->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 faculty-container">
-                    @foreach($department->faculty->take(6) as $faculty)
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-purple-100 faculty-card">
-                        <div class="p-6">
-                            <div class="flex items-center mb-4">
-                                <div class="h-14 w-14 rounded-xl bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-20"></div>
-                                    <div class="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
-                                    <svg class="w-6 h-6 text-purple-600 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-4">
-                                    <h3 class="text-lg font-bold text-gray-900">{{ $faculty->name }}</h3>
-                                    <p class="text-purple-600 font-medium">{{ $faculty->designation }}</p>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm mb-4">{{ Str::limit($faculty->qualification, 100) }}</p>
-                            <div class="flex items-center text-sm text-gray-500">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                </svg>
-                                <span>{{ $faculty->email }}</span>
-                            </div>
-                        </div>
+                @if(isset($dynamicContents['faculty']) && $dynamicContents['faculty']->is_active)
+                    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-purple-100">
+                        {!! $dynamicContents['faculty']->content !!}
                     </div>
-                    @endforeach
-                </div>
+                @endif
+                
+                @if($department->faculty->count() > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 faculty-container">
+                        @foreach($department->faculty as $faculty)
+                            <div class="bg-white rounded-2xl shadow-lg p-6 border border-purple-200 hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-center mb-4">
+                                    <div class="h-16 w-16 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mr-4">
+                                        <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">{{ $faculty->first_name }} {{ $faculty->last_name }}</h3>
+                                        <p class="text-purple-600 font-medium">{{ $faculty->designation }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-3">{{ Str::limit($faculty->qualification, 100) }}</p>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                    </svg>
+                                    <span>{{ $faculty->email }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 @else
                 <div class="text-center py-12">
                     <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 max-w-2xl mx-auto">
@@ -655,9 +690,15 @@
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Explore our academic programs</p>
                 </div>
                 
+                @if(isset($dynamicContents['courses']) && $dynamicContents['courses']->is_active)
+                    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-green-100">
+                        {!! $dynamicContents['courses']->content !!}
+                    </div>
+                @endif
+                
                 @if($department->courses->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 courses-container">
-                    @foreach($department->courses->take(6) as $course)
+                    @foreach($department->courses as $course)
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-green-100 course-card">
                         <div class="p-6">
                             <div class="flex items-center mb-4">

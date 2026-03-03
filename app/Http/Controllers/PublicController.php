@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\Course;
 use App\Models\Faculty;
+use App\Models\DepartmentContent;
 
 class PublicController extends Controller
 {
@@ -47,13 +48,19 @@ class PublicController extends Controller
     {
         $department = Department::where('code', strtoupper($code))
             ->where('is_active', true)
-            ->with(['faculty', 'courses'])
+            ->with(['faculty', 'courses', 'contents'])
             ->firstOrFail();
             
+        // Get dynamic content for each section
+        $dynamicContents = [];
+        foreach ($department->contents as $content) {
+            $dynamicContents[$content->section] = $content;
+        }
+        
         $departments = Department::where('is_active', true)->count();
         $facultyCount = Faculty::where('is_active', true)->count();
         $coursesCount = Course::where('is_active', true)->count();
         
-        return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount'));
+        return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount', 'dynamicContents'));
     }
 }
