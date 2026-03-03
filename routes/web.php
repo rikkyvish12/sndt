@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DepartmentController as AdminDepartmentController
 use App\Http\Controllers\Admin\FacultyController as AdminFacultyController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\DepartmentContentController as AdminDepartmentContentController;
 use App\Http\Controllers\PublicController;
 
 // Public routes
@@ -27,6 +28,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Departments
     Route::resource('departments', AdminDepartmentController::class);
+    
+    // Department Contents (nested under departments)
+    Route::prefix('departments/{departmentId}/contents')->name('departments.contents.')->group(function () {
+        Route::get('/', [AdminDepartmentContentController::class, 'index'])->name('index');
+        Route::get('/create', [AdminDepartmentContentController::class, 'create'])->name('create');
+        Route::post('/', [AdminDepartmentContentController::class, 'store'])->name('store');
+        Route::get('/{contentId}/edit', [AdminDepartmentContentController::class, 'edit'])->name('edit');
+        Route::put('/{contentId}', [AdminDepartmentContentController::class, 'update'])->name('update');
+        Route::delete('/{contentId}', [AdminDepartmentContentController::class, 'destroy'])->name('destroy');
+    });
     
     // Faculty
     Route::resource('faculty', AdminFacultyController::class);
