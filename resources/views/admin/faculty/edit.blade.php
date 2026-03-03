@@ -64,15 +64,18 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="department_id" class="form-label">Department *</label>
-                            <select class="form-control" id="department_id" name="department_id" required>
-                                <option value="">Select Department</option>
+                            <label class="form-label">Departments *</label>
+                            <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" {{ old('department_id', $faculty->department_id) == $department->id ? 'selected' : '' }}>
-                                        {{ $department->name }}
-                                    </option>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="department_ids[]" value="{{ $department->id }}" id="dept_{{ $department->id }}" {{ in_array($department->id, old('department_ids', $faculty->departments->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="dept_{{ $department->id }}">
+                                            {{ $department->name }}
+                                        </label>
+                                    </div>
                                 @endforeach
-                            </select>
+                            </div>
+                            <small class="form-text text-muted">Select one or more departments</small>
                         </div>
                     </div>
                 </div>
@@ -159,4 +162,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Initialize multi-select for departments
+    document.addEventListener('DOMContentLoaded', function() {
+        const departmentSelect = document.getElementById('department_ids');
+        
+        // Optional: Enhance the multi-select experience
+        if (departmentSelect) {
+            // Add a note about selecting multiple options
+            departmentSelect.setAttribute('size', '5'); // Show multiple options
+            
+            // Listen for changes
+            departmentSelect.addEventListener('change', function() {
+                // Can add additional logic here if needed
+            });
+        }
+    });
+</script>
+
 @endsection

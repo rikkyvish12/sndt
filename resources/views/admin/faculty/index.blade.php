@@ -57,7 +57,15 @@
                             </td>
                             <td>
                                 <i class="material-icons text-muted me-2">business</i>
-                                {{ $member->department->name ?? 'N/A' }}
+                                @if(isset($member->departments) && $member->departments->count() > 0)
+                                    @foreach($member->departments as $dept)
+                                        <span class="badge bg-primary me-1">{{ $dept->name }}</span>
+                                    @endforeach
+                                @elseif($member->department)
+                                    <span class="badge bg-primary">{{ $member->department->name }}</span>
+                                @else
+                                    N/A
+                                @endif
                             </td>
                             <td>
                                 <i class="material-icons text-muted me-2">work</i>

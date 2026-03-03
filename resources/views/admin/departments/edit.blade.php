@@ -53,8 +53,15 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="head_name" class="form-label">Head of Department</label>
-                            <input type="text" class="form-control" id="head_name" name="head_name" value="{{ old('head_name', $department->head_name) }}">
+                            <label for="head_of_department_id" class="form-label">Head of Department</label>
+                            <select class="form-control" id="head_of_department_id" name="head_of_department_id">
+                                <option value="">Select Faculty Member</option>
+                                @foreach($facultyMembers as $faculty)
+                                    <option value="{{ $faculty->id }}" {{ old('head_of_department_id', $department->head_of_department_id) == $faculty->id ? 'selected' : '' }}>
+                                        {{ $faculty->first_name }} {{ $faculty->last_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">

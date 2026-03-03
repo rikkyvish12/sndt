@@ -14,6 +14,7 @@ class Department extends Model
         'code',
         'description',
         'head_name',
+        'head_of_department_id',
         'email',
         'phone',
         'location',
@@ -27,11 +28,16 @@ class Department extends Model
     // Relationships
     public function faculty()
     {
-        return $this->hasMany(Faculty::class);
+        return $this->belongsToMany(Faculty::class, 'department_faculty');
     }
 
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+    
+    public function headOfDepartment()
+    {
+        return $this->belongsTo(Faculty::class, 'head_of_department_id');
     }
 }

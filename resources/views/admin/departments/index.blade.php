@@ -51,7 +51,7 @@
                                 </td>
                                 <td>
                                     <i class="material-icons text-muted me-2">person</i>
-                                    {{ $department->head_name }}
+                                    {{ $department->headOfDepartment ? $department->headOfDepartment->first_name . ' ' . $department->headOfDepartment->last_name : 'N/A' }}
                                 </td>
                                 <td>
                                     <i class="material-icons text-muted me-2">email</i>

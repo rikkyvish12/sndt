@@ -40,8 +40,18 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3"><strong>Department:</strong></div>
-                        <div class="col-sm-9">{{ $faculty->department->name ?? 'N/A' }}</div>
+                        <div class="col-sm-3"><strong>Departments:</strong></div>
+                        <div class="col-sm-9">
+                            @if(isset($faculty->departments) && $faculty->departments->count() > 0)
+                                @foreach($faculty->departments as $dept)
+                                    <span class="badge bg-primary me-1">{{ $dept->name }}</span>
+                                @endforeach
+                            @elseif($faculty->department)
+                                <span class="badge bg-primary">{{ $faculty->department->name }}</span>
+                            @else
+                                N/A
+                            @endif
+                        </div>
                     </div>
                     <hr>
                     <div class="row">

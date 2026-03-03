@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <th>Head of Department:</th>
-                            <td>{{ $department->head_name ?? 'N/A' }}</td>
+                            <td>{{ $department->headOfDepartment ? $department->headOfDepartment->first_name . ' ' . $department->headOfDepartment->last_name : 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th>Email:</th>
