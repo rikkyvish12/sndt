@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Faculty;
 
 class DepartmentController extends Controller
 {
@@ -13,7 +14,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->paginate(10);
+        $departments = Department::with('headOfDepartment')->latest()->paginate(10);
         return view('admin.departments.index', compact('departments'));
     }
 
@@ -22,7 +23,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.departments.create');
+        $facultyMembers = Faculty::orderBy('first_name')->orderBy('last_name')->get();
+        return view('admin.departments.create', compact('facultyMembers'));
     }
 
     /**
@@ -34,7 +36,7 @@ class DepartmentController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'required|string|unique:departments,code|max:10',
             'description' => 'nullable|string',
-            'head_name' => 'nullable|string|max:255',
+            'head_of_department_id' => 'nullable|exists:faculties,id',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',
@@ -51,7 +53,7 @@ class DepartmentController extends Controller
      */
     public function show(string $id)
     {
-        $department = Department::findOrFail($id);
+        $department = Department::with('headOfDepartment')->findOrFail($id);
         return view('admin.departments.show', compact('department'));
     }
 
@@ -61,7 +63,8 @@ class DepartmentController extends Controller
     public function edit(string $id)
     {
         $department = Department::findOrFail($id);
-        return view('admin.departments.edit', compact('department'));
+        $facultyMembers = Faculty::orderBy('first_name')->orderBy('last_name')->get();
+        return view('admin.departments.edit', compact('department', 'facultyMembers'));
     }
 
     /**
@@ -75,7 +78,7 @@ class DepartmentController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'required|string|unique:departments,code,' . $department->id . '|max:10',
             'description' => 'nullable|string',
-            'head_name' => 'nullable|string|max:255',
+            'head_of_department_id' => 'nullable|exists:faculties,id',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',

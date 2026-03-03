@@ -14,7 +14,7 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        $faculty = Faculty::with('department')->paginate(10);
+        $faculty = Faculty::with('departments')->paginate(10);
         return view('admin.faculty.index', compact('faculty'));
     }
 
@@ -39,7 +39,9 @@ class FacultyController extends Controller
             'phone' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
             'employee_id' => 'required|string|unique:faculties,employee_id',
-            'department_id' => 'required|exists:departments,id',
+            'department_id' => 'nullable|exists:departments,id',
+            'department_ids' => 'nullable|array',
+            'department_ids.*' => 'exists:departments,id',
             'designation' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'qualification' => 'nullable|string',
@@ -52,7 +54,16 @@ class FacultyController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        Faculty::create($request->all());
+        $facultyData = $request->all();
+        $departmentIds = $request->input('department_ids', []);
+        unset($facultyData['department_ids']);
+        
+        $faculty = Faculty::create($facultyData);
+        
+        // Attach departments if provided
+        if (!empty($departmentIds)) {
+            $faculty->departments()->attach($departmentIds);
+        }
 
         return redirect()->route('admin.faculty.index')
                         ->with('success', 'Faculty member created successfully.');
@@ -63,7 +74,7 @@ class FacultyController extends Controller
      */
     public function show(string $id)
     {
-        $faculty = Faculty::with('department')->findOrFail($id);
+        $faculty = Faculty::with('departments')->findOrFail($id);
         return view('admin.faculty.show', compact('faculty'));
     }
 
@@ -72,7 +83,7 @@ class FacultyController extends Controller
      */
     public function edit(string $id)
     {
-        $faculty = Faculty::findOrFail($id);
+        $faculty = Faculty::with('departments')->findOrFail($id);
         $departments = Department::all();
         return view('admin.faculty.edit', compact('faculty', 'departments'));
     }
@@ -91,7 +102,9 @@ class FacultyController extends Controller
             'phone' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
             'employee_id' => 'required|string|unique:faculties,employee_id,' . $faculty->id,
-            'department_id' => 'required|exists:departments,id',
+            'department_id' => 'nullable|exists:departments,id',
+            'department_ids' => 'nullable|array',
+            'department_ids.*' => 'exists:departments,id',
             'designation' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'qualification' => 'nullable|string',
@@ -104,7 +117,19 @@ class FacultyController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        $faculty->update($request->all());
+        $facultyData = $request->all();
+        $departmentIds = $request->input('department_ids', []);
+        unset($facultyData['department_ids']);
+        
+        $faculty->update($facultyData);
+        
+        // Sync departments if provided
+        if (!empty($departmentIds)) {
+            $faculty->departments()->sync($departmentIds);
+        } else {
+            // If no departments provided, detach all
+            $faculty->departments()->detach();
+        }
 
         return redirect()->route('admin.faculty.index')
                         ->with('success', 'Faculty member updated successfully.');

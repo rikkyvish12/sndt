@@ -165,53 +165,100 @@
         .hover-grow:hover {
             transform: scale(1.05);
         }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .animate-blob {
+            animation: blob 8s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans overflow-x-hidden">
     @include('partials.header')
 
     <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500">
-        <div class="absolute inset-0">
-            <div class="absolute top-0 left-0 w-32 h-32 md:w-72 md:h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow"></div>
-            <div class="absolute top-0 right-0 w-32 h-32 md:w-72 md:h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow animation-delay-2000"></div>
-            <div class="absolute bottom-0 left-1/2 w-32 h-32 md:w-72 md:h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow animation-delay-4000"></div>
+    <div class="relative bg-gradient-to-br from-purple-800 via-pink-700 to-orange-600 min-h-screen flex items-center overflow-x-hidden overflow-y-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-0 left-1/2 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+            
+            <!-- Floating shapes for additional animation -->
+            <div class="absolute top-1/4 left-1/4 w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 bg-white/10 rounded-full animate-ping animation-delay-1000"></div>
+            <div class="absolute top-1/3 right-1/3 w-8 h-8 sm:w-12 sm:h-12 md:w-20 md:h-20 bg-white/10 rounded-lg rotate-45 animate-pulse animation-delay-3000"></div>
+            <div class="absolute bottom-1/4 left-1/3 w-12 h-12 sm:w-20 sm:h-20 md:w-28 md:h-28 bg-white/10 rounded-full animate-bounce animation-delay-5000"></div>
         </div>
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-                <div class="pt-10 px-4 sm:px-6 lg:px-8 hero-content">
-                    <div class="text-center lg:text-left animate-fade-in">
-                        <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl animate-slide-up">
-                            <span class="block">Shreemati Nathibai</span>
-                            <span class="block text-yellow-200">Women's University</span>
-                        </h1>
-                        <p class="mt-3 text-base text-purple-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 animate-slide-up animation-delay-300">
-                            Empowering women through quality education since 1976. Join our community of learners and become a leader of tomorrow.
-                        </p>
-                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start animate-slide-up animation-delay-500">
-                            <div class="rounded-md shadow-lg transform hover:scale-105 transition-all duration-300">
-                                <a href="#explore" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-purple-600 bg-white hover:bg-yellow-50 md:py-4 md:text-lg md:px-10 shine-effect">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                                    </svg>
-                                    Explore Programs
-                                </a>
-                            </div>
-                            <div class="mt-3 sm:mt-0 sm:ml-3 transform hover:scale-105 transition-all duration-300">
-                                <a href="{{ route('contact') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 md:py-4 md:text-lg md:px-10 shadow-lg">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
-                                    Contact Us
-                                </a>
-                            </div>
+        
+        <div class="w-full px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
+            <div class="flex flex-col md:flex-row items-center max-w-7xl mx-auto">
+                <div class="md:w-1/2 mb-12 md:mb-0 text-center md:text-left">
+                    <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl animate-float">
+                        <span class="block">PREMLILA VITHALDAS</span>
+                        <span class="block text-yellow-200">POLYTECHNIC</span>
+                        <span class="block text-lg text-yellow-100 mt-2">SNDT Women's University</span>
+                    </h1>
+                    <p class="mt-6 text-lg text-purple-100 sm:text-xl md:text-2xl max-w-xl mx-auto md:mx-0 animate-float animation-delay-500">
+                        Empowering women through quality education since 1976. Join our community of learners and become a leader of tomorrow.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row sm:justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4 animate-float animation-delay-1000">
+                        <div class="transform hover:scale-105 transition-all duration-300">
+                            <a href="#explore" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-xl text-purple-600 bg-white hover:bg-yellow-50 md:py-4 md:text-lg md:px-10 shadow-xl shine-effect">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                Explore Programs
+                            </a>
+                        </div>
+                        <div class="transform hover:scale-105 transition-all duration-300">
+                            <a href="{{ route('contact') }}" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 md:py-4 md:text-lg md:px-10 shadow-xl">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Contact Us
+                            </a>
                         </div>
                     </div>
                 </div>
+                
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <!-- Main decorative graphic -->
+                        <div class="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-sm border border-white/30 flex items-center justify-center animate-float">
+                            <div class="text-white/80">
+                                <svg class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating elements around main graphic -->
+                        <div class="absolute -top-4 -right-4 w-8 h-8 sm:-top-6 sm:-right-6 sm:w-16 sm:h-16 bg-yellow-300/30 rounded-full animate-ping"></div>
+                        <div class="absolute -bottom-4 -left-4 w-8 h-8 sm:-bottom-6 sm:-left-6 sm:w-16 sm:h-16 bg-purple-300/30 rounded-lg animate-pulse"></div>
+                        <div class="absolute top-1/2 -left-6 w-6 h-6 sm:top-1/2 sm:-left-10 sm:w-12 sm:h-12 bg-pink-300/30 rounded-full animate-bounce"></div>
+                        <div class="absolute -top-2 left-1/2 w-5 h-5 sm:-top-4 sm:left-1/2 sm:w-10 sm:h-10 bg-orange-300/30 rounded-full animate-pulse animation-delay-2000"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 hero-image">
-            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Students studying">
         </div>
     </div>
 

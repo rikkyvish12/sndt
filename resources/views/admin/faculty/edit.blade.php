@@ -64,15 +64,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="department_id" class="form-label">Department *</label>
-                            <select class="form-control" id="department_id" name="department_id" required>
-                                <option value="">Select Department</option>
+                            <label for="department_ids[]" class="form-label">Departments *</label>
+                            <select class="form-control" id="department_ids" name="department_ids[]" multiple>
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" {{ old('department_id', $faculty->department_id) == $department->id ? 'selected' : '' }}>
+                                    <option value="{{ $department->id }}" {{ in_array($department->id, old('department_ids', $faculty->departments->pluck('id')->toArray())) ? 'selected' : '' }}>
                                         {{ $department->name }}
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple departments</small>
                         </div>
                     </div>
                 </div>
@@ -159,4 +159,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Initialize multi-select for departments
+    document.addEventListener('DOMContentLoaded', function() {
+        const departmentSelect = document.getElementById('department_ids');
+        
+        // Optional: Enhance the multi-select experience
+        if (departmentSelect) {
+            // Add a note about selecting multiple options
+            departmentSelect.setAttribute('size', '5'); // Show multiple options
+            
+            // Listen for changes
+            departmentSelect.addEventListener('change', function() {
+                // Can add additional logic here if needed
+            });
+        }
+    });
+</script>
+
 @endsection

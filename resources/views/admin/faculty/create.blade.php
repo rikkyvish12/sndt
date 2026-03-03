@@ -77,17 +77,17 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="department_id" class="form-label">
-                            <i class="material-icons">business</i> Department *
+                        <label for="department_ids[]" class="form-label">
+                            <i class="material-icons">business</i> Departments *
                         </label>
-                        <select class="form-select" id="department_id" name="department_id" required>
-                            <option value="">Select Department</option>
+                        <select class="form-select" id="department_ids" name="department_ids[]" multiple>
                             @foreach($departments as $department)
-                                <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                                <option value="{{ $department->id }}" {{ in_array($department->id, old('department_ids', [])) ? 'selected' : '' }}>
                                     {{ $department->name }}
                                 </option>
                             @endforeach
                         </select>
+                        <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple departments</small>
                     </div>
                 </div>
             </div>
@@ -199,4 +199,23 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Initialize multi-select for departments
+    document.addEventListener('DOMContentLoaded', function() {
+        const departmentSelect = document.getElementById('department_ids');
+        
+        // Optional: Enhance the multi-select experience
+        if (departmentSelect) {
+            // Add a note about selecting multiple options
+            departmentSelect.setAttribute('size', '5'); // Show multiple options
+            
+            // Listen for changes
+            departmentSelect.addEventListener('change', function() {
+                // Can add additional logic here if needed
+            });
+        }
+    });
+</script>
+
 @endsection
