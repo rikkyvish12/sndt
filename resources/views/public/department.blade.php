@@ -183,18 +183,65 @@
             transform: scale(1.05);
         }
         
-        /* Hide scrollbar for horizontal navigation */
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        /* Tab Styles */
+        .tab-content {
+            display: none;
+            animation: fadeInTab 0.3s ease-in-out;
         }
         
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeInTab {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button:hover:not(.active) {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+        
+        /* Mobile horizontal scroll for tabs */
+        @media (max-width: 768px) {
+            #tabNavigation {
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                flex-wrap: nowrap;
+                padding-bottom: 8px;
+            }
+            
+            #tabNavigation::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tab-button {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans overflow-x-hidden">
+<body class="bg-gray-50 font-sans">
     <div class="min-h-screen flex flex-col">
         @include('partials.header')
         
@@ -235,102 +282,105 @@
 
 
 
-        <!-- Main Content Area -->
+        <!-- Simple Tab Navigation -->
+        <div class="bg-white shadow-lg border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="flex flex-wrap md:flex-wrap gap-2 py-4" id="tabNavigation">
+                    <button onclick="showTab('about')" class="tab-button active flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg bg-purple-50 text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        About
+                    </button>
+                    <button onclick="showTab('vision')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        Vision
+                    </button>
+                    <button onclick="showTab('po')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        PO/PSO/PEO
+                    </button>
+                    <button onclick="showTab('hod')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        HOD's Desk
+                    </button>
+                    <button onclick="showTab('committee')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        Committee
+                    </button>
+                    <button onclick="showTab('faculty')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        Faculty
+                    </button>
+                    <button onclick="showTab('courses')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        Courses
+                    </button>
+                    <button onclick="showTab('laboratory')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                        Laboratory
+                    </button>
+                    <button onclick="showTab('mou')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                        MOU
+                    </button>
+                    <button onclick="showTab('industry')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Industry Visits
+                    </button>
+                    <button onclick="showTab('gallery')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Gallery
+                    </button>
+                    <button onclick="showTab('events')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Events
+                    </button>
+                    <button onclick="showTab('alumnae')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Alumnae
+                    </button>
+                    <button onclick="showTab('social')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                        </svg>
+                        Social
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content Area with Tabs -->
         <div class="px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col lg:flex-row gap-6 content-with-sidebar">
-                <!-- Sidebar Navigation -->
-                <div class="lg:w-1/4">
-                    <div class="bg-white rounded-xl shadow-lg p-6 lg:max-w-md w-full">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Detailed Navigation</h3>
-                        <nav class="space-y-2">
-                            <a href="#about" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                About Department
-                            </a>
-                            <a href="#vision" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                                Vision & Mission
-                            </a>
-                            <a href="#po" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                PO, PSO, PEO
-                            </a>
-                            <a href="#hod" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                HOD's Desk
-                            </a>
-                            <a href="#committee" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                                Committee Members
-                            </a>
-                            <a href="#faculty" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-                                </svg>
-                                Faculty
-                            </a>
-                            <a href="#laboratory" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                                </svg>
-                                Laboratory
-                            </a>
-                            <a href="#mou" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
-                                MOU
-                            </a>
-                            <a href="#industry" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                                Industry Visits
-                            </a>
-                            <a href="#gallery" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Gallery
-                            </a>
-                            <a href="#events" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Events Organized
-                            </a>
-                            <a href="#alumnae" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                Alumnae
-                            </a>
-                            <a href="#social" class="block px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-all duration-200 sidebar-link font-medium">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                                </svg>
-                                Social Media
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-                
-                <!-- Main Content -->
-                <div class="lg:w-3/4">
 
         <!-- Stats Section -->
-        <div class="bg-white py-16 -mt-16 relative z-10">
+        <div class="tab-content active" id="tab-about">
+            <div class="bg-white py-16  relative z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white rounded-2xl shadow-xl p-8 border border-purple-100">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center stats-container">
@@ -354,9 +404,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Vision & Mission Section -->
-        <div class="py-16 bg-white" id="vision">
+        <div class="tab-content" id="tab-vision">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Vision & Mission</h2>
@@ -395,9 +447,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- PO, PSO, PEO Section -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="po">
+        <div class="tab-content" id="tab-po">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">PO, PSO, PEO</h2>
@@ -437,9 +491,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- HOD's Desk -->
-        <div class="py-16 bg-white" id="hod">
+        <div class="tab-content" id="tab-hod">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">HOD's Desk</h2>
@@ -465,12 +521,13 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-
+        
         <!-- Department Overview -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="about">
+        <div class="tab-content" id="tab-about-overview">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">About Department</h2>
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Learn more about our {{ $department->name }}</p>
                 </div>
@@ -533,9 +590,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Faculty Section -->
-        <div class="py-16 bg-white" id="faculty">
+        <div class="tab-content" id="tab-faculty">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Our Faculty</h2>
@@ -584,10 +643,12 @@
                 </div>
                 @endif
             </div>
+            </div>
         </div>
 
         <!-- Courses Section -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="po">
+        <div class="tab-content" id="tab-courses">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Programs Offered</h2>
@@ -635,11 +696,12 @@
                 </div>
                 @endif
             </div>
+            </div>
         </div>
 
         <!-- CTA Section -->
-        <div class="bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 relative overflow-hidden" id="social">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="tab-content" id="tab-social">
+            <div class="bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 relative overflow-hidden py-16">
             <div class="absolute inset-0">
                 <div class="absolute top-0 left-0 w-48 h-48 md:w-96 md:h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
                 <div class="absolute top-0 right-0 w-48 h-48 md:w-96 md:h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow animation-delay-2000"></div>
@@ -671,9 +733,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Committee Members -->
-        <div class="py-16 bg-white" id="committee">
+        <div class="tab-content" id="tab-committee">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Committee Members</h2>
@@ -693,9 +757,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Laboratory Section -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="laboratory">
+        <div class="tab-content" id="tab-laboratory">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Laboratory</h2>
@@ -715,9 +781,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- MOU Section -->
-        <div class="py-16 bg-white" id="mou">
+        <div class="tab-content" id="tab-mou">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">MOU</h2>
@@ -737,9 +805,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Industry Visits -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="industry">
+        <div class="tab-content" id="tab-industry">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Industry Visits</h2>
@@ -759,9 +829,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Gallery -->
-        <div class="py-16 bg-white" id="gallery">
+        <div class="tab-content" id="tab-gallery">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Gallery</h2>
@@ -781,9 +853,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Events Organized -->
-        <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50" id="events">
+        <div class="tab-content" id="tab-events">
+            <div class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Events Organized</h2>
@@ -803,9 +877,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Alumnae -->
-        <div class="py-16 bg-white" id="alumnae">
+        <div class="tab-content" id="tab-alumnae">
+            <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Alumnae</h2>
@@ -827,9 +903,46 @@
         </div>
         
     </div> <!-- Close flex-grow div -->
+    
+    @include('partials.footer')
     </div> <!-- Close min-h-screen flex div -->
     
-    @include('partials.scripts')
-    @include('partials.footer')
+    <script>
+        // Tab switching function
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'bg-purple-50', 'text-purple-600');
+                button.classList.add('text-gray-700');
+            });
+            
+            // Show selected tab content
+            const selectedTab = document.getElementById('tab-' + tabName);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Add active class to clicked button
+            event.target.closest('.tab-button').classList.add('active', 'bg-purple-50', 'text-purple-600');
+            event.target.closest('.tab-button').classList.remove('text-gray-700');
+        }
+        
+        // Initialize ScrollReveal animations
+        window.sr = ScrollReveal();
+        sr.reveal('.animate-fade-in', { duration: 800, origin: 'bottom' });
+        sr.reveal('.animate-slide-up', { duration: 800, origin: 'bottom', distance: '20px' });
+        sr.reveal('.stats-item', { duration: 800, origin: 'bottom', interval: 100 });
+        sr.reveal('.vision-card', { duration: 800, origin: 'left', distance: '50px' });
+        sr.reveal('.mission-card', { duration: 800, origin: 'right', distance: '50px' });
+        sr.reveal('.faculty-card', { duration: 800, origin: 'bottom', interval: 100 });
+        sr.reveal('.course-card', { duration: 800, origin: 'bottom', interval: 100 });
+        sr.reveal('.cta-content', { duration: 800, origin: 'bottom' });
+        sr.reveal('.cta-buttons', { duration: 800, delay: 200 });
+    </script>
 </body>
 </html>
