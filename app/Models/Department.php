@@ -25,6 +25,17 @@ class Department extends Model
         'is_active' => 'boolean',
     ];
 
+    // Content sections relationship
+    public function contents()
+    {
+        return $this->hasMany(DepartmentContent::class);
+    }
+
+    // Get content for a specific section
+    public function getContentForSection($section)
+    {
+        return $this->contents()->where('section', $section)->first();
+    }
     // Relationships
     public function faculty()
     {
