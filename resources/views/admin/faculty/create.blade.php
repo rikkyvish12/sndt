@@ -77,17 +77,20 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="department_ids[]" class="form-label">
+                        <label class="form-label">
                             <i class="material-icons">business</i> Departments *
                         </label>
-                        <select class="form-select" id="department_ids" name="department_ids[]" multiple>
+                        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
                             @foreach($departments as $department)
-                                <option value="{{ $department->id }}" {{ in_array($department->id, old('department_ids', [])) ? 'selected' : '' }}>
-                                    {{ $department->name }}
-                                </option>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="department_ids[]" value="{{ $department->id }}" id="dept_{{ $department->id }}" {{ in_array($department->id, old('department_ids', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="dept_{{ $department->id }}">
+                                        {{ $department->name }}
+                                    </label>
+                                </div>
                             @endforeach
-                        </select>
-                        <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple departments</small>
+                        </div>
+                        <small class="form-text text-muted">Select one or more departments</small>
                     </div>
                 </div>
             </div>
