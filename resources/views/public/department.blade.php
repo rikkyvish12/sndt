@@ -535,6 +535,13 @@
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Message from the Head of Department</p>
                 </div>
                 
+                @if(isset($dynamicContents['hod']) && $dynamicContents['hod']->is_active)
+                    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-purple-100">
+                        {!! $dynamicContents['hod']->content !!}
+                    </div>
+                @endif
+                
+                @if($department->headOfDepartment)
                 <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 md:p-12 shadow-xl">
                     <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="flex-shrink-0">
@@ -545,7 +552,7 @@
                             </div>
                         </div>
                         <div class="flex-1 text-center md:text-left">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $department->head_name }}</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $department->headOfDepartment->first_name }} {{ $department->headOfDepartment->last_name }}</h3>
                             <p class="text-purple-600 font-medium mb-4">Head of {{ $department->name }}</p>
                             <p class="text-gray-700 text-lg leading-relaxed">
                                 Welcome to the {{ $department->name }}. Our department is committed to providing excellence in education and research. We strive to nurture critical thinking, innovation, and leadership qualities in our students to prepare them for the challenges of the modern world.
@@ -553,6 +560,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
             </div>
         </div>
@@ -699,28 +707,24 @@
                 @if($department->courses->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 courses-container">
                     @foreach($department->courses as $course)
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-green-100 course-card">
-                        <div class="p-6">
-                            <div class="flex items-center mb-4">
-                                <div class="h-12 w-12 rounded-xl bg-gradient-to-r from-green-100 to-teal-100 flex items-center justify-center relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-teal-400 opacity-20"></div>
-                                    <div class="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
-                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-4">
-                                    <h3 class="text-lg font-bold text-gray-900">{{ $course->name }}</h3>
-                                    <p class="text-green-600 font-medium">{{ $course->duration }}</p>
-                                </div>
+                    <div class="bg-white rounded-2xl shadow-lg p-6 border border-green-200 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="h-14 w-14 rounded-xl bg-gradient-to-r from-green-100 to-teal-100 flex items-center justify-center mr-4">
+                                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
                             </div>
-                            <p class="text-gray-600 text-sm mb-4">{{ Str::limit($course->description, 100) }}</p>
-                            <div class="flex justify-between items-center">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                    {{ $course->code }}
-                                </span>
-                                <span class="text-lg font-bold text-green-600">₹{{ number_format($course->fees) }}</span>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900">{{ $course->name }}</h3>
+                                <p class="text-green-600 font-medium">{{ $course->duration }}</p>
                             </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit($course->description, 100) }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                {{ $course->code }}
+                            </span>
+                            <span class="text-lg font-bold text-green-600">₹{{ number_format($course->fees) }}</span>
                         </div>
                     </div>
                     @endforeach

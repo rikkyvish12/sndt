@@ -296,19 +296,23 @@
                 <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Visit our campus and experience SNDT Women's University firsthand</p>
             </div>
             
-            <div class="bg-gradient-to-br from-purple-200 to-pink-200 rounded-2xl h-96 flex items-center justify-center shadow-xl transform hover:scale-105 transition-all duration-500 animate-float">
-                <div class="text-center text-purple-800">
-                    <svg class="h-24 w-24 mx-auto mb-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <p class="text-lg font-semibold">Interactive Map Location</p>
-                    <p class="mt-2">SNDT Women's University Campus<br>Mumbai, Maharashtra</p>
-                </div>
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.525656113941!2d72.82871067585094!3d19.08945858211757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1d9715c8af7%3A0x2aea9c027ef2f506!2sPremlila%20Vithaldas%20Polytechnic%2C%20SNDT%20Women&#39;s%20University!5e0!3m2!1sen!2sin!4v1710188236543!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="500" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="w-full">
+                </iframe>
             </div>
             
             <div class="mt-8 text-center animate-fade-in">
-                <p class="text-gray-600">Need directions? <a href="#" class="text-purple-600 hover:text-purple-800 font-medium transition-colors">Get Directions</a></p>
+                <a href="https://maps.app.goo.gl/WPeV5tLfuUfnatRS8" target="_blank" class="inline-block bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-3 rounded-lg hover:from-purple-700 hover:to-pink-600 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
+                    Get Directions on Google Maps
+                </a>
             </div>
         </div>
     </div>
