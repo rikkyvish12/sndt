@@ -48,7 +48,7 @@ class PublicController extends Controller
     {
         $department = Department::where('code', strtoupper($code))
             ->where('is_active', true)
-            ->with(['faculty', 'courses', 'contents'])
+            ->with(['faculty', 'courses', 'contents', 'headOfDepartment'])
             ->firstOrFail();
             
         // Get dynamic content for each section
