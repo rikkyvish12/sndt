@@ -58,6 +58,11 @@ class FacultyController extends Controller
         $departmentIds = $request->input('department_ids', []);
         unset($facultyData['department_ids']);
         
+        // Set department_id from the first selected department if any
+        if (!empty($departmentIds)) {
+            $facultyData['department_id'] = $departmentIds[0];
+        }
+        
         $faculty = Faculty::create($facultyData);
         
         // Attach departments if provided
@@ -120,6 +125,13 @@ class FacultyController extends Controller
         $facultyData = $request->all();
         $departmentIds = $request->input('department_ids', []);
         unset($facultyData['department_ids']);
+        
+        // Set department_id from the first selected department if any
+        if (!empty($departmentIds)) {
+            $facultyData['department_id'] = $departmentIds[0];
+        } else {
+            $facultyData['department_id'] = null;
+        }
         
         $faculty->update($facultyData);
         
