@@ -37,8 +37,11 @@ class CourseController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'department_id' => 'required|exists:departments,id',
-            'credits' => 'required|integer|min:1|max:10',
-            'duration' => 'required|integer|min:1|max:12',
+            'course_type' => 'nullable|string|max:50',
+            'duration' => 'required|integer|min:1|max:10',
+            'fees' => 'nullable|numeric|min:0',
+            'total_seats' => 'nullable|integer|min:0',
+            'available_seats' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ]);
 
@@ -79,8 +82,11 @@ class CourseController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'department_id' => 'required|exists:departments,id',
-            'credits' => 'required|integer|min:1|max:10',
-            'duration' => 'required|integer|min:1|max:12',
+            'course_type' => 'nullable|string|max:50',
+            'duration' => 'required|integer|min:1|max:10',
+            'fees' => 'nullable|numeric|min:0',
+            'total_seats' => 'nullable|integer|min:0',
+            'available_seats' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ]);
 

@@ -59,16 +59,46 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="course_type" class="form-label">Course Type</label>
+                            <select class="form-control" id="course_type" name="course_type">
+                                <option value="">Select Type</option>
+                                <option value="undergraduate" {{ old('course_type') == 'undergraduate' ? 'selected' : '' }}>Undergraduate</option>
+                                <option value="postgraduate" {{ old('course_type') == 'postgraduate' ? 'selected' : '' }}>Postgraduate</option>
+                                <option value="diploma" {{ old('course_type') == 'diploma' ? 'selected' : '' }}>Diploma</option>
+                                <option value="certificate" {{ old('course_type') == 'certificate' ? 'selected' : '' }}>Certificate</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-3">
                         <div class="mb-3">
-                            <label for="credits" class="form-label">Credits *</label>
-                            <input type="number" class="form-control" id="credits" name="credits" value="{{ old('credits', 3) }}" min="1" max="10" required>
+                            <label for="duration" class="form-label">Duration (years) *</label>
+                            <input type="number" class="form-control" id="duration" name="duration" value="{{ old('duration', 4) }}" min="1" max="10" required>
+                            <div class="form-text">Program duration in years</div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
-                            <label for="duration" class="form-label">Duration (months) *</label>
-                            <input type="number" class="form-control" id="duration" name="duration" value="{{ old('duration', 6) }}" min="1" max="12" required>
+                            <label for="fees" class="form-label">Fees (₹)</label>
+                            <input type="number" class="form-control" id="fees" name="fees" value="{{ old('fees') }}" min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="total_seats" class="form-label">Total Seats</label>
+                            <input type="number" class="form-control" id="total_seats" name="total_seats" value="{{ old('total_seats', 60) }}" min="0">
+                            <div class="form-text">Maximum seats available</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="available_seats" class="form-label">Available Seats</label>
+                            <input type="number" class="form-control" id="available_seats" name="available_seats" value="{{ old('available_seats', 60) }}" min="0">
+                            <div class="form-text">Currently available seats</div>
                         </div>
                     </div>
                 </div>

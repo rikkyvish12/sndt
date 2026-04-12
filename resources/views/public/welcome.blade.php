@@ -328,7 +328,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
-                                Head: {{ $department->head_name }}
+                                Head: {{ $department->headOfDepartment ? $department->headOfDepartment->first_name . ' ' . $department->headOfDepartment->last_name : 'TBD' }}
                             </span>
                         </div>
                     </div>
@@ -357,7 +357,8 @@
             </div>
 
             <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 course-container">
-                @foreach($courses as $course)
+                {{-- Debug: Total courses: {{ $courses->count() }} --}}
+                @forelse($courses as $course)
                 <div class="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-orange-100 course-card">
                     <div class="flex justify-between items-start">
                         <div>
@@ -383,13 +384,21 @@
                         </div>
                     </div>
                     <div class="mt-4">
+                        @if($course->total_seats && $course->total_seats > 0)
                         <div class="w-full bg-gray-200 rounded-full h-2">
                             <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style="width: {{ ($course->available_seats / $course->total_seats) * 100 }}%"></div>
                         </div>
                         <span class="text-sm text-gray-600 mt-2 inline-block">Available Seats: {{ $course->available_seats }}/{{ $course->total_seats }}</span>
+                        @else
+                        <span class="text-sm text-gray-600 mt-2 inline-block">Seats: Not specified</span>
+                        @endif
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-12 text-center py-5">
+                    <h3 class="text-gray-500">No courses available at the moment</h3>
+                </div>
+                @endforelse
             </div>
         </div>
     </div>

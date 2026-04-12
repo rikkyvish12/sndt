@@ -298,7 +298,7 @@
             
             <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.525656113941!2d72.82871067585094!3d19.08945858211757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1d9715c8af7%3A0x2aea9c027ef2f506!2sPremlila%20Vithaldas%20Polytechnic%2C%20SNDT%20Women&#39;s%20University!5e0!3m2!1sen!2sin!4v1710188236543!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.525656113941!2d72.82871067585094!3d19.08945858211757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1d9715c8af7%3A0x2aea9c027ef2f506!2sPremlila%20Vithaldas%20Polytechnic%2C%20SNDT%20Women&#39;s%20University!5e0!3m2!1sen!2sin!4v1710188236543!5m2!1sen!2sin&q=19.08945858211757,72.82871067585094&z=16" 
                     width="100%" 
                     height="500" 
                     style="border:0;" 
