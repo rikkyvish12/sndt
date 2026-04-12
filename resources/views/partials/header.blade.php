@@ -4,8 +4,8 @@
         <div class="flex justify-between h-16 overflow-x-hidden">
             <div class="flex items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <div class="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg animate-pulse-slow">
-                        <span class="text-purple-600 font-bold text-xl">S</span>
+                    <div class="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg overflow-hidden">
+                        <img src="{{ asset('sndt-logo.png') }}" alt="SNDT Logo" class="h-10 w-10 object-contain">
                     </div>
                     <div class="ml-3 min-w-0">
                         <h1 class="text-sm font-bold text-white truncate">PREMLILA VITHALDAS POLYTECHNIC</h1>

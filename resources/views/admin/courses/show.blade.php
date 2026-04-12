@@ -41,7 +41,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-3"><strong>Duration:</strong></div>
-                        <div class="col-sm-9">{{ $course->duration }} months</div>
+                        <div class="col-sm-9">{{ $course->duration }} years</div>
                     </div>
                     <hr>
                     <div class="row">

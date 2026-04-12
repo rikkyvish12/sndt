@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>About SNDT Women's University</title>
-    <meta name="description" content="Learn about SNDT Women's University - our history, mission, vision, and commitment to women's education">
+    <title>About PVPolytechnic</title>
+    <meta name="description" content="Learn about Premila Vithaldas Polytechnic - our history, mission, vision, and commitment to technical education and skill development">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,10 +119,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center">
                 <h1 class="text-4xl font-bold text-white sm:text-5xl md:text-6xl animate-slide-up">
-                    About SNDT Women's University
+                    About Premila Vithaldas Polytechnic
                 </h1>
                 <p class="mt-6 text-xl text-purple-100 max-w-3xl mx-auto animate-slide-up animation-delay-200">
-                    A premier institution dedicated to empowering women through quality education and holistic development since 1976.
+                    A premier polytechnic institution dedicated to empowering students through quality technical education, skill development, and holistic growth.
                 </p>
             </div>
         </div>
@@ -163,7 +163,7 @@
                     A Rich History of Excellence
                 </p>
                 <p class="mt-4 max-w-2xl text-xl text-gray-600 lg:mx-auto animate-slide-up animation-delay-200">
-                    Founded in 1976, SNDT Women's University has been at the forefront of women's education, creating leaders who shape the future.
+                    Premila Vithaldas Polytechnic has been at the forefront of technical education, shaping skilled professionals who contribute to industry and society.
                 </p>
             </div>
 
@@ -172,10 +172,10 @@
                     <div class="history-content">
                         <h3 class="text-2xl font-bold text-gray-900 mb-6 animate-slide-right">Our Founding Vision</h3>
                         <p class="text-gray-700 mb-4 animate-slide-right animation-delay-100">
-                            Established with the vision of providing quality higher education to women, SNDT Women's University has grown from a small institution to a comprehensive university offering diverse programs across multiple disciplines.
+                            Established with the vision of providing quality technical education, Premila Vithaldas Polytechnic has grown into a leading polytechnic institute offering diverse diploma programs across multiple engineering and technology disciplines.
                         </p>
                         <p class="text-gray-700 mb-4 animate-slide-right animation-delay-200">
-                            Our commitment to excellence in education, research, and community service has made us a beacon of learning for women from all walks of life.
+                            Our commitment to excellence in education, industry collaboration, and community service has made us a beacon of technical learning for students across Mumbai.
                         </p>
                         <div class="mt-8">
                             <div class="flex items-center mb-4 animate-slide-right animation-delay-300">
@@ -200,8 +200,8 @@
                                     </div>
                                 </div>
                                 <div class="ml-4">
-                                    <h4 class="text-lg font-medium text-gray-900">Women Empowerment</h4>
-                                    <p class="text-gray-600">Creating confident and capable women leaders</p>
+                                    <h4 class="text-lg font-medium text-gray-900">Student Empowerment</h4>
+                                    <p class="text-gray-600">Creating confident and capable technical professionals</p>
                                 </div>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                             <svg class="h-24 w-24 mx-auto mb-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
-                            <p class="font-semibold">University Campus</p>
+                            <p class="font-semibold">PVPolytechnic Campus</p>
                             <p class="text-sm mt-2">Mumbai, India</p>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                         <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
                     </div>
                     <p class="text-gray-700 text-lg">
-                        To provide quality higher education to women, foster their intellectual and personal growth, and prepare them to become leaders and change-makers in society through innovative teaching, research, and community engagement.
+                        To provide quality technical education and skill development, foster intellectual and professional growth in students, and prepare them to become skilled professionals and innovators through hands-on training, industry collaboration, and community engagement.
                     </p>
                 </div>
                 
@@ -249,7 +249,7 @@
                         <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Vision</h3>
                     </div>
                     <p class="text-gray-700 text-lg">
-                        To be a globally recognized center of excellence in women's education, research, and innovation, producing graduates who contribute meaningfully to society and inspire future generations of women leaders.
+                        To be a regionally recognized center of excellence in technical education, industry-ready training, and innovation, producing competent graduates who contribute meaningfully to society and inspire future generations of technologists.
                     </p>
                 </div>
             </div>
@@ -282,7 +282,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">Inclusivity</h3>
-                    <p class="text-gray-600">Creating an environment where all women can thrive regardless of their background.</p>
+                    <p class="text-gray-600">Creating an environment where all students can thrive regardless of their background.</p>
                 </div>
                 
                 <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 value-card animation-delay-200">

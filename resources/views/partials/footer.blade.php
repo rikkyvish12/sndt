@@ -5,15 +5,15 @@
             <div class="col-span-2">
                 <div class="flex items-center">
                     <div class="h-12 w-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-                        <span class="text-white font-bold text-xl">S</span>
+                        <span class="text-white font-bold text-xl">P</span>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-xl font-bold text-white">SNDT Women's University</h3>
-                        <p class="text-purple-200 text-sm">Empowering Women Since 1976</p>
+                        <h3 class="text-xl font-bold text-white">Premila Vithaldas Polytechnic</h3>
+                        <p class="text-purple-200 text-sm">Excellence in Technical Education</p>
                     </div>
                 </div>
                 <p class="mt-4 text-purple-200 text-sm">
-                    A premier institution dedicated to providing quality education and empowering women to become leaders in their respective fields.
+                    A premier polytechnic institution dedicated to providing quality technical education and empowering students to become skilled professionals.
                 </p>
             </div>
             
@@ -35,7 +35,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
-                        <span class="text-sm">University Campus, Mumbai</span>
+                        <span class="text-sm">Juhu, Vile Parle (West), Mumbai - 400 056</span>
                     </li>
                     <li class="flex items-center">
                         <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,14 +47,14 @@
                         <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
-                        <span class="text-sm">info@sndt.edu.in</span>
+                        <span class="text-sm">pvpsndt@gmail.com</span>
                     </li>
                 </ul>
             </div>
         </div>
         
         <div class="mt-8 pt-8 border-t border-purple-800 text-center text-purple-300">
-            <p class="text-sm">&copy; 2026 SNDT Women's University. All rights reserved.</p>
+            <p class="text-sm">&copy; 2026 Premila Vithaldas Polytechnic. All rights reserved.</p>
         </div>
     </div>
 </footer>

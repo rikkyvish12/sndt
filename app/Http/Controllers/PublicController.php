@@ -13,6 +13,7 @@ class PublicController extends Controller
     public function index()
     {
         $departments = Department::where('is_active', true)
+            ->with(['headOfDepartment'])
             ->withCount(['faculty', 'courses'])
             ->limit(6)
             ->get();

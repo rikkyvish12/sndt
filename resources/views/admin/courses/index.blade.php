@@ -31,8 +31,9 @@
                         <th><i class="material-icons">book</i> Code</th>
                         <th><i class="material-icons">title</i> Name</th>
                         <th><i class="material-icons">business</i> Department</th>
-                        <th><i class="material-icons">grading</i> Credits</th>
+                        <th><i class="material-icons">category</i> Type</th>
                         <th><i class="material-icons">schedule</i> Duration</th>
+                        <th><i class="material-icons">event_seat</i> Seats</th>
                         <th><i class="material-icons">toggle_on</i> Status</th>
                         <th><i class="material-icons">settings</i> Actions</th>
                     </tr>
@@ -56,12 +57,17 @@
                                 {{ $course->department->name ?? 'N/A' }}
                             </td>
                             <td>
-                                <i class="material-icons text-muted me-2">grading</i>
-                                {{ $course->credits }}
+                                <span class="badge bg-info">
+                                    {{ ucfirst($course->course_type ?? 'N/A') }}
+                                </span>
                             </td>
                             <td>
                                 <i class="material-icons text-muted me-2">schedule</i>
-                                {{ $course->duration }} months
+                                {{ $course->duration }} years
+                            </td>
+                            <td>
+                                <i class="material-icons text-muted me-2">event_seat</i>
+                                {{ $course->available_seats ?? 0 }}/{{ $course->total_seats ?? 0 }}
                             </td>
                             <td>
                                 <span class="badge bg-{{ $course->is_active ? 'success' : 'secondary' }}">
@@ -98,7 +104,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center py-4">
+                            <td colspan="9" class="text-center py-4">
                                 <i class="material-icons text-muted" style="font-size: 64px;">sentiment_dissatisfied</i>
                                 <p class="mt-2 text-muted">No courses found.</p>
                                 <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">
