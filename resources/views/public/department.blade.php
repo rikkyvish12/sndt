@@ -347,7 +347,7 @@
                         </svg>
                         Industry Visits
                     </button>
-                    <button onclick="showTab('gallery')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                    <button onclick="alert('Gallery tab clicked!'); showTab('gallery')" class="tab-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600">
                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
@@ -382,6 +382,14 @@
         <div class="tab-content active" id="tab-about">
             <div class="bg-white py-16  relative z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                @if(isset($dynamicContents['about']))
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-purple-100 mb-8">
+                        <div class="prose max-w-none">
+                            {!! $dynamicContents['about']->content !!}
+                        </div>
+                    </div>
+                @endif
+                
                 <div class="bg-white rounded-2xl shadow-xl p-8 border border-purple-100">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center stats-container">
                         <div class="stats-item transform hover:scale-105 transition-all duration-300">
@@ -403,7 +411,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <!-- Vision & Mission Section -->
@@ -427,9 +434,9 @@
                                 </div>
                                 <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Vision</h3>
                             </div>
-                            <p class="text-gray-700 text-lg">
+                            <div class="text-gray-700 text-lg prose max-w-none">
                                 {!! $dynamicContents['vision']->content !!}
-                            </p>
+                            </div>
                         </div>
                     @else
                         <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 shadow-lg vision-card">
@@ -448,20 +455,25 @@
                         </div>
                     @endif
                     
-                    @if(isset($dynamicContents['mission']))
-                        <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
-                            <div class="flex items-center mb-6">
-                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
-                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                    </svg>
+                    @if(isset($dynamicContents['vision']))
+                        @php
+                            $extraData = is_array($dynamicContents['vision']->extra_data) ? $dynamicContents['vision']->extra_data : json_decode($dynamicContents['vision']->extra_data, true) ?? [];
+                        @endphp
+                        @if(!empty($extraData['mission']))
+                            <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
+                                <div class="flex items-center mb-6">
+                                    <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
                                 </div>
-                                <h3 class="ml-4 text-2xl font-bold text-gray-900">Our Mission</h3>
+                                <div class="text-gray-700 text-lg prose max-w-none">
+                                    {!! $extraData['mission'] !!}
+                                </div>
                             </div>
-                            <p class="text-gray-700 text-lg">
-                                {!! $dynamicContents['mission']->content !!}
-                            </p>
-                        </div>
+                        @endif
                     @else
                         <div class="bg-gradient-to-br from-pink-100 to-orange-100 rounded-2xl p-8 shadow-lg mission-card">
                             <div class="flex items-center mb-6">
@@ -492,39 +504,82 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
+                    @if(isset($dynamicContents['po']))
+                        @php
+                            $poExtraData = is_array($dynamicContents['po']->extra_data) ? $dynamicContents['po']->extra_data : json_decode($dynamicContents['po']->extra_data, true) ?? [];
+                        @endphp
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Outcomes (PO)</h3>
+                            <div class="text-gray-600 prose max-w-none">
+                                {!! $dynamicContents['po']->content !!}
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Outcomes (PO)</h3>
-                        <p class="text-gray-600">Graduates will demonstrate engineering knowledge, problem analysis, design solutions, and professional skills in their field.</p>
-                    </div>
-                    
-                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-100 to-orange-100 flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                            </svg>
+                        
+                        @if(!empty($poExtraData['pso']))
+                            <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-100 to-orange-100 flex items-center justify-center mb-4">
+                                    <svg class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Specific Outcomes (PSO)</h3>
+                                <div class="text-gray-600 prose max-w-none">
+                                    {!! $poExtraData['pso'] !!}
+                                </div>
+                            </div>
+                        @endif
+                        
+                        @if(!empty($poExtraData['peo']))
+                            <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-orange-100 to-yellow-100 flex items-center justify-center mb-4">
+                                    <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Educational Objectives (PEO)</h3>
+                                <div class="text-gray-600 prose max-w-none">
+                                    {!! $poExtraData['peo'] !!}
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Outcomes (PO)</h3>
+                            <p class="text-gray-600">Graduates will demonstrate engineering knowledge, problem analysis, design solutions, and professional skills in their field.</p>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Specific Outcomes (PSO)</h3>
-                        <p class="text-gray-600">Specialized knowledge and skills specific to {{ $department->code }} field and industry requirements.</p>
-                    </div>
-                    
-                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-orange-100 to-yellow-100 flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                            </svg>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-pink-100 to-orange-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Specific Outcomes (PSO)</h3>
+                            <p class="text-gray-600">Specialized knowledge and skills specific to {{ $department->code }} field and industry requirements.</p>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Educational Objectives (PEO)</h3>
-                        <p class="text-gray-600">Career advancement, leadership qualities, and contribution to technological and social development.</p>
-                    </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-orange-100 to-yellow-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Program Educational Objectives (PEO)</h3>
+                            <p class="text-gray-600">Career advancement, leadership qualities, and contribution to technological and social development.</p>
+                        </div>
+                    @endif
                 </div>
-            </div>
-        </div>
-        </div>
 
         <!-- HOD's Desk -->
         <div class="tab-content" id="tab-hod">
@@ -850,7 +905,6 @@
                 </div>
             </div>
         </div>
-        </div>
 
         <!-- Industry Visits -->
         <div class="tab-content" id="tab-industry">
@@ -874,9 +928,8 @@
                 </div>
             </div>
         </div>
-        </div>
 
-        <!-- Gallery -->
+        <!-- Gallery Section -->
         <div class="tab-content" id="tab-gallery">
             <div class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -884,18 +937,73 @@
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl animate-slide-up">Gallery</h2>
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Department events and activities</p>
                 </div>
-                
-                <div class="text-center">
-                    <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-12 shadow-lg">
-                        <div class="h-24 w-24 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center mx-auto mb-6">
-                            <svg class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Photo Gallery</h3>
-                        <p class="text-gray-700">Visual documentation of department activities, events, and achievements.</p>
+                <h1>Gallery</h1>
+                @if(isset($dynamicContents['gallery']))
+                    @php
+                        $galleryExtraData = is_array($dynamicContents['gallery']->extra_data) ? $dynamicContents['gallery']->extra_data : json_decode($dynamicContents['gallery']->extra_data, true) ?? [];
+                    @endphp
+                    
+                    {{-- Debug: Show gallery data --}}
+                    <div style="background:lightyellow;padding:10px;margin-bottom:10px;">
+                        <strong>Gallery Debug:</strong>
+                        <pre>{{ print_r($galleryExtraData, true) }}</pre>
                     </div>
-                </div>
+                    
+                    @if(!empty($galleryExtraData['images']))
+                        {{-- Debug: Show image count --}}
+                        <div style="background:lightgreen;padding:10px;margin-bottom:10px;">
+                            <strong>Gallery Images Found:</strong> {{ count($galleryExtraData['images']) }} images
+                            <br>
+                            <strong>Image Paths:</strong>
+                            <ul style="margin:5px 0; padding-left:20px;">
+                                @foreach($galleryExtraData['images'] as $img)
+                                    <li>{{ asset('storage/' . $img) }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            @foreach($galleryExtraData['images'] as $image)
+                                @php
+                                    $imageSrc = asset('storage/' . $image);
+                                @endphp
+                                <div class="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <img src="{{ $imageSrc }}" 
+                                         alt="Gallery Image" 
+                                         class="w-full h-64 object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                         onclick="openLightbox('{{ $imageSrc }}')"
+                                         onerror="console.error('Image failed to load:', this.src); this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div style="display:none; height:256px; background:#f0f0f0; align-items:center; justify-content:center; text-align:center; padding:20px;">
+                                        <p style="color:#999;">Image failed to load<br><small style="word-break:break-all;">{{ $imageSrc }}</small></p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center">
+                            <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-12 shadow-lg">
+                                <div class="h-24 w-24 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center mx-auto mb-6">
+                                    <svg class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">No Images Yet</h3>
+                                <p class="text-gray-700">Gallery images will be uploaded soon.</p>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <div class="text-center">
+                        <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-12 shadow-lg">
+                            <div class="h-24 w-24 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center mx-auto mb-6">
+                                <svg class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Photo Gallery</h3>
+                            <p class="text-gray-700">Visual documentation of department activities, events, and achievements.</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         </div>
@@ -909,17 +1017,44 @@
                     <p class="mt-4 text-xl text-gray-600 animate-slide-up animation-delay-200">Department activities and programs</p>
                 </div>
                 
-                <div class="text-center">
-                    <div class="bg-white rounded-2xl p-12 shadow-lg">
-                        <div class="h-24 w-24 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center mx-auto mb-6">
-                            <svg class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
+                @if(isset($dynamicContents['events']))
+                    @php
+                        $eventsExtraData = is_array($dynamicContents['events']->extra_data) ? $dynamicContents['events']->extra_data : json_decode($dynamicContents['events']->extra_data, true) ?? [];
+                    @endphp
+                    
+                    @if(!empty($dynamicContents['events']->content))
+                        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-purple-100">
+                            <div class="prose max-w-none">
+                                {!! $dynamicContents['events']->content !!}
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Events Calendar</h3>
-                        <p class="text-gray-700">Workshops, seminars, conferences, and other academic events organized by the department.</p>
+                    @endif
+                    
+                    @if(!empty($eventsExtraData['images']))
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+                            @foreach($eventsExtraData['images'] as $image)
+                                <div class="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <img src="{{ asset('storage/' . $image) }}" 
+                                         alt="Event Image" 
+                                         class="w-full h-64 object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                         onclick="openLightbox('{{ asset('storage/' . $image) }}')">
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                @else
+                    <div class="text-center">
+                        <div class="bg-white rounded-2xl p-12 shadow-lg">
+                            <div class="h-24 w-24 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center mx-auto mb-6">
+                                <svg class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Events Calendar</h3>
+                            <p class="text-gray-700">Workshops, seminars, conferences, and other academic events organized by the department.</p>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
         </div>
@@ -955,27 +1090,79 @@
     <script>
         // Tab switching function
         function showTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active', 'bg-purple-50', 'text-purple-600');
-                button.classList.add('text-gray-700');
-            });
-            
-            // Show selected tab content
-            const selectedTab = document.getElementById('tab-' + tabName);
-            if (selectedTab) {
-                selectedTab.classList.add('active');
+            console.log('showTab called with:', tabName);
+            try {
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.classList.remove('active', 'bg-purple-50', 'text-purple-600');
+                    button.classList.add('text-gray-700');
+                });
+                
+                // Show selected tab content
+                const selectedTab = document.getElementById('tab-' + tabName);
+                console.log('Selected tab element:', selectedTab);
+                if (selectedTab) {
+                    selectedTab.classList.add('active');
+                    console.log('Tab activated successfully');
+                } else {
+                    console.error('Tab element not found: tab-' + tabName);
+                }
+                
+                // Add active class to clicked button
+                const clickedButton = event.target.closest('.tab-button');
+                if (clickedButton) {
+                    clickedButton.classList.add('active', 'bg-purple-50', 'text-purple-600');
+                    clickedButton.classList.remove('text-gray-700');
+                }
+            } catch (error) {
+                console.error('Error in showTab:', error);
+                alert('Error: ' + error.message);
             }
-            
-            // Add active class to clicked button
-            event.target.closest('.tab-button').classList.add('active', 'bg-purple-50', 'text-purple-600');
-            event.target.closest('.tab-button').classList.remove('text-gray-700');
         }
+        
+        // Lightbox functionality
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('image-lightbox');
+            if (lightbox) {
+                const lightboxImg = lightbox.querySelector('.lightbox-image');
+                lightboxImg.src = imageSrc;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Create lightbox if it doesn't exist
+                const lightboxHTML = `
+                    <div id="image-lightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; cursor:pointer;" onclick="closeLightbox()">
+                        <img class="lightbox-image" src="${imageSrc}" style="max-width:90%; max-height:90%; object-fit:contain; border-radius:8px;">
+                        <button style="position:absolute; top:20px; right:20px; background:white; border:none; border-radius:50%; width:40px; height:40px; font-size:24px; cursor:pointer;" onclick="closeLightbox()">&times;</button>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', lightboxHTML);
+                setTimeout(() => {
+                    document.getElementById('image-lightbox').style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }, 10);
+            }
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('image-lightbox');
+            if (lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
         
         // Initialize ScrollReveal animations
         window.sr = ScrollReveal();

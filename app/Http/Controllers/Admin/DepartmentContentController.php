@@ -42,9 +42,10 @@ class DepartmentContentController extends Controller
         $validated = $request->validate([
             'section' => 'required|string|max:255',
             'content' => 'nullable|string',
-            'extra_data' => 'nullable|json',
+            'extra_data' => 'nullable|array',
             'is_active' => 'boolean',
             'order' => 'integer',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
         
         // Check if section already exists
@@ -57,11 +58,24 @@ class DepartmentContentController extends Controller
                 ->with('error', 'This section already exists. Please edit it instead.');
         }
         
+        // Handle extra_data
+        $extraData = $validated['extra_data'] ?? [];
+        
+        // Handle file uploads for gallery and events
+        if (in_array($validated['section'], ['gallery', 'events']) && $request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('department-content/' . $departmentId . '/' . $validated['section'], 'public');
+                $images[] = $path;
+            }
+            $extraData['images'] = $images;
+        }
+        
         DepartmentContent::create([
             'department_id' => $departmentId,
             'section' => $validated['section'],
             'content' => $validated['content'] ?? null,
-            'extra_data' => $validated['extra_data'] ?? null,
+            'extra_data' => !empty($extraData) ? $extraData : null,
             'is_active' => $validated['is_active'] ?? true,
             'order' => $validated['order'] ?? 0,
         ]);
@@ -100,12 +114,63 @@ class DepartmentContentController extends Controller
         $validated = $request->validate([
             'section' => 'required|string|max:255',
             'content' => 'nullable|string',
-            'extra_data' => 'nullable|json',
+            'extra_data' => 'nullable|array',
             'is_active' => 'boolean',
             'order' => 'integer',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'remove_images' => 'nullable|array',
         ]);
         
-        $content->update($validated);
+        // Get existing extra_data
+        $extraData = is_array($content->extra_data) ? $content->extra_data : (json_decode($content->extra_data, true) ?? []);
+        
+        // Merge with new extra_data from form
+        if (!empty($validated['extra_data'])) {
+            $extraData = array_merge($extraData, $validated['extra_data']);
+        }
+        
+        // Handle image removal
+        if (!empty($validated['remove_images'])) {
+            foreach ($validated['remove_images'] as $imagePath) {
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
+                // Remove from extra_data
+                if (isset($extraData['images'])) {
+                    $extraData['images'] = array_filter($extraData['images'], function($img) use ($imagePath) {
+                        return $img !== $imagePath;
+                    });
+                    $extraData['images'] = array_values($extraData['images']); // Re-index array
+                }
+            }
+        }
+        
+        // Handle new file uploads for gallery and events
+        if (in_array($validated['section'], ['gallery', 'events']) && $request->hasFile('images')) {
+            if (!isset($extraData['images'])) {
+                $extraData['images'] = [];
+            }
+            
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('department-content/' . $departmentId . '/' . $validated['section'], 'public');
+                $extraData['images'][] = $path;
+            }
+        }
+        
+        // Prepare update data
+        $updateData = [
+            'section' => $validated['section'],
+            'content' => $validated['content'] ?? $content->content,
+            'is_active' => $validated['is_active'] ?? $content->is_active,
+            'order' => $validated['order'] ?? $content->order,
+        ];
+        
+        // Only update extra_data if we have data
+        if (!empty($extraData)) {
+            $updateData['extra_data'] = $extraData;
+        }
+        
+        $content->update($updateData);
         
         return redirect()->route('admin.departments.contents.index', $departmentId)
             ->with('success', 'Content updated successfully.');
