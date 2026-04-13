@@ -6,6 +6,9 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Department Details</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ route('admin.departments.contents.index', $department) }}" class="btn btn-success me-2">
+                <i class="fas fa-layer-group"></i> Manage Contents
+            </a>
             <a href="{{ route('admin.departments.edit', $department) }}" class="btn btn-warning me-2">
                 <i class="fas fa-edit"></i> Edit
             </a>

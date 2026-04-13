@@ -6,9 +6,9 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Create Department</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('admin.departments.index') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to Departments
-            </a>
+            <div class="alert alert-info mb-0">
+                <i class="fas fa-info-circle"></i> <small>After creating the department, you'll be able to manage its contents.</small>
+            </div>
         </div>
     </div>
 

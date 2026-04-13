@@ -43,9 +43,9 @@ class DepartmentController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        Department::create($request->all());
+        $department = Department::create($request->all());
 
-        return redirect()->route('admin.departments.index')->with('success', 'Department created successfully.');
+        return redirect()->route('admin.departments.contents.index', $department)->with('success', 'Department created successfully. Now you can add content to it.');
     }
 
     /**
