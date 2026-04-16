@@ -58,3 +58,6 @@
         </div>
     </div>
 </footer>
+
+<!-- Include Chatbot Widget -->
+@include('partials.chatbot', ['departmentId' => $departmentId ?? null])

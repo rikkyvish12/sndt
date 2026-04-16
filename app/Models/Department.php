@@ -51,4 +51,15 @@ class Department extends Model
     {
         return $this->belongsTo(Faculty::class, 'head_of_department_id');
     }
+
+    public function faqs()
+    {
+        return $this->hasMany(DepartmentFaq::class)->where('is_active', true)->orderBy('order');
+    }
+
+    // Get FAQ by category
+    public function getFaqsByCategory($category)
+    {
+        return $this->faqs()->where('category', $category)->get();
+    }
 }
