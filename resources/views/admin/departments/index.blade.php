@@ -65,10 +65,15 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.departments.contents.index', $department->id) }}" 
+                                        <a href="{{ route('admin.departments.contents.index', $department->id) }}"
                                            class="btn btn-sm btn-success" 
                                            title="Manage Content">
                                             <i class="material-icons">description</i>
+                                        </a>
+                                        <a href="{{ route('admin.departments.faqs.index', $department->id) }}"
+                                           class="btn btn-sm btn-info" 
+                                           title="Manage FAQs">
+                                            <i class="material-icons">help</i>
                                         </a>
                                         <a href="{{ route('admin.departments.show', $department) }}" 
                                            class="btn btn-sm btn-info" 

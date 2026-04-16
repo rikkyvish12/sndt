@@ -122,6 +122,12 @@
                                 <i class="material-icons">settings</i> Settings
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.enquiries.*') ? 'active' : 'text-white' }}" 
+                               href="{{ route('admin.enquiries.index') }}">
+                                <i class="material-icons">question_answer</i> Enquiries
+                            </a>
+                        </li>
                         <li class="nav-item mt-4">
                             <a class="nav-link text-white" href="{{ route('logout') }}" 
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

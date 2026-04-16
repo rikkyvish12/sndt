@@ -1113,7 +1113,7 @@
                     
     </div> <!-- Close flex-grow div -->
     
-    @include('partials.footer')
+    @include('partials.footer', ['departmentId' => $department->id])
     </div> <!-- Close min-h-screen flex div -->
 
                     <script>
