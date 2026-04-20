@@ -10,12 +10,26 @@ use App\Models\Department;
 class FacultyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource with optional search.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $faculty = Faculty::with('departments')->paginate(10);
-        return view('admin.faculty.index', compact('faculty'));
+        $search = $request->input('search');
+
+        $faculty = Faculty::with('departments')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                      ->orWhere('last_name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%")
+                      ->orWhere('employee_id', 'like', "%{$search}%")
+                      ->orWhere('designation', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->appends(['search' => $search]);
+
+        return view('admin.faculty.index', compact('faculty', 'search'));
     }
 
     /**
@@ -33,45 +47,51 @@ class FacultyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:faculties,email',
-            'phone' => 'nullable|string|max:20',
-            'date_of_birth' => 'nullable|date',
-            'employee_id' => 'required|string|unique:faculties,employee_id',
-            'department_id' => 'nullable|exists:departments,id',
-            'department_ids' => 'nullable|array',
+            'first_name'       => 'required|string|max:255',
+            'last_name'        => 'required|string|max:255',
+            'email'            => 'required|email|unique:faculties,email',
+            'phone'            => 'nullable|string|max:20',
+            'date_of_birth'    => 'nullable|date',
+            'employee_id'      => 'required|string|unique:faculties,employee_id',
+            'department_id'    => 'nullable|exists:departments,id',
+            'department_ids'   => 'nullable|array',
             'department_ids.*' => 'exists:departments,id',
-            'designation' => 'nullable|string|max:255',
-            'joining_date' => 'nullable|date',
-            'qualification' => 'nullable|string',
-            'specialization' => 'nullable|string',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'postal_code' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:100',
-            'is_active' => 'boolean',
+            'designation'      => 'nullable|string|max:255',
+            'joining_date'     => 'nullable|date',
+            'qualification'    => 'nullable|string',
+            'specialization'   => 'nullable|string',
+            'address'          => 'nullable|string',
+            'city'             => 'nullable|string|max:100',
+            'state'            => 'nullable|string|max:100',
+            'postal_code'      => 'nullable|string|max:20',
+            'country'          => 'nullable|string|max:100',
+            'is_active'        => 'boolean',
+            'photo'            => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $facultyData = $request->all();
+        $facultyData   = $request->except(['department_ids', 'photo']);
         $departmentIds = $request->input('department_ids', []);
-        unset($facultyData['department_ids']);
-        
+
         // Set department_id from the first selected department if any
         if (!empty($departmentIds)) {
             $facultyData['department_id'] = $departmentIds[0];
         }
-        
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('faculty', 'public');
+            $facultyData['photo'] = $path;
+        }
+
         $faculty = Faculty::create($facultyData);
-        
+
         // Attach departments if provided
         if (!empty($departmentIds)) {
             $faculty->departments()->attach($departmentIds);
         }
 
         return redirect()->route('admin.faculty.index')
-                        ->with('success', 'Faculty member created successfully.');
+                         ->with('success', 'Faculty member created successfully.');
     }
 
     /**
@@ -88,7 +108,7 @@ class FacultyController extends Controller
      */
     public function edit(string $id)
     {
-        $faculty = Faculty::with('departments')->findOrFail($id);
+        $faculty     = Faculty::with('departments')->findOrFail($id);
         $departments = Department::all();
         return view('admin.faculty.edit', compact('faculty', 'departments'));
     }
@@ -101,50 +121,60 @@ class FacultyController extends Controller
         $faculty = Faculty::findOrFail($id);
 
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:faculties,email,' . $faculty->id,
-            'phone' => 'nullable|string|max:20',
-            'date_of_birth' => 'nullable|date',
-            'employee_id' => 'required|string|unique:faculties,employee_id,' . $faculty->id,
-            'department_id' => 'nullable|exists:departments,id',
-            'department_ids' => 'nullable|array',
+            'first_name'       => 'required|string|max:255',
+            'last_name'        => 'required|string|max:255',
+            'email'            => 'required|email|unique:faculties,email,' . $faculty->id,
+            'phone'            => 'nullable|string|max:20',
+            'date_of_birth'    => 'nullable|date',
+            'employee_id'      => 'required|string|unique:faculties,employee_id,' . $faculty->id,
+            'department_id'    => 'nullable|exists:departments,id',
+            'department_ids'   => 'nullable|array',
             'department_ids.*' => 'exists:departments,id',
-            'designation' => 'nullable|string|max:255',
-            'joining_date' => 'nullable|date',
-            'qualification' => 'nullable|string',
-            'specialization' => 'nullable|string',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'postal_code' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:100',
-            'is_active' => 'boolean',
+            'designation'      => 'nullable|string|max:255',
+            'joining_date'     => 'nullable|date',
+            'qualification'    => 'nullable|string',
+            'specialization'   => 'nullable|string',
+            'address'          => 'nullable|string',
+            'city'             => 'nullable|string|max:100',
+            'state'            => 'nullable|string|max:100',
+            'postal_code'      => 'nullable|string|max:20',
+            'country'          => 'nullable|string|max:100',
+            'is_active'        => 'boolean',
+            'photo'            => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $facultyData = $request->all();
+        $facultyData   = $request->except(['department_ids', 'photo', '_token', '_method']);
         $departmentIds = $request->input('department_ids', []);
-        unset($facultyData['department_ids']);
-        
-        // Set department_id from the first selected department if any
+
+        // Set department_id from the first selected department if any,
+        // otherwise keep the existing value (column is NOT NULL in DB)
         if (!empty($departmentIds)) {
             $facultyData['department_id'] = $departmentIds[0];
         } else {
-            $facultyData['department_id'] = null;
+            $facultyData['department_id'] = $faculty->department_id;
         }
-        
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($faculty->photo) {
+                \Storage::disk('public')->delete($faculty->photo);
+            }
+            $path = $request->file('photo')->store('faculty', 'public');
+            $facultyData['photo'] = $path;
+        }
+
         $faculty->update($facultyData);
-        
+
         // Sync departments if provided
         if (!empty($departmentIds)) {
             $faculty->departments()->sync($departmentIds);
         } else {
-            // If no departments provided, detach all
             $faculty->departments()->detach();
         }
 
         return redirect()->route('admin.faculty.index')
-                        ->with('success', 'Faculty member updated successfully.');
+                         ->with('success', 'Faculty member updated successfully.');
     }
 
     /**
@@ -153,9 +183,15 @@ class FacultyController extends Controller
     public function destroy(string $id)
     {
         $faculty = Faculty::findOrFail($id);
+
+        // Delete photo if exists
+        if ($faculty->photo) {
+            \Storage::disk('public')->delete($faculty->photo);
+        }
+
         $faculty->delete();
 
         return redirect()->route('admin.faculty.index')
-                        ->with('success', 'Faculty member deleted successfully.');
+                         ->with('success', 'Faculty member deleted successfully.');
     }
 }

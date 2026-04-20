@@ -74,6 +74,18 @@ class DepartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'Jewellery Designing',
+                'code' => 'JD',
+                'description' => 'Department of Jewellery Design & Manufacture offering B.Voc. programs.',
+                'head_name' => 'Dr. Jane Doe',
+                'email' => 'jd@college.edu',
+                'phone' => '+1-234-567-8906',
+                'location' => 'Building F, Floor 1',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
