@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\DepartmentContentController as AdminDepartmentContentController;
 use App\Http\Controllers\Admin\DepartmentFaqController as AdminDepartmentFaqController;
 use App\Http\Controllers\Admin\EnquiryController as AdminEnquiryController;
+use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\ChatbotController;
@@ -74,6 +75,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/enquiries/{id}/edit', [AdminEnquiryController::class, 'edit'])->name('enquiries.edit');
     Route::put('/enquiries/{id}', [AdminEnquiryController::class, 'update'])->name('enquiries.update');
     Route::delete('/enquiries/{id}', [AdminEnquiryController::class, 'destroy'])->name('enquiries.destroy');
+    
+    // Announcements
+    Route::resource('announcements', AdminAnnouncementController::class);
 });
 
 // College Management System API Routes (Commented out for now)
