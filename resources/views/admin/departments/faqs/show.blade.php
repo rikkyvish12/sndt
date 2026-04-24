@@ -1,69 +1,138 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="container mx-auto px-6 py-8">
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
+<style>
+    .detail-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+    .detail-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    .detail-value {
+        font-size: 1.1rem;
+        color: #2c3e50;
+    }
+    .question-display {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a237e;
+        line-height: 1.4;
+    }
+    .answer-display {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #1a237e;
+        white-space: pre-line;
+        line-height: 1.8;
+    }
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .status-active {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+    }
+    .status-inactive {
+        background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%);
+        color: white;
+    }
+</style>
+
+<div class="container-fluid px-4 py-4">
+    <!-- Page Header -->
+    <div class="page-header d-flex justify-content-between align-items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">FAQ Details</h1>
-            <p class="text-gray-600 mt-2">{{ $department->name }}</p>
+            <h2 class="mb-1"><i class="material-icons">visibility</i> FAQ Details</h2>
+            <p class="text-muted mb-0"><i class="material-icons" style="font-size: 16px;">business</i> {{ $department->name }}</p>
         </div>
-        <div class="flex gap-3">
+        <div class="d-flex gap-2">
             <a href="{{ route('admin.departments.faqs.edit', [$department->id, $faq->id]) }}" 
-               class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
-                ✏️ Edit
+               class="btn btn-warning">
+                <i class="material-icons">edit</i> Edit
             </a>
             <a href="{{ route('admin.departments.faqs.index', $department->id) }}" 
-               class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-                ← Back to FAQs
+               class="btn btn-outline-dark">
+                <i class="material-icons">arrow_back</i> Back to FAQs
             </a>
         </div>
     </div>
 
     <!-- FAQ Details -->
-    <div class="bg-white rounded-lg shadow-md p-8">
-        <div class="mb-6">
-            <h2 class="text-sm font-semibold text-gray-500 uppercase mb-2">Question</h2>
-            <p class="text-xl font-semibold text-gray-800">{{ $faq->question }}</p>
+    <div class="detail-card">
+        <!-- Question -->
+        <div class="mb-4">
+            <div class="detail-label">
+                <i class="material-icons" style="font-size: 16px;">help</i> Question
+            </div>
+            <div class="question-display">{{ $faq->question }}</div>
         </div>
 
-        <div class="mb-6">
-            <h2 class="text-sm font-semibold text-gray-500 uppercase mb-2">Answer</h2>
-            <div class="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
-                {{ $faq->answer }}
+        <!-- Answer -->
+        <div class="mb-4">
+            <div class="detail-label">
+                <i class="material-icons" style="font-size: 16px;">format_list_bulleted</i> Answer
+            </div>
+            <div class="answer-display">{{ $faq->answer }}</div>
+        </div>
+
+        <!-- Meta Information -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="detail-label">
+                    <i class="material-icons" style="font-size: 16px;">category</i> Category
+                </div>
+                <div class="detail-value">
+                    <span class="badge bg-primary">{{ ucfirst($faq->category) }}</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="detail-label">
+                    <i class="material-icons" style="font-size: 16px;">swap_vert</i> Order
+                </div>
+                <div class="detail-value">{{ $faq->order }}</div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="detail-label">
+                    <i class="material-icons" style="font-size: 16px;">info</i> Status
+                </div>
+                <div>
+                    @if($faq->is_active)
+                        <span class="status-badge status-active">
+                            <i class="material-icons" style="font-size: 18px;">check_circle</i> Active
+                        </span>
+                    @else
+                        <span class="status-badge status-inactive">
+                            <i class="material-icons" style="font-size: 18px;">cancel</i> Inactive
+                        </span>
+                    @endif
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 mb-6">
-            <div>
-                <h2 class="text-sm font-semibold text-gray-500 uppercase mb-2">Category</h2>
-                <p class="text-gray-700">{{ ucfirst($faq->category) }}</p>
-            </div>
-            <div>
-                <h2 class="text-sm font-semibold text-gray-500 uppercase mb-2">Order</h2>
-                <p class="text-gray-700">{{ $faq->order }}</p>
-            </div>
-        </div>
-
-        <div class="mb-6">
-            <h2 class="text-sm font-semibold text-gray-500 uppercase mb-2">Status</h2>
-            <p>
-                @if($faq->is_active)
-                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">✅ Active</span>
-                @else
-                    <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold">❌ Inactive</span>
-                @endif
-            </p>
-        </div>
-
-        <div class="flex gap-3 pt-6 border-t">
+        <!-- Actions -->
+        <div class="d-flex gap-2 pt-3 border-top">
             <form action="{{ route('admin.departments.faqs.destroy', [$department->id, $faq->id]) }}" 
                   method="POST" 
                   onsubmit="return confirm('Are you sure you want to delete this FAQ?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-                    🗑️ Delete FAQ
+                <button type="submit" class="btn btn-danger">
+                    <i class="material-icons">delete</i> Delete FAQ
                 </button>
             </form>
         </div>

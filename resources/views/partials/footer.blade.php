@@ -1,8 +1,8 @@
 <!-- Footer -->
-<footer class="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white py-12">
+<footer class="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white py-8 md:py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="col-span-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div class="col-span-1 sm:col-span-2 md:col-span-2">
                 <div class="flex items-center">
                     <div class="h-12 w-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
                         <span class="text-white font-bold text-xl">P</span>
@@ -17,9 +17,9 @@
                 </p>
             </div>
             
-            <div>
-                <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
-                <ul class="space-y-2">
+            <div class="pt-4 md:pt-0">
+                <h4 class="text-lg font-semibold text-white mb-3 md:mb-4">Quick Links</h4>
+                <ul class="space-y-1 md:space-y-2">
                     <li><a href="{{ route('welcome') }}" class="text-purple-200 hover:text-white transition-colors duration-300 block py-1">Home</a></li>
                     <li><a href="{{ route('about') }}" class="text-purple-200 hover:text-white transition-colors duration-300 block py-1">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="text-purple-200 hover:text-white transition-colors duration-300 block py-1">Contact</a></li>
@@ -27,9 +27,9 @@
                 </ul>
             </div>
             
-            <div>
-                <h4 class="text-lg font-semibold text-white mb-4">Contact Info</h4>
-                <ul class="space-y-2 text-purple-200">
+            <div class="pt-4 md:pt-0">
+                <h4 class="text-lg font-semibold text-white mb-3 md:mb-4">Contact Info</h4>
+                <ul class="space-y-2 md:space-y-3 text-purple-200">
                     <li class="flex items-start">
                         <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -61,3 +61,6 @@
 
 <!-- Include Chatbot Widget -->
 @include('partials.chatbot', ['departmentId' => $departmentId ?? null])
+
+<!-- Include Golden Jubilee Widget -->
+@include('partials.golden-jubilee')

@@ -1,115 +1,154 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="container mx-auto px-6 py-8">
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
+<style>
+    .form-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #1a237e;
+        box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+    }
+    .help-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    .form-icon {
+        color: #1a237e;
+        margin-right: 5px;
+    }
+</style>
+
+<div class="container-fluid px-4 py-4">
+    <!-- Page Header -->
+    <div class="page-header d-flex justify-content-between align-items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">Add New FAQ</h1>
-            <p class="text-gray-600 mt-2">{{ $department->name }}</p>
+            <h2 class="mb-1"><i class="material-icons">add_circle</i> Add New FAQ</h2>
+            <p class="text-muted mb-0"><i class="material-icons" style="font-size: 16px;">business</i> {{ $department->name }}</p>
         </div>
         <a href="{{ route('admin.departments.faqs.index', $department->id) }}" 
-           class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-            ← Back to FAQs
+           class="btn btn-outline-dark">
+            <i class="material-icons">arrow_back</i> Back to FAQs
         </a>
     </div>
 
     <!-- Form -->
-    <div class="bg-white rounded-lg shadow-md p-8">
+    <div class="form-section">
         <form action="{{ route('admin.departments.faqs.store', $department->id) }}" method="POST">
             @csrf
 
             <!-- Question -->
-            <div class="mb-6">
-                <label for="question" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Question <span class="text-red-500">*</span>
+            <div class="mb-4">
+                <label for="question" class="form-label">
+                    <i class="material-icons form-icon">help</i> Question <span class="text-danger">*</span>
                 </label>
                 <input type="text" 
                        name="question" 
                        id="question" 
                        value="{{ old('question') }}"
                        placeholder="e.g., What is the duration of the course?"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('question') border-red-500 @enderror"
+                       class="form-control @error('question') is-invalid @enderror"
                        required>
                 @error('question')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+                <div class="help-text">Enter a clear, concise question that users commonly ask</div>
             </div>
 
             <!-- Answer -->
-            <div class="mb-6">
-                <label for="answer" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Answer <span class="text-red-500">*</span>
+            <div class="mb-4">
+                <label for="answer" class="form-label">
+                    <i class="material-icons form-icon">format_list_bulleted</i> Answer <span class="text-danger">*</span>
                 </label>
                 <textarea name="answer" 
                           id="answer" 
-                          rows="8"
-                          placeholder="Enter the answer (you can use bullet points with •)"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('answer') border-red-500 @enderror"
+                          rows="10"
+                          placeholder="Enter the detailed answer..."
+                          class="form-control @error('answer') is-invalid @enderror"
                           required>{{ old('answer') }}</textarea>
                 @error('answer')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-                <p class="text-xs text-gray-500 mt-1">Tip: Use • for bullet points, \n for new lines</p>
+                <div class="help-text">
+                    <i class="material-icons" style="font-size: 14px;">lightbulb</i> 
+                    Tip: Use • for bullet points, press Enter for new lines. Be comprehensive but clear.
+                </div>
             </div>
 
-            <!-- Category -->
-            <div class="mb-6">
-                <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Category <span class="text-red-500">*</span>
-                </label>
-                <select name="category" 
-                        id="category" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('category') border-red-500 @enderror"
-                        required>
-                    <option value="">Select a category</option>
-                    @foreach($categories as $key => $label)
-                        <option value="{{ $key }}" {{ old('category') == $key ? 'selected' : '' }}>
-                            {{ $label }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('category')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+            <div class="row">
+                <!-- Category -->
+                <div class="col-md-6 mb-4">
+                    <label for="category" class="form-label">
+                        <i class="material-icons form-icon">category</i> Category <span class="text-danger">*</span>
+                    </label>
+                    <select name="category" 
+                            id="category" 
+                            class="form-select @error('category') is-invalid @enderror"
+                            required>
+                        <option value="">Select a category</option>
+                        @foreach($categories as $key => $label)
+                            <option value="{{ $key }}" {{ old('category') == $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <div class="help-text">Choose the most relevant category for this FAQ</div>
+                </div>
 
-            <!-- Order -->
-            <div class="mb-6">
-                <label for="order" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Order (Optional)
-                </label>
-                <input type="number" 
-                       name="order" 
-                       id="order" 
-                       value="{{ old('order', 0) }}"
-                       min="0"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <p class="text-xs text-gray-500 mt-1">Lower numbers appear first (default: 0)</p>
+                <!-- Order -->
+                <div class="col-md-6 mb-4">
+                    <label for="order" class="form-label">
+                        <i class="material-icons form-icon">swap_vert</i> Order
+                    </label>
+                    <input type="number" 
+                           name="order" 
+                           id="order" 
+                           value="{{ old('order', 0) }}"
+                           min="0"
+                           class="form-control">
+                    <div class="help-text">Lower numbers appear first (default: 0)</div>
+                </div>
             </div>
 
             <!-- Active Status -->
-            <div class="mb-6">
-                <label class="flex items-center">
+            <div class="mb-4">
+                <div class="form-check form-switch">
                     <input type="hidden" name="is_active" value="0">
                     <input type="checkbox" 
                            name="is_active" 
                            value="1" 
+                           id="is_active"
                            {{ old('is_active', true) ? 'checked' : '' }}
-                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                    <span class="ml-2 text-sm text-gray-700">Active</span>
-                </label>
+                           class="form-check-input">
+                    <label class="form-check-label" for="is_active">
+                        <i class="material-icons" style="font-size: 18px; vertical-align: middle;">check_circle</i>
+                        <strong>Active</strong> - This FAQ will be displayed on the website
+                    </label>
+                </div>
             </div>
 
             <!-- Submit Button -->
-            <div class="flex gap-3">
+            <div class="d-flex gap-2 pt-3 border-top">
                 <button type="submit" 
-                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
-                    💾 Create FAQ
+                        class="btn btn-primary btn-lg">
+                    <i class="material-icons">save</i> Create FAQ
                 </button>
                 <a href="{{ route('admin.departments.faqs.index', $department->id) }}" 
-                   class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
-                    Cancel
+                   class="btn btn-secondary btn-lg">
+                    <i class="material-icons">cancel</i> Cancel
                 </a>
             </div>
         </form>
