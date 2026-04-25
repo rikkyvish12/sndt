@@ -290,8 +290,8 @@
         </div>
     </div>
 
-    <!-- Courses Section -->
-    <div class="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50">
+    <!-- Courses Section (Popular Programs) -->
+    <div id="explore" class="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Popular Programs</h2>
@@ -347,7 +347,7 @@
     </div>
 
     <!-- Departments Section -->
-    <div id="explore" class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+    <div id="departments" class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Our Departments</h2>
