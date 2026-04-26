@@ -228,6 +228,102 @@
         .testimonial-card-3d:hover {
             transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
         }
+        
+        /* Golden Jubilee Special Effects */
+        @keyframes jubilee-fall-bounce {
+            0% { transform: translateY(-110vh); opacity: 0; }
+            60% { transform: translateY(0); opacity: 1; }
+            75% { transform: translateY(-30px); }
+            90% { transform: translateY(0); }
+            95% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes jubilee-gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .golden-jubilee-btn {
+            position: fixed !important;
+            bottom: 1.5rem !important;
+            left: 5px !important;
+            right: auto !important;
+            z-index: 9999;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            animation: jubilee-fall-bounce 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, 
+                       jubilee-gentle-bounce 3s infinite ease-in-out 2s;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .golden-jubilee-btn:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 20px 35px rgba(0,0,0,0.5));
+        }
+        .jubilee-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .jubilee-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .jubilee-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 2rem;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.25);
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .jubilee-modal.active img {
+            transform: scale(1) translateY(0);
+        }
+        .close-jubilee {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: white;
+            color: black;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .close-jubilee:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #f59e0b;
+            color: white;
+        }
+
+        /* Placement Partners Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans overflow-x-hidden">
@@ -1116,6 +1212,47 @@
         }
     </style>
 
+    <!-- Top Placement Partners Section -->
+    <div class="py-16 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Our Top Placement Partners</h2>
+                <p class="mt-4 text-xl text-gray-600">Our students are placed in world-class organizations</p>
+                <div class="mt-2 w-24 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 mx-auto rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="relative flex overflow-hidden group">
+            <div class="flex space-x-12 animate-marquee whitespace-nowrap py-4">
+                <!-- First set of logos -->
+                <div class="flex space-x-12 items-center">
+                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/WhatsApp_icon-fXwyEBjV.png" alt="WhatsApp Partner" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/P.V.POLYTECHNIC-BYarhyCK.png" alt="PV Polytechnic" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/frame-Bewihn-R.png" alt="Partner Frame" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <!-- Duplicate some for length -->
+                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                </div>
+                <!-- Second set of logos for seamless loop -->
+                <div class="flex space-x-12 items-center">
+                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/WhatsApp_icon-fXwyEBjV.png" alt="WhatsApp Partner" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/P.V.POLYTECHNIC-BYarhyCK.png" alt="PV Polytechnic" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/frame-Bewihn-R.png" alt="Partner Frame" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                </div>
+            </div>
+            
+            <!-- Gradient Overlays for smooth fading at edges -->
+            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+            <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+        </div>
+    </div>
+
 
     <!-- Student Testimonial Section -->
     <div class="py-24 bg-white overflow-hidden relative">
@@ -1381,5 +1518,52 @@
         });
     @include('partials.scripts')
     @include('partials.footer')
+    <!-- Golden Jubilee Button -->
+    <div class="golden-jubilee-btn shadow-2xl" id="goldenJubileeBtn" title="Celebrate our Golden Jubilee!">
+        <img src="{{ asset('goldan_jubli.png') }}" alt="Golden Jubilee" class="w-full h-full object-contain">
+        <div class="absolute inset-0 rounded-full animate-pulse-slow bg-yellow-400 opacity-20 blur-xl"></div>
+    </div>
+
+    <!-- Jubilee Modal -->
+    <div class="jubilee-modal" id="jubileeModal">
+        <div class="close-jubilee" id="closeJubileeModal">&times;</div>
+        <img src="{{ asset('goldan_jubli.png') }}" alt="Golden Jubilee Full Content" class="shadow-2xl">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jubileeBtn = document.getElementById('goldenJubileeBtn');
+            const jubileeModal = document.getElementById('jubileeModal');
+            const closeJubilee = document.getElementById('closeJubileeModal');
+
+            if (jubileeBtn && jubileeModal) {
+                jubileeBtn.addEventListener('click', () => {
+                    jubileeModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                const hideJubileeModal = () => {
+                    jubileeModal.classList.remove('active');
+                    setTimeout(() => {
+                        if (!jubileeModal.classList.contains('active')) {
+                            document.body.style.overflow = '';
+                        }
+                    }, 500);
+                };
+
+                closeJubilee.addEventListener('click', hideJubileeModal);
+                jubileeModal.addEventListener('click', (e) => {
+                    if (e.target === jubileeModal) hideJubileeModal();
+                });
+
+                // Escape key support
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && jubileeModal.classList.contains('active')) {
+                        hideJubileeModal();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
