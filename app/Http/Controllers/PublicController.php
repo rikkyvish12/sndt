@@ -59,9 +59,14 @@ class PublicController extends Controller
             ->with(['faculty', 'courses', 'contents', 'headOfDepartment'])
             ->firstOrFail();
             
-        // Get dynamic content for each section
+        // Get dynamic content for each section, ordered by 'order' field
         $dynamicContents = [];
-        foreach ($department->contents as $content) {
+        $orderedContents = $department->contents()
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+            
+        foreach ($orderedContents as $content) {
             $dynamicContents[$content->section] = $content;
         }
         
