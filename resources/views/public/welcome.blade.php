@@ -190,6 +190,44 @@
                 transform: translate(0px, 0px) scale(1);
             }
         }
+        @keyframes float-pattern {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes shine-badge {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        .animate-float-pattern {
+            animation: float-pattern 6s ease-in-out infinite;
+        }
+        .animate-float-pattern-reverse {
+            animation: float-pattern 8s ease-in-out infinite reverse;
+        }
+        .badge-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .badge-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            animation: shine-badge 4s infinite;
+        }
+        .testimonial-card-3d {
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .testimonial-card-3d:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans overflow-x-hidden">
@@ -241,21 +279,45 @@
                 </div>
                 
                 <div class="md:w-1/2 flex justify-center">
-                    <div class="relative">
-                        <!-- Main decorative graphic -->
-                        <div class="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-sm border border-white/30 flex items-center justify-center animate-float">
-                            <div class="text-white/80">
-                                <svg class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
-                                </svg>
+                    <div class="relative group">
+                        <!-- Main Image with specialized frame -->
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[450px] md:h-[450px] animate-float">
+                            <!-- Background Glow -->
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow"></div>
+                            
+                            <!-- Image Container -->
+                            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden border-4 border-white/50 shadow-2xl backdrop-blur-sm transform transition-all duration-700 group-hover:scale-[1.02] group-hover:rotate-2">
+                                <img src="{{ asset('graduated_student_hero.png') }}" alt="Successful Student" class="w-full h-full object-cover">
+                                
+                                <!-- Overlay Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                            </div>
+
+                            <!-- Decorative Floating Badges -->
+                            <div class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-xl animate-bounce-slow flex items-center space-x-3 border border-purple-100 z-20">
+                                <div class="bg-yellow-100 p-2 rounded-lg text-yellow-600">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Success Rate</p>
+                                    <p class="text-lg font-black text-purple-700">95%+</p>
+                                </div>
+                            </div>
+
+                            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl animate-float-medium flex items-center space-x-3 border border-orange-100 z-20">
+                                <div class="bg-orange-100 p-2 rounded-lg text-orange-600">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Alumni Network</p>
+                                    <p class="text-lg font-black text-orange-700">10k+</p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Floating elements around main graphic -->
-                        <div class="absolute -top-4 -right-4 w-8 h-8 sm:-top-6 sm:-right-6 sm:w-16 sm:h-16 bg-yellow-300/30 rounded-full animate-ping"></div>
-                        <div class="absolute -bottom-4 -left-4 w-8 h-8 sm:-bottom-6 sm:-left-6 sm:w-16 sm:h-16 bg-purple-300/30 rounded-lg animate-pulse"></div>
-                        <div class="absolute top-1/2 -left-6 w-6 h-6 sm:top-1/2 sm:-left-10 sm:w-12 sm:h-12 bg-pink-300/30 rounded-full animate-bounce"></div>
-                        <div class="absolute -top-2 left-1/2 w-5 h-5 sm:-top-4 sm:left-1/2 sm:w-10 sm:h-10 bg-orange-300/30 rounded-full animate-pulse animation-delay-2000"></div>
                     </div>
                 </div>
             </div>
@@ -429,12 +491,8 @@
                         <!-- Large Image Container -->
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">PS</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('neeta-lulla.png') }}" alt="Neeta Lulla" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <!-- Overlay gradient at bottom -->
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -499,12 +557,8 @@
                         <!-- Large Image Container -->
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-rose-500 to-red-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">AP</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('anita-dongre.png') }}" alt="Anita Dongre" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <!-- Overlay gradient at bottom -->
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -569,12 +623,8 @@
                         <!-- Large Image Container -->
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">MR</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('eka-lakhani.png') }}" alt="Eka Lakhani" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <!-- Overlay gradient at bottom -->
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -639,12 +689,8 @@
                         <!-- Large Image Container -->
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">SS</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi-sinha.png') }}" alt="Sonakshi Sinha" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <!-- Overlay gradient at bottom -->
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -709,12 +755,8 @@
                         <!-- Large Image Container -->
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">SR</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi raaj.png') }}" alt="Sonaakshi Raaj" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <!-- Overlay gradient at bottom -->
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -779,12 +821,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-purple-500/30 group-hover:scale-[1.02]">
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">NL</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('neeta-lulla.png') }}" alt="Neeta Lulla" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-400 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -839,12 +877,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-pink-500/30 group-hover:scale-[1.02]">
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-rose-500 to-red-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">AD</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('anita-dongre.png') }}" alt="Anita Dongre" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute top-4 right-4 bg-gradient-to-r from-pink-400 to-rose-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -899,12 +933,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-green-500/30 group-hover:scale-[1.02]">
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">EL</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('eka-lakhani.png') }}" alt="Eka Lakhani" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -959,12 +989,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-amber-500/30 group-hover:scale-[1.02]">
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">SS</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi-sinha.png') }}" alt="Sonakshi Sinha" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute top-4 right-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -1019,12 +1045,8 @@
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-cyan-500/30 group-hover:scale-[1.02]">
                         <div class="relative h-80 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-500"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="w-40 h-40 mx-auto rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                                        <span class="text-6xl font-bold text-white">SR</span>
-                                    </div>
-                                </div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi raaj.png') }}" alt="Sonaakshi Raaj" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute top-4 right-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -1093,6 +1115,87 @@
             animation-play-state: paused;
         }
     </style>
+
+
+    <!-- Student Testimonial Section -->
+    <div class="py-24 bg-white overflow-hidden relative">
+        <!-- Floating background particles -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full opacity-20 animate-float-pattern"></div>
+            <div class="absolute top-40 right-20 w-6 h-6 bg-purple-400 rounded-full opacity-20 animate-float-pattern-reverse"></div>
+            <div class="absolute bottom-20 left-1/4 w-3 h-3 bg-yellow-400 rounded-full opacity-20 animate-float-pattern"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-6xl font-black text-[#000080] mb-4 tracking-tight animate-section">
+                    Our Students Speak
+                </h2>
+                <div class="mt-2 w-32 h-2 bg-gradient-to-r from-[#000080] to-blue-500 mx-auto rounded-full animate-fade"></div>
+            </div>
+
+            <div class="relative bg-white rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,128,0.15)] lg:flex items-stretch min-h-[650px] border border-blue-50/50 testimonial-card-3d">
+                <!-- Content Column -->
+                <div class="lg:w-3/5 p-10 lg:p-24 flex flex-col justify-center relative bg-gradient-to-br from-white to-blue-50/30">
+                    <div class="mb-10 font-serif opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="h-16 w-16 text-[#000080]" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] mb-10 animate-section">
+                        “A transformative journey at <span class="text-[#000080]">SNDT University</span>”
+                    </h3>
+                    
+                    <div class="space-y-8">
+                        <p class="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium animate-card">
+                            As an alumna of the Diploma in Electronics program at P.V. Polytechnic, I consider it one of my greatest achievements to have been admitted to this esteemed institution. 
+                        </p>
+                        <p class="text-xl md:text-2xl text-gray-600 leading-relaxed animate-card">
+                            The internships and continuous practical training have equipped me with invaluable knowledge and ignited a deep curiosity to keep learning.
+                        </p>
+                        <div class="pt-6 border-t border-blue-100 mt-8 animate-fade">
+                            <p class="text-lg md:text-xl text-[#000080] font-bold italic">
+                                "I am deeply grateful for the guidance and support I received throughout my journey at SNDT."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Column -->
+                <div class="lg:w-2/5 relative bg-[#f0f4ff] flex items-end justify-center pt-20 lg:pt-0 overflow-hidden group">
+                    <!-- Dynamic Doodle Decorations -->
+                    <div class="absolute inset-0 z-0 pointer-events-none">
+                        <div class="absolute top-10 right-10 animate-float-pattern">
+                            <svg class="w-32 h-32 text-blue-200/50 rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354l1.107 3.18h3.344l-2.706 1.966 1.034 3.178-2.779-2.02-2.779 2.02 1.034-3.178-2.706-1.966h3.344l1.107-3.18z" />
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-40 left-10 animate-float-pattern-reverse">
+                            <svg class="w-24 h-24 text-purple-200/50 -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 002 2z" />
+                            </svg>
+                        </div>
+                        <!-- Artistic line decorations mimic doodles -->
+                        <svg class="absolute top-1/2 left-0 w-full h-full text-blue-100/40" viewBox="0 0 200 200" fill="none">
+                            <path d="M10 80 Q 50 10, 90 80 T 170 80" stroke="currentColor" stroke-width="3" stroke-dasharray="8 8" class="animate-float-pattern" />
+                            <path d="M20 150 Q 60 190, 100 150 T 180 150" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" class="animate-float-pattern-reverse" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 w-full h-full flex items-end px-6 lg:px-0">
+                        <img src="{{ asset('shivani-nikam.png') }}" alt="Shivani Nikam" class="w-full h-auto object-cover transform transition-all duration-1000 group-hover:scale-110 group-hover:translate-y-[-10px] origin-bottom scale-105 filter drop-shadow-2xl">
+                        
+                        <!-- Name Badge -->
+                        <div class="absolute bottom-10 left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-[-15%] bg-[#000080] text-white px-12 py-5 rounded-full text-3xl font-black shadow-[0_20px_40px_rgba(0,0,128,0.4)] whitespace-nowrap border-4 border-white transition-all duration-500 hover:scale-110 badge-shine group-hover:bottom-14">
+                            Shivani Nikam
+                            <span class="block text-sm font-medium text-blue-200 tracking-wider uppercase mt-1">Electronics Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- CTA Section -->
     <div class="bg-gradient-to-r from-purple-700 via-pink-600 to-orange-500 relative overflow-hidden">
