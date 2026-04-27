@@ -1223,27 +1223,36 @@
         </div>
 
         <div class="relative flex overflow-hidden group">
-            <div class="flex space-x-12 animate-marquee whitespace-nowrap py-4">
+            <div class="flex animate-marquee py-4">
                 <!-- First set of logos -->
-                <div class="flex space-x-12 items-center">
-                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/WhatsApp_icon-fXwyEBjV.png" alt="WhatsApp Partner" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/P.V.POLYTECHNIC-BYarhyCK.png" alt="PV Polytechnic" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/frame-Bewihn-R.png" alt="Partner Frame" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <!-- Duplicate some for length -->
-                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                <div class="flex shrink-0 items-center space-x-12">
+                    <img src="{{ asset('our-partners/anita_dongre-CCyncElf.jpg') }}" alt="Anita Dongre" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/artemis-DJa-OVe6.jpg') }}" alt="Artemis" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/brij-CTe-6HBg.jpg') }}" alt="Brij" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/caratlane-DiEKaPUF.png') }}" alt="CaratLane" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/f_s_peacock-ChlNzK-9 (1).jpg') }}" alt="F.S. Peacock" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/itc_hotels-DtkmkMTw.jpg') }}" alt="ITC Hotels" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/lnt-BQr1LGxt.jpg') }}" alt="L&T" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/purple_style_labs-PY9EA28_.jpg') }}" alt="Purple Style Labs" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/reliance-BIBBEdiI.png') }}" alt="Reliance" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/siemens-enSDzWct.jpg') }}" alt="Siemens" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/tfs-bqyR2Sdk.png') }}" alt="TFS" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/zevar-DkeJcL4X.png') }}" alt="Zevar" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
                 </div>
                 <!-- Second set of logos for seamless loop -->
-                <div class="flex space-x-12 items-center">
-                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/WhatsApp_icon-fXwyEBjV.png" alt="WhatsApp Partner" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/P.V.POLYTECHNIC-BYarhyCK.png" alt="PV Polytechnic" class="h-16 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/frame-Bewihn-R.png" alt="Partner Frame" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/sndt-logo-DmGKQnP5.png" alt="SNDT Logo" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
-                    <img src="https://pvpsndt.ac.in/build/assets/image-BTgLJJLi.png" alt="Partner Image" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                <div class="flex shrink-0 items-center space-x-12">
+                    <img src="{{ asset('our-partners/anita_dongre-CCyncElf.jpg') }}" alt="Anita Dongre" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/artemis-DJa-OVe6.jpg') }}" alt="Artemis" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/brij-CTe-6HBg.jpg') }}" alt="Brij" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/caratlane-DiEKaPUF.png') }}" alt="CaratLane" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/f_s_peacock-ChlNzK-9 (1).jpg') }}" alt="F.S. Peacock" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/itc_hotels-DtkmkMTw.jpg') }}" alt="ITC Hotels" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/lnt-BQr1LGxt.jpg') }}" alt="L&T" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/purple_style_labs-PY9EA28_.jpg') }}" alt="Purple Style Labs" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/reliance-BIBBEdiI.png') }}" alt="Reliance" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/siemens-enSDzWct.jpg') }}" alt="Siemens" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/tfs-bqyR2Sdk.png') }}" alt="TFS" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/zevar-DkeJcL4X.png') }}" alt="Zevar" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
                 </div>
             </div>
             
