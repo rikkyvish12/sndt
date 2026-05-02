@@ -104,7 +104,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $departments->links() }}
+            {{ $departments->links('pagination::bootstrap-5') }}
         @else
             <div class="text-center py-4">
                 <i class="material-icons text-muted" style="font-size: 64px;">business</i>
