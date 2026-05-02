@@ -12,6 +12,7 @@ class Faculty extends Model
     protected $fillable = [
         'first_name',
         'last_name',
+        'photo',
         'email',
         'phone',
         'date_of_birth',
@@ -31,8 +32,8 @@ class Faculty extends Model
 
     protected $casts = [
         'date_of_birth' => 'date',
-        'joining_date' => 'date',
-        'is_active' => 'boolean',
+        'joining_date'  => 'date',
+        'is_active'     => 'boolean',
     ];
 
     // Relationships
@@ -40,12 +41,12 @@ class Faculty extends Model
     {
         return $this->belongsToMany(Department::class, 'department_faculty');
     }
-    
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
-    
+
     public function currentDepartment()
     {
         return $this->belongsToMany(Department::class, 'department_faculty');

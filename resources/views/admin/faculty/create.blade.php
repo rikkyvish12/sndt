@@ -25,9 +25,30 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.faculty.store') }}" method="POST">
+        <form action="{{ route('admin.faculty.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+
+            {{-- Photo Upload --}}
+            <div class="mb-4">
+                <label class="form-label">
+                    <i class="material-icons">photo_camera</i> Faculty Photo
+                </label>
+                <div class="d-flex align-items-center gap-3">
+                    <div id="photoPreviewWrap" class="rounded-circle overflow-hidden bg-light border d-flex align-items-center justify-content-center"
+                         style="width:100px;height:100px;flex-shrink:0;">
+                        <img id="photoPreview" src="" alt="Preview"
+                             style="width:100%;height:100%;object-fit:cover;display:none;">
+                        <i class="material-icons text-muted" id="photoIcon" style="font-size:48px;">person</i>
+                    </div>
+                    <div>
+                        <input type="file" class="form-control" id="photo" name="photo"
+                               accept="image/jpeg,image/png,image/gif,image/webp"
+                               onchange="previewPhoto(event)">
+                        <small class="text-muted">JPG, PNG, GIF or WebP. Max 2 MB.</small>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -204,21 +225,18 @@
 </div>
 
 <script>
-    // Initialize multi-select for departments
-    document.addEventListener('DOMContentLoaded', function() {
-        const departmentSelect = document.getElementById('department_ids');
-        
-        // Optional: Enhance the multi-select experience
-        if (departmentSelect) {
-            // Add a note about selecting multiple options
-            departmentSelect.setAttribute('size', '5'); // Show multiple options
-            
-            // Listen for changes
-            departmentSelect.addEventListener('change', function() {
-                // Can add additional logic here if needed
-            });
-        }
-    });
+    function previewPhoto(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('photoPreview');
+            const icon = document.getElementById('photoIcon');
+            img.src = e.target.result;
+            img.style.display = 'block';
+            icon.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
 </script>
-
 @endsection

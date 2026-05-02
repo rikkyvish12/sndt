@@ -5,26 +5,66 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Edit Faculty</h1>
-        <a href="{{ route('admin.faculty.index') }}" class="btn btn-secondary">Back to Faculty</a>
+        <h1><i class="material-icons">edit</i> Edit Faculty</h1>
+        <a href="{{ route('admin.faculty.index') }}" class="btn btn-secondary">
+            <i class="material-icons">arrow_back</i> Back to Faculty
+        </a>
     </div>
 
     @if($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="material-icons">error_outline</i> Please fix the following errors:
             <ul class="mb-0">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     <div class="card">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="material-icons">person</i> Faculty Information</h5>
+        </div>
         <div class="card-body">
-            <form action="{{ route('admin.faculty.update', $faculty->id) }}" method="POST">
+            <form action="{{ route('admin.faculty.update', $faculty->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                
+
+                {{-- Photo Upload --}}
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="material-icons">photo_camera</i> Faculty Photo
+                    </label>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle overflow-hidden bg-light border d-flex align-items-center justify-content-center"
+                             style="width:100px;height:100px;flex-shrink:0;">
+                            @if($faculty->photo)
+                                <img id="photoPreview"
+                                     src="{{ asset('storage/' . $faculty->photo) }}"
+                                     alt="{{ $faculty->first_name }}"
+                                     style="width:100%;height:100%;object-fit:cover;">
+                            @else
+                                <img id="photoPreview" src="" alt="Preview"
+                                     style="width:100%;height:100%;object-fit:cover;display:none;">
+                                <i class="material-icons text-muted" id="photoIcon" style="font-size:48px;">person</i>
+                            @endif
+                        </div>
+                        <div>
+                            <input type="file" class="form-control" id="photo" name="photo"
+                                   accept="image/jpeg,image/png,image/gif,image/webp"
+                                   onchange="previewPhoto(event)">
+                            <small class="text-muted">
+                                JPG, PNG, GIF or WebP. Max 2 MB.
+                                @if($faculty->photo)
+                                    <br>Upload a new image to replace the current one.
+                                @endif
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -154,9 +194,13 @@
                     <input type="text" class="form-control" id="country" name="country" value="{{ old('country', $faculty->country) }}">
                 </div>
 
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Update Faculty</button>
-                    <a href="{{ route('admin.faculty.index') }}" class="btn btn-secondary ms-2">Cancel</a>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ route('admin.faculty.index') }}" class="btn btn-secondary">
+                        <i class="material-icons">arrow_back</i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="material-icons">save</i> Update Faculty
+                    </button>
                 </div>
             </form>
         </div>
@@ -164,21 +208,18 @@
 </div>
 
 <script>
-    // Initialize multi-select for departments
-    document.addEventListener('DOMContentLoaded', function() {
-        const departmentSelect = document.getElementById('department_ids');
-        
-        // Optional: Enhance the multi-select experience
-        if (departmentSelect) {
-            // Add a note about selecting multiple options
-            departmentSelect.setAttribute('size', '5'); // Show multiple options
-            
-            // Listen for changes
-            departmentSelect.addEventListener('change', function() {
-                // Can add additional logic here if needed
-            });
-        }
-    });
+    function previewPhoto(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('photoPreview');
+            const icon = document.getElementById('photoIcon');
+            img.src = e.target.result;
+            img.style.display = 'block';
+            if (icon) icon.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
 </script>
-
 @endsection
