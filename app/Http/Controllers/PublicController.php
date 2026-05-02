@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Course;
 use App\Models\Faculty;
 use App\Models\DepartmentContent;
+use App\Models\Announcement;
 
 class PublicController extends Controller
 {
@@ -28,7 +29,9 @@ class PublicController extends Controller
             ->limit(6)
             ->get();
             
-        return view('public.welcome', compact('departments', 'courses', 'faculty'));
+        $announcements = Announcement::getActiveAnnouncements();
+            
+        return view('public.welcome', compact('departments', 'courses', 'faculty', 'announcements'));
     }
     
     public function about()
@@ -37,12 +40,16 @@ class PublicController extends Controller
         $facultyCount = Faculty::where('is_active', true)->count();
         $coursesCount = Course::where('is_active', true)->count();
         
-        return view('public.about', compact('departments', 'facultyCount', 'coursesCount'));
+        $announcements = Announcement::getActiveAnnouncements();
+        
+        return view('public.about', compact('departments', 'facultyCount', 'coursesCount', 'announcements'));
     }
     
     public function contact()
     {
-        return view('public.contact');
+        $announcements = Announcement::getActiveAnnouncements();
+        
+        return view('public.contact', compact('announcements'));
     }
     
     public function department($code)
@@ -52,9 +59,14 @@ class PublicController extends Controller
             ->with(['faculty', 'courses', 'contents', 'headOfDepartment'])
             ->firstOrFail();
             
-        // Get dynamic content for each section
+        // Get dynamic content for each section, ordered by 'order' field
         $dynamicContents = [];
-        foreach ($department->contents as $content) {
+        $orderedContents = $department->contents()
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+            
+        foreach ($orderedContents as $content) {
             $dynamicContents[$content->section] = $content;
         }
         
@@ -62,6 +74,8 @@ class PublicController extends Controller
         $facultyCount = Faculty::where('is_active', true)->count();
         $coursesCount = Course::where('is_active', true)->count();
         
-        return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount', 'dynamicContents'));
+        $announcements = Announcement::getActiveAnnouncements();
+        
+        return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount', 'dynamicContents', 'announcements'));
     }
 }

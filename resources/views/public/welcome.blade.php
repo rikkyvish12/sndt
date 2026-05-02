@@ -190,6 +190,140 @@
                 transform: translate(0px, 0px) scale(1);
             }
         }
+        @keyframes float-pattern {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes shine-badge {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        .animate-float-pattern {
+            animation: float-pattern 6s ease-in-out infinite;
+        }
+        .animate-float-pattern-reverse {
+            animation: float-pattern 8s ease-in-out infinite reverse;
+        }
+        .badge-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .badge-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            animation: shine-badge 4s infinite;
+        }
+        .testimonial-card-3d {
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .testimonial-card-3d:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
+        }
+        
+        /* Golden Jubilee Special Effects */
+        @keyframes jubilee-fall-bounce {
+            0% { transform: translateY(-110vh); opacity: 0; }
+            60% { transform: translateY(0); opacity: 1; }
+            75% { transform: translateY(-30px); }
+            90% { transform: translateY(0); }
+            95% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes jubilee-gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .golden-jubilee-btn {
+            position: fixed !important;
+            bottom: 1.5rem !important;
+            left: 5px !important;
+            right: auto !important;
+            z-index: 9999;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            animation: jubilee-fall-bounce 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, 
+                       jubilee-gentle-bounce 3s infinite ease-in-out 2s;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .golden-jubilee-btn:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 20px 35px rgba(0,0,0,0.5));
+        }
+        .jubilee-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .jubilee-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .jubilee-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 2rem;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.25);
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .jubilee-modal.active img {
+            transform: scale(1) translateY(0);
+        }
+        .close-jubilee {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: white;
+            color: black;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .close-jubilee:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #f59e0b;
+            color: white;
+        }
+
+        /* Placement Partners Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans overflow-x-hidden">
@@ -241,21 +375,45 @@
                 </div>
                 
                 <div class="md:w-1/2 flex justify-center">
-                    <div class="relative">
-                        <!-- Main decorative graphic -->
-                        <div class="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-sm border border-white/30 flex items-center justify-center animate-float">
-                            <div class="text-white/80">
-                                <svg class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
-                                </svg>
+                    <div class="relative group">
+                        <!-- Main Image with specialized frame -->
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[450px] md:h-[450px] animate-float">
+                            <!-- Background Glow -->
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow"></div>
+                            
+                            <!-- Image Container -->
+                            <div class="relative h-full w-full rounded-[2.5rem] overflow-hidden border-4 border-white/50 shadow-2xl backdrop-blur-sm transform transition-all duration-700 group-hover:scale-[1.02] group-hover:rotate-2">
+                                <img src="{{ asset('graduated_student_hero.png') }}" alt="Successful Student" class="w-full h-full object-cover">
+                                
+                                <!-- Overlay Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                            </div>
+
+                            <!-- Decorative Floating Badges -->
+                            <div class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-xl animate-bounce-slow flex items-center space-x-3 border border-purple-100 z-20">
+                                <div class="bg-yellow-100 p-2 rounded-lg text-yellow-600">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Success Rate</p>
+                                    <p class="text-lg font-black text-purple-700">95%+</p>
+                                </div>
+                            </div>
+
+                            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl animate-float-medium flex items-center space-x-3 border border-orange-100 z-20">
+                                <div class="bg-orange-100 p-2 rounded-lg text-orange-600">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Alumni Network</p>
+                                    <p class="text-lg font-black text-orange-700">10k+</p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Floating elements around main graphic -->
-                        <div class="absolute -top-4 -right-4 w-8 h-8 sm:-top-6 sm:-right-6 sm:w-16 sm:h-16 bg-yellow-300/30 rounded-full animate-ping"></div>
-                        <div class="absolute -bottom-4 -left-4 w-8 h-8 sm:-bottom-6 sm:-left-6 sm:w-16 sm:h-16 bg-purple-300/30 rounded-lg animate-pulse"></div>
-                        <div class="absolute top-1/2 -left-6 w-6 h-6 sm:top-1/2 sm:-left-10 sm:w-12 sm:h-12 bg-pink-300/30 rounded-full animate-bounce"></div>
-                        <div class="absolute -top-2 left-1/2 w-5 h-5 sm:-top-4 sm:left-1/2 sm:w-10 sm:h-10 bg-orange-300/30 rounded-full animate-pulse animation-delay-2000"></div>
                     </div>
                 </div>
             </div>
@@ -290,8 +448,64 @@
         </div>
     </div>
 
+    <!-- Courses Section (Popular Programs) -->
+    <div id="explore" class="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Popular Programs</h2>
+                <p class="mt-4 text-xl text-gray-600">Discover our most sought-after courses</p>
+                <div class="mt-2 w-24 h-1 bg-gradient-to-r from-orange-500 via-yellow-500 to-green-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 course-container">
+                {{-- Debug: Total courses: {{ $courses->count() }} --}}
+                @forelse($courses as $course)
+                <div class="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-orange-100 course-card">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">{{ $course->name }}</h3>
+                            <p class="text-sm text-orange-600 font-medium mt-1">{{ $course->department->name }}</p>
+                        </div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 border border-blue-200">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            {{ ucfirst($course->course_type) }}
+                        </span>
+                    </div>
+                    <p class="mt-3 text-gray-600 text-sm leading-relaxed">{{ Str::limit($course->description, 80) }}</p>
+                    <div class="mt-4 grid grid-cols-2 gap-4 text-sm">
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <span class="text-orange-700 font-medium">Duration:</span>
+                            <span class="font-bold text-orange-900 ml-1">{{ $course->duration }} years</span>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <span class="text-green-700 font-medium">Fees:</span>
+                            <span class="font-bold text-green-900 ml-1">₹{{ number_format($course->fees) }}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        @if($course->total_seats && $course->total_seats > 0)
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style="width: {{ ($course->available_seats / $course->total_seats) * 100 }}%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600 mt-2 inline-block">Available Seats: {{ $course->available_seats }}/{{ $course->total_seats }}</span>
+                        @else
+                        <span class="text-sm text-gray-600 mt-2 inline-block">Seats: Not specified</span>
+                        @endif
+                    </div>
+                </div>
+                @empty
+                <div class="col-12 text-center py-5">
+                    <h3 class="text-gray-500">No courses available at the moment</h3>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
     <!-- Departments Section -->
-    <div id="explore" class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+    <div id="departments" class="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center animate-fade-in">
                 <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Our Departments</h2>
@@ -347,121 +561,784 @@
         </div>
     </div>
 
-    <!-- Courses Section -->
-    <div class="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center animate-fade-in">
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Popular Programs</h2>
-                <p class="mt-4 text-xl text-gray-600">Discover our most sought-after courses</p>
-                <div class="mt-2 w-24 h-1 bg-gradient-to-r from-orange-500 via-yellow-500 to-green-500 mx-auto rounded-full"></div>
+    <!-- Alumni Section -->
+    <div class="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0">
+            <div class="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+            <div class="absolute top-10 right-10 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-10 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
+                    <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">Our Distinguished Alumni</span>
+                </h2>
+                <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">Celebrating the success stories of our graduates who are making a difference worldwide</p>
+                <div class="mt-4 w-32 h-1.5 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 mx-auto rounded-full"></div>
             </div>
 
-            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 course-container">
-                {{-- Debug: Total courses: {{ $courses->count() }} --}}
-                @forelse($courses as $course)
-                <div class="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-orange-100 course-card">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">{{ $course->name }}</h3>
-                            <p class="text-sm text-orange-600 font-medium mt-1">{{ $course->department->name }}</p>
+            <div class="flex overflow-hidden alumni-container" id="alumni-scroll-container">
+                <div class="flex space-x-8 animate-scroll-alumni" id="alumni-scroll-content">
+                <!-- Alumni Card 1 -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-purple-500/30 group-hover:scale-[1.02]">
+                        <!-- Large Image Container -->
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('neeta-lulla.png') }}" alt="Neeta Lulla" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <!-- Overlay gradient at bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <!-- Year badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Class of 2018
+                            </div>
                         </div>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 border border-blue-200">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
-                            {{ ucfirst($course->course_type) }}
-                        </span>
-                    </div>
-                    <p class="mt-3 text-gray-600 text-sm leading-relaxed">{{ Str::limit($course->description, 80) }}</p>
-                    <div class="mt-4 grid grid-cols-2 gap-4 text-sm">
-                        <div class="bg-orange-50 p-3 rounded-lg">
-                            <span class="text-orange-700 font-medium">Duration:</span>
-                            <span class="font-bold text-orange-900 ml-1">{{ $course->duration }} years</span>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Neeta Lulla</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300 mb-3">Costume Designer</p>
+                                
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Department</p>
+                                            <p class="text-white font-semibold">Computer Science & Engineering</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-purple-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Academy Award-winning costume designer for Devdas, Baahubali</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quote -->
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT gave me the creative foundation to design for cinema's greatest epics."</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-green-50 p-3 rounded-lg">
-                            <span class="text-green-700 font-medium">Fees:</span>
-                            <span class="font-bold text-green-900 ml-1">₹{{ number_format($course->fees) }}</span>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        @if($course->total_seats && $course->total_seats > 0)
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style="width: {{ ($course->available_seats / $course->total_seats) * 100 }}%"></div>
-                        </div>
-                        <span class="text-sm text-gray-600 mt-2 inline-block">Available Seats: {{ $course->available_seats }}/{{ $course->total_seats }}</span>
-                        @else
-                        <span class="text-sm text-gray-600 mt-2 inline-block">Seats: Not specified</span>
-                        @endif
                     </div>
                 </div>
-                @empty
-                <div class="col-12 text-center py-5">
-                    <h3 class="text-gray-500">No courses available at the moment</h3>
+
+                <!-- Alumni Card 2 -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-pink-500/30 group-hover:scale-[1.02]">
+                        <!-- Large Image Container -->
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-rose-500 to-red-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('anita-dongre.png') }}" alt="Anita Dongre" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <!-- Overlay gradient at bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <!-- Year badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-pink-400 to-rose-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Class of 2019
+                            </div>
+                        </div>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Anita Dongre</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-300 mb-3">Fashion Designer</p>
+                                
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-pink-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Department</p>
+                                            <p class="text-white font-semibold">Fashion Design & Textiles</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-rose-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Founded global fashion brand, dressed celebrities worldwide</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quote -->
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"My journey from SNDT to building a global fashion empire was fueled by passion and perseverance."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                @endforelse
+
+                <!-- Alumni Card 3 -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-green-500/30 group-hover:scale-[1.02]">
+                        <!-- Large Image Container -->
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('eka-lakhani.png') }}" alt="Eka Lakhani" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <!-- Overlay gradient at bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <!-- Year badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Class of 2017
+                            </div>
+                        </div>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Eka Lakhani</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-emerald-300 mb-3">Costume Designer</p>
+                                
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Department</p>
+                                            <p class="text-white font-semibold">Electronics Engineering</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Renowned for Bollywood film costumes and contemporary fashion design</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quote -->
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT taught me that creativity and hard work can transform dreams into reality."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 4 -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-amber-500/30 group-hover:scale-[1.02]">
+                        <!-- Large Image Container -->
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi-sinha.png') }}" alt="Sonakshi Sinha" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <!-- Overlay gradient at bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <!-- Year badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Sonakshi Sinha</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-300 mb-3">Actress</p>
+                                
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Bollywood Cinema & Entertainment</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-orange-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Award-winning actress in Dabangg, Lootera & more</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quote -->
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT empowered me to pursue my dreams with confidence and grace."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 5 -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-cyan-500/30 group-hover:scale-[1.02]">
+                        <!-- Large Image Container -->
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi raaj.png') }}" alt="Sonaakshi Raaj" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <!-- Overlay gradient at bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <!-- Year badge -->
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Sonaakshi Raaj</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 mb-3">Fashion Designer</p>
+                                
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-cyan-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Fashion Design & Styling</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Celebrity fashion designer and style icon</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quote -->
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT shaped my creative vision and inspired me to make fashion accessible."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DUPLICATE CARDS FOR SEAMLESS LOOP -->
+                <!-- Alumni Card 1 (Duplicate) -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-purple-500/30 group-hover:scale-[1.02]">
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('neeta-lulla.png') }}" alt="Neeta Lulla" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-400 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Neeta Lulla</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300 mb-3">Costume Designer</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Costume Design for Cinema</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-purple-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Academy Award-winning costume designer for Devdas, Baahubali</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT gave me the creative foundation to design for cinema's greatest epics."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 2 (Duplicate) -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-pink-500/30 group-hover:scale-[1.02]">
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-pink-400 via-rose-500 to-red-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('anita-dongre.png') }}" alt="Anita Dongre" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-pink-400 to-rose-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Anita Dongre</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-300 mb-3">Fashion Designer</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-pink-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Fashion Design & Textiles</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-rose-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Founded global fashion brand, dressed celebrities worldwide</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"My journey from SNDT to building a global fashion empire was fueled by passion and perseverance."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 3 (Duplicate) -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-green-500/30 group-hover:scale-[1.02]">
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('eka-lakhani.png') }}" alt="Eka Lakhani" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Eka Lakhani</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-emerald-300 mb-3">Costume Designer</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Bollywood Costume Design</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Renowned for Bollywood film costumes and contemporary fashion design</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT taught me that creativity and hard work can transform dreams into reality."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 4 (Duplicate) -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-amber-500/30 group-hover:scale-[1.02]">
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi-sinha.png') }}" alt="Sonakshi Sinha" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Sonakshi Sinha</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-300 mb-3">Actress</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Bollywood Cinema & Entertainment</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-orange-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Award-winning actress in Dabangg, Lootera & more</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT empowered me to pursue my dreams with confidence and grace."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni Card 5 (Duplicate) -->
+                <div class="group relative alumni-card snap-center flex-shrink-0 w-96">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl transition-all duration-500 group-hover:shadow-cyan-500/30 group-hover:scale-[1.02]">
+                        <div class="relative h-80 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-500"></div>
+                            <div class="absolute inset-0 flex items-end justify-center">
+                                <img src="{{ asset('sonakshi raaj.png') }}" alt="Sonaakshi Raaj" class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                Notable Alumni
+                            </div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-12 left-6">
+                                <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl border-4 border-slate-900">
+                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-white mb-1">Sonaakshi Raaj</h3>
+                                <p class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 mb-3">Fashion Designer</p>
+                                <div class="space-y-3 mt-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-cyan-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.5c1.175 0 2.278-.229 3.286-.638a8.998 8.998 0 00-2.536-1.862 1 1 0 01-.75 1.5c-.553 0-1.09.048-1.616.134A7.002 7.002 0 009.3 16.5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Field</p>
+                                            <p class="text-white font-semibold">Fashion Design & Styling</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mt-1">
+                                            <svg class="w-4 h-4 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-300 font-medium">Achievement</p>
+                                            <p class="text-white font-semibold">Celebrity fashion designer and style icon</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <p class="text-sm text-gray-300 italic">"SNDT shaped my creative vision and inspired me to make fashion accessible."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Faculty Section -->
-    <div class="py-16 bg-gradient-to-br from-green-50 via-teal-50 to-cyan-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center animate-fade-in">
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Our Distinguished Faculty</h2>
-                <p class="mt-4 text-xl text-gray-600">Learn from experienced professionals and scholars</p>
-                <div class="mt-2 w-24 h-1 bg-gradient-to-r from-green-500 via-teal-500 to-cyan-500 mx-auto rounded-full"></div>
+    <style>
+        @keyframes scrollAlumni {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .animate-scroll-alumni {
+            animation: scrollAlumni 40s linear infinite;
+        }
+        .animate-scroll-alumni:hover {
+            animation-play-state: paused;
+        }
+    </style>
+
+    <!-- Top Placement Partners Section -->
+    <div class="py-16 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl gradient-text">Our Top Placement Partners</h2>
+                <p class="mt-4 text-xl text-gray-600">Our students are placed in world-class organizations</p>
+                <div class="mt-2 w-24 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 mx-auto rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="relative flex overflow-hidden group">
+            <div class="flex animate-marquee py-4">
+                <!-- First set of logos -->
+                <div class="flex shrink-0 items-center space-x-12">
+                    <img src="{{ asset('our-partners/anita_dongre-CCyncElf.jpg') }}" alt="Anita Dongre" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/artemis-DJa-OVe6.jpg') }}" alt="Artemis" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/brij-CTe-6HBg.jpg') }}" alt="Brij" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/caratlane-DiEKaPUF.png') }}" alt="CaratLane" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/f_s_peacock-ChlNzK-9 (1).jpg') }}" alt="F.S. Peacock" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/itc_hotels-DtkmkMTw.jpg') }}" alt="ITC Hotels" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/lnt-BQr1LGxt.jpg') }}" alt="L&T" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/purple_style_labs-PY9EA28_.jpg') }}" alt="Purple Style Labs" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/reliance-BIBBEdiI.png') }}" alt="Reliance" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/siemens-enSDzWct.jpg') }}" alt="Siemens" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/tfs-bqyR2Sdk.png') }}" alt="TFS" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/zevar-DkeJcL4X.png') }}" alt="Zevar" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                </div>
+                <!-- Second set of logos for seamless loop -->
+                <div class="flex shrink-0 items-center space-x-12">
+                    <img src="{{ asset('our-partners/anita_dongre-CCyncElf.jpg') }}" alt="Anita Dongre" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/artemis-DJa-OVe6.jpg') }}" alt="Artemis" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/brij-CTe-6HBg.jpg') }}" alt="Brij" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/caratlane-DiEKaPUF.png') }}" alt="CaratLane" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/f_s_peacock-ChlNzK-9 (1).jpg') }}" alt="F.S. Peacock" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/itc_hotels-DtkmkMTw.jpg') }}" alt="ITC Hotels" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/lnt-BQr1LGxt.jpg') }}" alt="L&T" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/purple_style_labs-PY9EA28_.jpg') }}" alt="Purple Style Labs" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/reliance-BIBBEdiI.png') }}" alt="Reliance" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/siemens-enSDzWct.jpg') }}" alt="Siemens" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/tfs-bqyR2Sdk.png') }}" alt="TFS" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                    <img src="{{ asset('our-partners/zevar-DkeJcL4X.png') }}" alt="Zevar" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 transform hover:scale-110">
+                </div>
+            </div>
+            
+            <!-- Gradient Overlays for smooth fading at edges -->
+            <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
+            <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+        </div>
+    </div>
+
+
+    <!-- Student Testimonial Section -->
+    <div class="py-24 bg-white overflow-hidden relative">
+        <!-- Floating background particles -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full opacity-20 animate-float-pattern"></div>
+            <div class="absolute top-40 right-20 w-6 h-6 bg-purple-400 rounded-full opacity-20 animate-float-pattern-reverse"></div>
+            <div class="absolute bottom-20 left-1/4 w-3 h-3 bg-yellow-400 rounded-full opacity-20 animate-float-pattern"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-6xl font-black text-[#000080] mb-4 tracking-tight animate-section">
+                    Our Students Speak
+                </h2>
+                <div class="mt-2 w-32 h-2 bg-gradient-to-r from-[#000080] to-blue-500 mx-auto rounded-full animate-fade"></div>
             </div>
 
-            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 faculty-container">
-                @foreach($faculty as $member)
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-green-100 faculty-card">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 relative">
-                                <div class="h-20 w-20 rounded-2xl bg-gradient-to-r from-green-100 to-teal-100 flex items-center justify-center relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-teal-400 opacity-20"></div>
-                                    <span class="text-2xl font-bold text-green-600 relative z-10">
-                                        {{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}
-                                    </span>
-                                    <div class="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-bold text-gray-900">
-                                    {{ $member->first_name }} {{ $member->last_name }}
-                                </h3>
-                                <p class="text-sm text-green-600 font-bold">{{ $member->designation }}</p>
-                                <div class="mt-1 flex items-center">
-                                    <svg class="w-4 h-4 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    <span class="text-xs text-gray-500">Experienced Faculty</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 space-y-2">
-                            <div class="bg-green-50 p-3 rounded-lg">
-                                <p class="text-sm text-gray-700">
-                                    <span class="font-bold text-green-700">Department:</span> 
-                                    <span class="text-green-900">{{ $member->department->name }}</span>
-                                </p>
-                            </div>
-                            <div class="bg-teal-50 p-3 rounded-lg">
-                                <p class="text-sm text-gray-700">
-                                    <span class="font-bold text-teal-700">Specialization:</span> 
-                                    <span class="text-teal-900">{{ $member->specialization }}</span>
-                                </p>
-                            </div>
-                            <div class="bg-cyan-50 p-3 rounded-lg">
-                                <p class="text-sm text-gray-700">
-                                    <span class="font-bold text-cyan-700">Qualification:</span> 
-                                    <span class="text-cyan-900">{{ $member->qualification }}</span>
-                                </p>
-                            </div>
+            <div class="relative bg-white rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,128,0.15)] lg:flex items-stretch min-h-[650px] border border-blue-50/50 testimonial-card-3d">
+                <!-- Content Column -->
+                <div class="lg:w-3/5 p-10 lg:p-24 flex flex-col justify-center relative bg-gradient-to-br from-white to-blue-50/30">
+                    <div class="mb-10 font-serif opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="h-16 w-16 text-[#000080]" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] mb-10 animate-section">
+                        “A transformative journey at <span class="text-[#000080]">SNDT University</span>”
+                    </h3>
+                    
+                    <div class="space-y-8">
+                        <p class="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium animate-card">
+                            As an alumna of the Diploma in Electronics program at P.V. Polytechnic, I consider it one of my greatest achievements to have been admitted to this esteemed institution. 
+                        </p>
+                        <p class="text-xl md:text-2xl text-gray-600 leading-relaxed animate-card">
+                            The internships and continuous practical training have equipped me with invaluable knowledge and ignited a deep curiosity to keep learning.
+                        </p>
+                        <div class="pt-6 border-t border-blue-100 mt-8 animate-fade">
+                            <p class="text-lg md:text-xl text-[#000080] font-bold italic">
+                                "I am deeply grateful for the guidance and support I received throughout my journey at SNDT."
+                            </p>
                         </div>
                     </div>
                 </div>
-                @endforeach
+
+                <!-- Image Column -->
+                <div class="lg:w-2/5 relative bg-[#f0f4ff] flex items-end justify-center pt-20 lg:pt-0 overflow-hidden group">
+                    <!-- Dynamic Doodle Decorations -->
+                    <div class="absolute inset-0 z-0 pointer-events-none">
+                        <div class="absolute top-10 right-10 animate-float-pattern">
+                            <svg class="w-32 h-32 text-blue-200/50 rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354l1.107 3.18h3.344l-2.706 1.966 1.034 3.178-2.779-2.02-2.779 2.02 1.034-3.178-2.706-1.966h3.344l1.107-3.18z" />
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-40 left-10 animate-float-pattern-reverse">
+                            <svg class="w-24 h-24 text-purple-200/50 -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 002 2z" />
+                            </svg>
+                        </div>
+                        <!-- Artistic line decorations mimic doodles -->
+                        <svg class="absolute top-1/2 left-0 w-full h-full text-blue-100/40" viewBox="0 0 200 200" fill="none">
+                            <path d="M10 80 Q 50 10, 90 80 T 170 80" stroke="currentColor" stroke-width="3" stroke-dasharray="8 8" class="animate-float-pattern" />
+                            <path d="M20 150 Q 60 190, 100 150 T 180 150" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" class="animate-float-pattern-reverse" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 w-full h-full flex items-end px-6 lg:px-0">
+                        <img src="{{ asset('shivani-nikam.png') }}" alt="Shivani Nikam" class="w-full h-auto object-cover transform transition-all duration-1000 group-hover:scale-110 group-hover:translate-y-[-10px] origin-bottom scale-105 filter drop-shadow-2xl">
+                        
+                        <!-- Name Badge -->
+                        <div class="absolute bottom-10 left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-[-15%] bg-[#000080] text-white px-12 py-5 rounded-full text-3xl font-black shadow-[0_20px_40px_rgba(0,0,128,0.4)] whitespace-nowrap border-4 border-white transition-all duration-500 hover:scale-110 badge-shine group-hover:bottom-14">
+                            Shivani Nikam
+                            <span class="block text-sm font-medium text-blue-200 tracking-wider uppercase mt-1">Electronics Engineering</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -622,6 +1499,15 @@
                     scale: 0.95
                 });
 
+                ScrollReveal().reveal('.alumni-card', {
+                    origin: 'bottom',
+                    distance: '25px',
+                    duration: 700,
+                    interval: 100,
+                    opacity: 0,
+                    scale: 0.95
+                });
+
                 ScrollReveal().reveal('.cta-content', {
                     origin: 'left',
                     distance: '40px',
@@ -641,5 +1527,52 @@
         });
     @include('partials.scripts')
     @include('partials.footer')
+    <!-- Golden Jubilee Button -->
+    <div class="golden-jubilee-btn shadow-2xl" id="goldenJubileeBtn" title="Celebrate our Golden Jubilee!">
+        <img src="{{ asset('goldan_jubli.png') }}" alt="Golden Jubilee" class="w-full h-full object-contain">
+        <div class="absolute inset-0 rounded-full animate-pulse-slow bg-yellow-400 opacity-20 blur-xl"></div>
+    </div>
+
+    <!-- Jubilee Modal -->
+    <div class="jubilee-modal" id="jubileeModal">
+        <div class="close-jubilee" id="closeJubileeModal">&times;</div>
+        <img src="{{ asset('goldan_jubli.png') }}" alt="Golden Jubilee Full Content" class="shadow-2xl">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jubileeBtn = document.getElementById('goldenJubileeBtn');
+            const jubileeModal = document.getElementById('jubileeModal');
+            const closeJubilee = document.getElementById('closeJubileeModal');
+
+            if (jubileeBtn && jubileeModal) {
+                jubileeBtn.addEventListener('click', () => {
+                    jubileeModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                const hideJubileeModal = () => {
+                    jubileeModal.classList.remove('active');
+                    setTimeout(() => {
+                        if (!jubileeModal.classList.contains('active')) {
+                            document.body.style.overflow = '';
+                        }
+                    }, 500);
+                };
+
+                closeJubilee.addEventListener('click', hideJubileeModal);
+                jubileeModal.addEventListener('click', (e) => {
+                    if (e.target === jubileeModal) hideJubileeModal();
+                });
+
+                // Escape key support
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && jubileeModal.classList.contains('active')) {
+                        hideJubileeModal();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
