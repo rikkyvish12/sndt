@@ -78,4 +78,20 @@ class PublicController extends Controller
         
         return view('public.department', compact('department', 'departments', 'facultyCount', 'coursesCount', 'dynamicContents', 'announcements'));
     }
+
+    public function course($id)
+    {
+        $course = Course::where('id', $id)
+            ->where('is_active', true)
+            ->with('department')
+            ->firstOrFail();
+            
+        $departments = Department::where('is_active', true)->count();
+        $facultyCount = Faculty::where('is_active', true)->count();
+        $coursesCount = Course::where('is_active', true)->count();
+        
+        $announcements = Announcement::getActiveAnnouncements();
+        
+        return view('public.course', compact('course', 'departments', 'facultyCount', 'coursesCount', 'announcements'));
+    }
 }

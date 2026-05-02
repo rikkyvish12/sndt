@@ -21,6 +21,7 @@ Route::get('/', [PublicController::class, 'index'])->name('welcome');
 Route::get('/about', [PublicController::class, 'about'])->name('about');
 Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
 Route::get('/department/{code}', [PublicController::class, 'department'])->name('department.show');
+Route::get('/course/{id}', [PublicController::class, 'course'])->name('course.show');
 
 // Enquiry route (public)
 Route::post('/enquiry', [EnquiryController::class, 'store'])->name('enquiry.store');

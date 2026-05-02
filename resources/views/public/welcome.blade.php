@@ -460,7 +460,7 @@
             <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 course-container">
                 {{-- Debug: Total courses: {{ $courses->count() }} --}}
                 @forelse($courses as $course)
-                <div class="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-orange-100 course-card">
+                <a href="{{ route('course.show', $course->id) }}" class="block bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-orange-100 course-card">
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">{{ $course->name }}</h3>
@@ -494,7 +494,7 @@
                         <span class="text-sm text-gray-600 mt-2 inline-block">Seats: Not specified</span>
                         @endif
                     </div>
-                </div>
+                </a>
                 @empty
                 <div class="col-12 text-center py-5">
                     <h3 class="text-gray-500">No courses available at the moment</h3>
