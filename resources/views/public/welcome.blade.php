@@ -515,7 +515,7 @@
 
             <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 department-container">
                 @foreach($departments as $department)
-                <a href="{{ route('department.show', $department->code) }}" class="block bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-purple-100 department-card">
+                <a href="{{ route('department.show', $department->code) }}" class="block bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 card-hover border border-purple-100 department-card {{ $loop->index >= 6 ? 'hidden extra-department' : '' }}">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 relative">
@@ -550,14 +550,31 @@
                 @endforeach
             </div>
 
-            <div class="mt-12 text-center">
-                <a href="{{ route('welcome') }}#explore" class="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover-grow shine-effect">
+            @if($departments->count() > 6)
+            <div class="mt-12 text-center" id="explore-departments-wrapper">
+                <button type="button" id="explore-departments-btn" class="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover-grow shine-effect cursor-pointer">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                     Explore Departments
-                </a>
+                </button>
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const exploreBtn = document.getElementById('explore-departments-btn');
+                    if (exploreBtn) {
+                        exploreBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            document.querySelectorAll('.extra-department').forEach(el => {
+                                el.classList.remove('hidden');
+                                el.classList.add('animate-fade-in');
+                            });
+                            document.getElementById('explore-departments-wrapper').style.display = 'none';
+                        });
+                    }
+                });
+            </script>
+            @endif
         </div>
     </div>
 
