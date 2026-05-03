@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\DepartmentContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class DepartmentContentController extends Controller
 {
@@ -65,8 +66,10 @@ class DepartmentContentController extends Controller
         if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $image) {
-                $path = $image->store('department-content/' . $departmentId . '/' . $validated['section'], 'public');
-                $images[] = $path;
+                $filename = time() . '_' . $image->getClientOriginalName();
+                $subDir = 'department-content/' . $departmentId . '/' . $validated['section'];
+                $image->move(public_path($subDir), $filename);
+                $images[] = $subDir . '/' . $filename;
             }
             $extraData['images'] = $images;
         }
@@ -132,8 +135,8 @@ class DepartmentContentController extends Controller
         // Handle image removal
         if (!empty($validated['remove_images'])) {
             foreach ($validated['remove_images'] as $imagePath) {
-                if (Storage::disk('public')->exists($imagePath)) {
-                    Storage::disk('public')->delete($imagePath);
+                if (File::exists(public_path($imagePath))) {
+                    File::delete(public_path($imagePath));
                 }
                 // Remove from extra_data
                 if (isset($extraData['images'])) {
@@ -152,8 +155,10 @@ class DepartmentContentController extends Controller
             }
             
             foreach ($request->file('images') as $image) {
-                $path = $image->store('department-content/' . $departmentId . '/' . $validated['section'], 'public');
-                $extraData['images'][] = $path;
+                $filename = time() . '_' . $image->getClientOriginalName();
+                $subDir = 'department-content/' . $departmentId . '/' . $content->section;
+                $image->move(public_path($subDir), $filename);
+                $extraData['images'][] = $subDir . '/' . $filename;
             }
         }
         
