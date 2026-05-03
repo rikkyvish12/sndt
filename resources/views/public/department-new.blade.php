@@ -194,11 +194,15 @@
                     @if($department->headOfDepartment)
                     <div class="mt-8 bg-white rounded-2xl p-8 shadow-lg">
                         <div class="flex flex-col md:flex-row items-center gap-6">
-                            <div class="h-32 w-32 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center">
-                                <svg class="h-16 w-16 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                            </div>
+                            @if($department->headOfDepartment->photo)
+                                <img src="{{ asset('storage/' . $department->headOfDepartment->photo) }}" alt="{{ $department->headOfDepartment->first_name }}" class="h-32 w-32 rounded-full object-cover">
+                            @else
+                                <div class="h-32 w-32 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center">
+                                    <svg class="h-16 w-16 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                            @endif
                             <div class="text-center md:text-left">
                                 <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $department->headOfDepartment->first_name }} {{ $department->headOfDepartment->last_name }}</h3>
                                 <p class="text-purple-600 font-medium">Head of Department</p>
@@ -233,11 +237,15 @@
                         @foreach($department->faculty as $faculty)
                         <div class="bg-white rounded-2xl shadow-lg p-6">
                             <div class="flex items-center mb-4">
-                                <div class="h-16 w-16 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mr-4">
-                                    <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
+                                @if($faculty->photo)
+                                    <img src="{{ asset('storage/' . $faculty->photo) }}" alt="{{ $faculty->first_name }}" class="h-16 w-16 rounded-full object-cover mr-4">
+                                @else
+                                    <div class="h-16 w-16 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mr-4">
+                                        <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                @endif
                                 <div>
                                     <h3 class="text-xl font-bold text-gray-900">{{ $faculty->first_name }} {{ $faculty->last_name }}</h3>
                                     <p class="text-purple-600 font-medium">{{ $faculty->designation }}</p>
