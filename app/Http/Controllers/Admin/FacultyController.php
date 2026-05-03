@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Faculty;
 use App\Models\Department;
+use Illuminate\Support\Facades\File;
 
 class FacultyController extends Controller
 {
@@ -79,8 +80,10 @@ class FacultyController extends Controller
 
         // Handle photo upload
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('faculty', 'public');
-            $facultyData['photo'] = $path;
+            $image = $request->file('photo');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('faculty'), $filename);
+            $facultyData['photo'] = 'faculty/' . $filename;
         }
 
         $faculty = Faculty::create($facultyData);
@@ -157,11 +160,13 @@ class FacultyController extends Controller
         // Handle photo upload
         if ($request->hasFile('photo')) {
             // Delete old photo if exists
-            if ($faculty->photo) {
-                \Storage::disk('public')->delete($faculty->photo);
+            if ($faculty->photo && File::exists(public_path($faculty->photo))) {
+                File::delete(public_path($faculty->photo));
             }
-            $path = $request->file('photo')->store('faculty', 'public');
-            $facultyData['photo'] = $path;
+            $image = $request->file('photo');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('faculty'), $filename);
+            $facultyData['photo'] = 'faculty/' . $filename;
         }
 
         $faculty->update($facultyData);
@@ -185,8 +190,8 @@ class FacultyController extends Controller
         $faculty = Faculty::findOrFail($id);
 
         // Delete photo if exists
-        if ($faculty->photo) {
-            \Storage::disk('public')->delete($faculty->photo);
+        if ($faculty->photo && File::exists(public_path($faculty->photo))) {
+            File::delete(public_path($faculty->photo));
         }
 
         $faculty->delete();
