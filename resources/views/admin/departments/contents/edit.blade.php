@@ -53,6 +53,31 @@
                         <label class="form-label"><i class="material-icons">rocket_launch</i> Mission</label>
                         <textarea name="extra_data[mission]" id="mission" rows="8" class="form-control rich-text-editor">{{ old('extra_data.mission', $extraData['mission'] ?? '') }}</textarea>
                     </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label"><i class="material-icons">image</i> Additional Images</label>
+                        <small class="text-muted d-block mb-2">Upload multiple images (JPG, PNG, GIF, WebP)</small>
+                        <input type="file" name="images[]" multiple="multiple" accept="image/*"
+                               class="form-control @error('images.*') is-invalid @enderror">
+                        
+                        @if(!empty($extraData['images']))
+                            <div class="mt-3">
+                                <label class="form-label">Current Images:</label>
+                                <div class="row g-2">
+                                    @foreach($extraData['images'] as $index => $image)
+                                        <div class="col-3 position-relative">
+                                            <img src="{{ asset('storage/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
+                                                <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div id="image-preview" class="mt-3 row g-2"></div>
+                    </div>
                 @elseif($content->section === 'po')
                     <div class="mb-4">
                         <label class="form-label"><i class="material-icons">assignment</i> Program Outcomes (PO)</label>
@@ -65,6 +90,31 @@
                     <div class="mb-4">
                         <label class="form-label"><i class="material-icons">emoji_objects</i> Program Educational Objectives (PEO)</label>
                         <textarea name="extra_data[peo]" id="peo" rows="8" class="form-control rich-text-editor">{{ old('extra_data.peo', $extraData['peo'] ?? '') }}</textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label"><i class="material-icons">image</i> Additional Images</label>
+                        <small class="text-muted d-block mb-2">Upload multiple images (JPG, PNG, GIF, WebP)</small>
+                        <input type="file" name="images[]" multiple="multiple" accept="image/*"
+                               class="form-control @error('images.*') is-invalid @enderror">
+                        
+                        @if(!empty($extraData['images']))
+                            <div class="mt-3">
+                                <label class="form-label">Current Images:</label>
+                                <div class="row g-2">
+                                    @foreach($extraData['images'] as $index => $image)
+                                        <div class="col-3 position-relative">
+                                            <img src="{{ asset('storage/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
+                                                <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div id="image-preview" class="mt-3 row g-2"></div>
                     </div>
                 @elseif($content->section === 'gallery')
                     <div class="mb-4">
@@ -123,13 +173,38 @@
                         @endif
                         <div id="image-preview" class="mt-3 row g-2"></div>
                     </div>
-                @elseif(in_array($content->section, ['hod', 'faculty', 'courses', 'laboratory', 'mou', 'industry', 'alumnae', 'committee', 'social']))
+                @elseif(in_array($content->section, ['hod', 'faculty', 'courses', 'laboratory', 'mou', 'industry', 'alumnae', 'committee', 'social', 'about']))
                     <div class="mb-4">
                         <label class="form-label"><i class="material-icons">subject</i> Content</label>
                         <textarea name="content" id="content" rows="10" class="form-control rich-text-editor">{{ old('content', $content->content ?? '') }}</textarea>
                         @error('content')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label"><i class="material-icons">image</i> Additional Images</label>
+                        <small class="text-muted d-block mb-2">Upload multiple images (JPG, PNG, GIF, WebP)</small>
+                        <input type="file" name="images[]" multiple="multiple" accept="image/*"
+                               class="form-control @error('images.*') is-invalid @enderror">
+                        
+                        @if(!empty($extraData['images']))
+                            <div class="mt-3">
+                                <label class="form-label">Current Images:</label>
+                                <div class="row g-2">
+                                    @foreach($extraData['images'] as $index => $image)
+                                        <div class="col-3 position-relative">
+                                            <img src="{{ asset('storage/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
+                                                <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div id="image-preview" class="mt-3 row g-2"></div>
                     </div>
                 @endif
             </div>

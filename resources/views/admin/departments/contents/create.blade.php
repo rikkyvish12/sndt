@@ -255,7 +255,22 @@ const sectionFields = {
     
     // Update dynamic fields
     if (sectionFields[section]) {
-        dynamicFields.innerHTML = sectionFields[section].html;
+        let html = sectionFields[section].html;
+        
+        // Add multiple images upload field for sections that don't have it explicitly
+        if (section !== 'gallery' && section !== 'events') {
+            html += `
+            <div class="mb-4">
+                <label class="form-label"><i class="material-icons">image</i> Additional Images</label>
+                <small class="text-muted d-block mb-2">Upload multiple images (JPG, PNG, GIF, WebP)</small>
+                <input type="file" name="images[]" multiple="multiple" accept="image/*"
+                       class="form-control">
+                <div id="image-preview" class="mt-3 row g-2"></div>
+            </div>
+            `;
+        }
+        
+        dynamicFields.innerHTML = html;
         
         // Initialize CKEditor for rich text editors
         setTimeout(() => {
