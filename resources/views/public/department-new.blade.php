@@ -195,7 +195,7 @@
                     <div class="mt-8 bg-white rounded-2xl p-8 shadow-lg">
                         <div class="flex flex-col md:flex-row items-center gap-6">
                             @if($department->headOfDepartment->photo)
-                                <img src="{{ asset($department->headOfDepartment->photo) }}" alt="{{ $department->headOfDepartment->first_name }}" class="h-32 w-32 rounded-full object-cover">
+                                <img src="{{ asset('public/' . $department->headOfDepartment->photo) }}" alt="{{ $department->headOfDepartment->first_name }}" class="h-32 w-32 rounded-full object-cover">
                             @else
                                 <div class="h-32 w-32 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 flex items-center justify-center">
                                     <svg class="h-16 w-16 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -238,7 +238,7 @@
                         <div class="bg-white rounded-2xl shadow-lg p-6">
                             <div class="flex items-center mb-4">
                                 @if($faculty->photo)
-                                    <img src="{{ asset($faculty->photo) }}" alt="{{ $faculty->first_name }}" class="h-16 w-16 rounded-full object-cover mr-4">
+                                    <img src="{{ asset('public/' . $faculty->photo) }}" alt="{{ $faculty->first_name }}" class="h-16 w-16 rounded-full object-cover mr-4">
                                 @else
                                     <div class="h-16 w-16 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center mr-4">
                                         <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
@@ -330,10 +330,10 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach($galleryExtraData['images'] as $image)
                         <div class="overflow-hidden rounded-xl shadow-lg">
-                            <img src="{{ asset($image) }}"
+                            <img src="{{ asset('public/' . $image) }}"
                                 alt="Gallery Image"
                                 class="w-full h-64 object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
-                                onclick="openLightbox('{{ asset($image) }}')">
+                                onclick="openLightbox('{{ asset('public/' . $image) }}')">
                         </div>
                         @endforeach
                     </div>
@@ -364,10 +364,10 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach($eventsExtraData['images'] as $image)
                         <div class="overflow-hidden rounded-xl shadow-lg">
-                            <img src="{{ asset($image) }}"
+                            <img src="{{ asset('public/' . $image) }}"
                                 alt="Event Image"
                                 class="w-full h-64 object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
-                                onclick="openLightbox('{{ asset($image) }}')">
+                                onclick="openLightbox('{{ asset('public/' . $image) }}')">
                         </div>
                         @endforeach
                     </div>

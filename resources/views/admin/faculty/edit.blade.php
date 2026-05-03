@@ -42,7 +42,7 @@
                              style="width:100px;height:100px;flex-shrink:0;">
                             @if($faculty->photo)
                                 <img id="photoPreview"
-                                     src="{{ asset($faculty->photo) }}"
+                                     src="{{ asset('public/' . $faculty->photo) }}"
                                      alt="{{ $faculty->first_name }}"
                                      style="width:100%;height:100%;object-fit:cover;">
                             @else
