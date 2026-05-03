@@ -66,7 +66,7 @@
                                 <div class="row g-2">
                                     @foreach($extraData['images'] as $index => $image)
                                         <div class="col-3 position-relative">
-                                            <img src="{{ asset($image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img src="{{ asset('public/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
                                             <div class="form-check mt-1">
                                                 <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
                                                 <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
@@ -104,7 +104,7 @@
                                 <div class="row g-2">
                                     @foreach($extraData['images'] as $index => $image)
                                         <div class="col-3 position-relative">
-                                            <img src="{{ asset($image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img src="{{ asset('public/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
                                             <div class="form-check mt-1">
                                                 <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
                                                 <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
@@ -132,7 +132,7 @@
                                 <div class="row g-2">
                                     @foreach($extraData['images'] as $index => $image)
                                         <div class="col-3 position-relative">
-                                            <img src="{{ asset($image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img src="{{ asset('public/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
                                             <div class="form-check mt-1">
                                                 <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
                                                 <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
@@ -161,7 +161,7 @@
                                 <div class="row g-2">
                                     @foreach($extraData['images'] as $index => $image)
                                         <div class="col-3 position-relative">
-                                            <img src="{{ asset($image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img src="{{ asset('public/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
                                             <div class="form-check mt-1">
                                                 <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
                                                 <label class="form-check-label" for="remove_{{ $index }}">Remove</label>
@@ -194,7 +194,7 @@
                                 <div class="row g-2">
                                     @foreach($extraData['images'] as $index => $image)
                                         <div class="col-3 position-relative">
-                                            <img src="{{ asset($image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img src="{{ asset('public/' . $image) }}" class="img-thumbnail" style="height: 100px; width: 100%; object-fit: cover;">
                                             <div class="form-check mt-1">
                                                 <input class="form-check-input" type="checkbox" name="remove_images[]" value="{{ $image }}" id="remove_{{ $index }}">
                                                 <label class="form-check-label" for="remove_{{ $index }}">Remove</label>

@@ -81,7 +81,7 @@
                             <td>{{ $member->id }}</td>
                             <td>
                                 @if($member->photo)
-                                    <img src="{{ asset($member->photo) }}"
+                                    <img src="{{ asset('public/' . $member->photo) }}"
                                          alt="{{ $member->first_name }}"
                                          class="rounded-circle"
                                          style="width:42px;height:42px;object-fit:cover;border:2px solid #dee2e6;">
