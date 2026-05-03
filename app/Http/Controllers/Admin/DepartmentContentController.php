@@ -61,8 +61,8 @@ class DepartmentContentController extends Controller
         // Handle extra_data
         $extraData = $validated['extra_data'] ?? [];
         
-        // Handle file uploads for gallery and events
-        if (in_array($validated['section'], ['gallery', 'events']) && $request->hasFile('images')) {
+        // Handle file uploads for any section
+        if ($request->hasFile('images')) {
             $images = [];
             foreach ($request->file('images') as $image) {
                 $path = $image->store('department-content/' . $departmentId . '/' . $validated['section'], 'public');
@@ -76,7 +76,7 @@ class DepartmentContentController extends Controller
             'section' => $validated['section'],
             'content' => $validated['content'] ?? null,
             'extra_data' => !empty($extraData) ? $extraData : null,
-            'is_active' => $validated['is_active'] ?? true,
+            'is_active' => $request->has('is_active'),
             'order' => $validated['order'] ?? 0,
         ]);
         
@@ -145,8 +145,8 @@ class DepartmentContentController extends Controller
             }
         }
         
-        // Handle new file uploads for gallery and events
-        if (in_array($validated['section'], ['gallery', 'events']) && $request->hasFile('images')) {
+        // Handle new file uploads for any section
+        if ($request->hasFile('images')) {
             if (!isset($extraData['images'])) {
                 $extraData['images'] = [];
             }
@@ -161,7 +161,7 @@ class DepartmentContentController extends Controller
         $updateData = [
             'section' => $validated['section'],
             'content' => $validated['content'] ?? $content->content,
-            'is_active' => $validated['is_active'] ?? $content->is_active,
+            'is_active' => $request->has('is_active'),
             'order' => $validated['order'] ?? $content->order,
         ];
         
