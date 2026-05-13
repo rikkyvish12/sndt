@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
     <script>
         tailwind.config = {
@@ -51,6 +51,23 @@
             }
         }
     </script>
+    <style>
+        /* Force WYSIWYG tables to not squish text infinitely */
+        .prose table {
+            min-width: max-content;
+            width: 100%;
+        }
+        .prose td, .prose th {
+            vertical-align: top;
+            padding: 1rem !important;
+            min-width: 200px; /* give each column enough breathing room */
+        }
+        .prose img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50 font-sans">
@@ -377,8 +394,8 @@
                     {{-- Alumnae Section --}}
                     @if($section === 'alumnae')
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl mb-8 text-center">Alumnae</h2>
-                    <div class="bg-white rounded-2xl shadow-xl p-8">
-                        <div class="prose max-w-none">
+                    <div class="bg-white rounded-2xl shadow-xl p-8 overflow-hidden">
+                        <div class="prose prose-lg max-w-none overflow-x-auto w-full prose-img:rounded-xl prose-img:shadow-md">
                             {!! $content->content !!}
                         </div>
                     </div>
