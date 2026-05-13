@@ -399,6 +399,30 @@
                     </div>
                     @endif
 
+                    {{-- Generic image display for any section that has uploaded images --}}
+                    {{-- (gallery and events handle their own images above, skip them here) --}}
+                    @if(!in_array($section, ['gallery', 'events']))
+                    @php
+                        $genericExtraData = is_array($content->extra_data)
+                            ? $content->extra_data
+                            : (json_decode($content->extra_data, true) ?? []);
+                    @endphp
+                    @if(!empty($genericExtraData['images']))
+                    <div class="mt-8">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            @foreach($genericExtraData['images'] as $image)
+                            <div class="overflow-hidden rounded-xl shadow-lg">
+                                <img src="{{ asset('public/' . $image) }}"
+                                    alt="{{ ucfirst($section) }} Image"
+                                    class="w-full h-64 object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
+                                    onclick="openLightbox('{{ asset('public/' . $image) }}')">
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                    @endif
+
                 </div>
             </section>
             @endforeach
