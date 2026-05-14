@@ -56,11 +56,85 @@
         .prose table {
             min-width: max-content;
             width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .prose thead {
+            background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #f97316 100%);
+        }
+        .prose thead th {
+            color: white !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1.25rem 1.5rem !important;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .prose thead th::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .prose tbody tr {
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        .prose tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        .prose tbody tr:nth-child(2) { animation-delay: 0.2s; }
+        .prose tbody tr:nth-child(3) { animation-delay: 0.3s; }
+        .prose tbody tr:nth-child(4) { animation-delay: 0.4s; }
+        .prose tbody tr:nth-child(5) { animation-delay: 0.5s; }
+        .prose tbody tr:nth-child(6) { animation-delay: 0.6s; }
+        .prose tbody tr:nth-child(7) { animation-delay: 0.7s; }
+        .prose tbody tr:nth-child(8) { animation-delay: 0.8s; }
+        .prose tbody tr:nth-child(9) { animation-delay: 0.9s; }
+        .prose tbody tr:nth-child(10) { animation-delay: 1s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .prose tbody tr:hover {
+            background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%);
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+        }
+        .prose tbody tr:nth-child(even) {
+            background-color: #faf5ff;
+        }
+        .prose tbody tr:nth-child(odd) {
+            background-color: #ffffff;
         }
         .prose td, .prose th {
             vertical-align: top;
-            padding: 1rem !important;
-            min-width: 200px; /* give each column enough breathing room */
+            padding: 1.25rem 1.5rem !important;
+            min-width: 200px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .prose tbody td {
+            color: #374151;
+            font-weight: 500;
         }
         .prose img {
             max-width: 100%;
@@ -107,27 +181,74 @@
                 
                 <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
                     <div class="text-center">
-                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
+                        <!-- Badge -->
+                        <div class="inline-flex items-center px-6 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full mb-6">
+                            <svg class="w-5 h-5 mr-2 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            @php
+                                $currentYear = date('Y');
+                                $nextYear = $currentYear + 1;
+                                // If we're in the second half of the year, show next academic year
+                                if(date('n') >= 7) {
+                                    $admissionYear = ($currentYear + 1) . '-' . ($currentYear + 2);
+                                } else {
+                                    $admissionYear = $currentYear . '-' . $nextYear;
+                                }
+                            @endphp
+                            <span class="text-white font-semibold text-sm">Admissions Open {{ $admissionYear }}</span>
+                        </div>
+                        
+                        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in leading-tight">
                             {{ $department->name }}
                         </h1>
-                        <p class="text-xl md:text-2xl text-purple-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                        <p class="text-xl md:text-2xl text-purple-100 mb-8 max-w-4xl mx-auto leading-relaxed">
                             {{ $department->description }}
                         </p>
-                        <div class="flex flex-wrap justify-center gap-4 mt-8">
-                            <a href="#about-section" class="inline-flex items-center px-8 py-4 bg-white text-purple-700 font-semibold rounded-full hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        
+                        <!-- Quick Stats -->
+                        <div class="flex flex-wrap justify-center gap-6 mb-10">
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl px-6 py-4">
+                                <div class="text-3xl font-bold text-white">{{ $department->faculty->count() }}+</div>
+                                <div class="text-purple-100 text-sm font-medium">Expert Faculty</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl px-6 py-4">
+                                <div class="text-3xl font-bold text-white">{{ $department->courses->count() }}+</div>
+                                <div class="text-purple-100 text-sm font-medium">Programs</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl px-6 py-4">
+                                <div class="text-3xl font-bold text-white">95%</div>
+                                <div class="text-purple-100 text-sm font-medium">Placement Rate</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl px-6 py-4">
+                                <div class="text-3xl font-bold text-white">45+</div>
+                                <div class="text-purple-100 text-sm font-medium">Years Legacy</div>
+                            </div>
+                        </div>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a href="#courses-section" class="inline-flex items-center px-10 py-5 bg-white text-purple-700 font-bold text-lg rounded-full hover:bg-purple-50 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1">
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
-                                Learn More
+                                Explore Programs
                             </a>
-                            <a href="{{ route('contact') }}" class="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-purple-700 transition-all duration-300">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            <a href="{{ route('contact') }}" class="inline-flex items-center px-10 py-5 bg-transparent border-3 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-purple-700 transition-all duration-300 transform hover:-translate-y-1">
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
-                                Contact Us
+                                Apply Now
                             </a>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Wave Separator -->
+                <div class="absolute bottom-0 left-0 right-0">
+                    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
+                    </svg>
                 </div>
             </div>
 
@@ -189,37 +310,46 @@
                     {{-- About Section --}}
                     @if($section === 'about')
                     <div class="mb-12">
-                        <h2 class="text-4xl font-bold text-gray-900 mb-6 text-center">About the Department</h2>
-                        <div class="section-divider w-24 mx-auto mb-8"></div>
+                        <h2 class="text-5xl font-bold text-gray-900 mb-6 text-center">Why Choose {{ $department->name }}?</h2>
+                        <div class="section-divider w-32 mx-auto mb-8"></div>
+                        
+                        <!-- Key Highlights Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                            <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-3xl p-8 text-white hover-lift">
+                                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Industry-Ready Curriculum</h3>
+                                <p class="text-purple-100 leading-relaxed">Updated syllabus designed with industry experts to ensure you're job-ready from day one</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-3xl p-8 text-white hover-lift">
+                                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">95% Placement Rate</h3>
+                                <p class="text-pink-100 leading-relaxed">Strong industry connections with top companies ensuring excellent career opportunities</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-8 text-white hover-lift">
+                                <div class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mb-6">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">State-of-Art Labs</h3>
+                                <p class="text-orange-100 leading-relaxed">Modern infrastructure with cutting-edge technology for hands-on learning experience</p>
+                            </div>
+                        </div>
+                        
+                        <!-- About Content -->
                         <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift">
                             <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                                 {!! $content->content !!}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {{-- Stats --}}
-                    <div class="bg-gradient-to-br from-white to-purple-50 rounded-3xl shadow-xl p-8 md:p-12 border border-purple-100">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                            <div class="group">
-                                <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300">{{ $department->faculty->count() }}</div>
-                                <div class="text-gray-700 font-semibold text-lg">Expert Faculty</div>
-                                <div class="text-sm text-gray-500 mt-1">Dedicated Educators</div>
-                            </div>
-                            <div class="group">
-                                <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300">{{ $department->courses->count() }}</div>
-                                <div class="text-gray-700 font-semibold text-lg">Programs</div>
-                                <div class="text-sm text-gray-500 mt-1">Diverse Options</div>
-                            </div>
-                            <div class="group">
-                                <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300">{{ $department->code }}</div>
-                                <div class="text-gray-700 font-semibold text-lg">Department Code</div>
-                                <div class="text-sm text-gray-500 mt-1">Unique Identity</div>
-                            </div>
-                            <div class="group">
-                                <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300">45+</div>
-                                <div class="text-gray-700 font-semibold text-lg">Years Legacy</div>
-                                <div class="text-sm text-gray-500 mt-1">Excellence Since</div>
                             </div>
                         </div>
                     </div>
@@ -413,42 +543,84 @@
 
                     {{-- Courses Section --}}
                     @if($section === 'courses')
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Programs Offered</h2>
-                    <div class="section-divider w-24 mx-auto mb-12"></div>
-                    @if($content->content)
-                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 hover-lift">
-                        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                            {!! $content->content !!}
-                        </div>
-                    </div>
-                    @endif
-                    @if($department->courses->count() > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach($department->courses as $course)
-                        <div class="bg-white rounded-3xl shadow-lg overflow-hidden hover-lift border border-gray-100">
-                            <div class="bg-gradient-to-r from-purple-600 to-pink-500 p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">{{ $course->name }}</h3>
-                                <span class="inline-block px-3 py-1 bg-white bg-opacity-20 text-white text-sm font-semibold rounded-full">
-                                    {{ $course->code }}
-                                </span>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex items-center mb-3 text-gray-600">
-                                    <svg class="w-5 h-5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span class="font-medium">{{ $course->duration }}</span>
-                                </div>
-                                @if($course->description)
-                                <p class="text-gray-600 text-sm mb-4 leading-relaxed">{{ Str::limit($course->description, 120) }}</p>
-                                @endif
-                                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                    <span class="text-sm text-gray-500">Program Fee</span>
-                                    <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">{{ number_format($course->fees) }}</span>
-                                </div>
+                    <div id="courses-section">
+                        <h2 class="text-5xl font-bold text-gray-900 mb-4 text-center">Transform Your Future</h2>
+                        <p class="text-xl text-gray-600 text-center mb-4">Choose from our industry-aligned programs</p>
+                        <div class="section-divider w-32 mx-auto mb-12"></div>
+                        @if($content->content)
+                        <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 hover-lift">
+                            <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                                {!! $content->content !!}
                             </div>
                         </div>
-                        @endforeach
+                        @endif
+                        @if($department->courses->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            @foreach($department->courses as $index => $course)
+                            <div class="bg-white rounded-3xl shadow-lg overflow-hidden hover-lift border-2 border-transparent hover:border-purple-300 group">
+                                <!-- Course Header with Number Badge -->
+                                <div class="relative bg-gradient-to-r from-purple-600 to-pink-500 p-8">
+                                    <div class="absolute top-4 right-4 w-12 h-12 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                        <span class="text-white font-bold text-lg">{{ $index + 1 }}</span>
+                                    </div>
+                                    <div class="absolute -bottom-6 right-6 w-24 h-24 bg-white bg-opacity-10 rounded-full blur-2xl"></div>
+                                    <h3 class="text-2xl font-bold text-white mb-3 pr-16">{{ $course->name }}</h3>
+                                    <span class="inline-block px-4 py-2 bg-white bg-opacity-20 backdrop-blur-sm text-white text-sm font-bold rounded-full">
+                                        {{ $course->code }}
+                                    </span>
+                                </div>
+                                
+                                <!-- Course Details -->
+                                <div class="p-8">
+                                    @if($course->description)
+                                    <p class="text-gray-600 text-base mb-6 leading-relaxed">{{ Str::limit($course->description, 150) }}</p>
+                                    @endif
+                                    
+                                    <div class="space-y-4 mb-6">
+                                        <div class="flex items-center text-gray-700">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mr-3">
+                                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-gray-500 font-medium">Duration</div>
+                                                <div class="font-bold">{{ $course->duration }}</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center text-gray-700">
+                                            <div class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center mr-3">
+                                                <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-gray-500 font-medium">Program Fee</div>
+                                                <div class="font-bold text-2xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">₹{{ number_format($course->fees) }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="{{ route('contact') }}" class="block w-full text-center py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-2xl hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                                        Enroll Now →
+                                    </a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        
+                        <!-- CTA Banner -->
+                        <div class="mt-12 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 rounded-3xl p-10 text-center text-white shadow-2xl">
+                            <h3 class="text-3xl font-bold mb-4">Ready to Start Your Journey?</h3>
+                            <p class="text-lg mb-6 text-purple-100">Limited seats available. Apply now to secure your future!</p>
+                            <a href="{{ route('contact') }}" class="inline-flex items-center px-10 py-5 bg-white text-purple-700 font-bold text-lg rounded-full hover:bg-purple-50 transition-all duration-300 shadow-xl transform hover:-translate-y-1">
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Apply for Admission
+                            </a>
+                        </div>
                     </div>
                     @endif
                     @endif
@@ -480,7 +652,7 @@
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Industry Visits & Exposure</h2>
                     <div class="section-divider w-24 mx-auto mb-12"></div>
                     <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift overflow-x-auto">
-                        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed min-w-[600px]">
+                        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed min-w-[600px] animate-table">
                             {!! $content->content !!}
                         </div>
                     </div>
