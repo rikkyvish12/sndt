@@ -521,8 +521,29 @@
                     <div class="section-divider w-24 mx-auto mb-12"></div>
                     @if($content->content)
                     <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 hover-lift">
-                        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                            {!! $content->content !!}
+                        <div class="prose prose-lg max-w-none">
+                            <ul class="space-y-4">
+                                @php
+                                // Parse the content to extract list items
+                                $lines = explode("\n", strip_tags($content->content));
+                                $hasList = false;
+                                foreach($lines as $line) {
+                                    $line = trim($line);
+                                    if(!empty($line)) {
+                                        $hasList = true;
+                                        echo '<li class="flex items-start group">';
+                                        echo '<span class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4 mt-1 group-hover:scale-110 transition-transform">';
+                                        echo '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                                        echo '</span>';
+                                        echo '<span class="text-gray-700 text-lg font-medium">' . e($line) . '</span>';
+                                        echo '</li>';
+                                    }
+                                }
+                                if(!$hasList) {
+                                    echo '<div class="text-gray-700 text-lg leading-relaxed">' . $content->content . '</div>';
+                                }
+                                @endphp
+                            </ul>
                         </div>
                     </div>
                     @endif
@@ -548,10 +569,31 @@
                     @if($section === 'alumnae')
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Our Alumnae Network</h2>
                     <div class="section-divider w-24 mx-auto mb-12"></div>
-                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl shadow-xl p-8 md:p-12 border border-purple-100 overflow-hidden">
-                        <div class="prose prose-lg max-w-none overflow-x-auto w-full prose-img:rounded-xl prose-img:shadow-md text-gray-700 leading-relaxed">
-                            {!! $content->content !!}
-                        </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl shadow-xl p-8 md:p-12 border border-purple-100">
+                        @php
+                        // Parse alumnae content to create beautiful cards
+                        $alumnaeLines = explode("\n", strip_tags($content->content));
+                        $alumnaeCount = 0;
+                        foreach($alumnaeLines as $line) {
+                            $line = trim($line);
+                            if(!empty($line) && (strpos($line, 'Ms.') !== false || strpos($line, 'Batch') !== false)) {
+                                $alumnaeCount++;
+                                echo '<div class="bg-white rounded-2xl p-6 mb-6 shadow-md hover-lift border-l-4 border-purple-500">';
+                                echo '<div class="flex items-start">';
+                                echo '<div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4">';
+                                echo '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>';
+                                echo '</div>';
+                                echo '<div class="flex-1">';
+                                echo '<p class="text-gray-800 text-base leading-relaxed">' . e($line) . '</p>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        }
+                        if($alumnaeCount == 0) {
+                            echo '<div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">' . $content->content . '</div>';
+                        }
+                        @endphp
                     </div>
                     @endif
 
@@ -571,9 +613,33 @@
                                 </svg>
                             </div>
                             <h2 class="text-4xl font-bold mb-6">Get in Touch</h2>
-                            <div class="prose prose-lg max-w-none mx-auto text-white leading-relaxed">
-                                {!! $content->content !!}
-                            </div>
+                            
+                            @php
+                            // Parse social content to properly display images and text
+                            $socialContent = $content->content;
+                            // Check if content has image tags
+                            if(preg_match_all('/<img[^>]+src="([^"]+)"[^>]*>/i', $socialContent, $matches)) {
+                                echo '<div class="max-w-4xl mx-auto">';
+                                echo '<div class="prose prose-lg max-w-none mx-auto text-white leading-relaxed mb-8">';
+                                // Remove images from content to display separately
+                                $textOnly = preg_replace('/<img[^>]+>/i', '', $socialContent);
+                                echo $textOnly;
+                                echo '</div>';
+                                echo '<div class="grid grid-cols-2 md:grid-cols-3 gap-8 mt-10">';
+                                foreach($matches[1] as $imageUrl) {
+                                    echo '<div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4 hover-lift">';
+                                    echo '<img src="' . e($imageUrl) . '" alt="Social Media" class="w-full h-auto rounded-xl">';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
+                                echo '</div>';
+                            } else {
+                                echo '<div class="prose prose-lg max-w-none mx-auto text-white leading-relaxed">';
+                                echo $socialContent;
+                                echo '</div>';
+                            }
+                            @endphp
+                            
                             <div class="mt-10">
                                 <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-10 py-4 bg-white text-purple-700 text-lg font-bold rounded-full hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
