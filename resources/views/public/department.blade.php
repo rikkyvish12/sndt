@@ -54,13 +54,17 @@
     <style>
         /* Force WYSIWYG tables to not squish text infinitely */
         .prose table {
-            min-width: max-content;
+            min-width: 100%;
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
             overflow: hidden;
             border-radius: 1rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0;
+        }
+        .prose table, .prose table * {
+            box-sizing: border-box;
         }
         .prose thead {
             background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #f97316 100%);
@@ -74,6 +78,7 @@
             border: none !important;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
         .prose thead th::after {
             content: '';
@@ -129,8 +134,10 @@
         .prose td, .prose th {
             vertical-align: top;
             padding: 1.25rem 1.5rem !important;
-            min-width: 200px;
+            min-width: 150px;
             border-bottom: 1px solid #e5e7eb;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .prose tbody td {
             color: #374151;
@@ -161,6 +168,11 @@
             height: 4px;
             background: linear-gradient(to right, #7c3aed, #ec4899, #f97316);
             border-radius: 2px;
+        }
+        
+        /* Reset for nested containers */
+        section > div > div {
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -480,7 +492,7 @@
                     @if($section === 'committee')
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Committee Members</h2>
                     <div class="section-divider w-24 mx-auto mb-12"></div>
-                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift">
+                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift overflow-x-auto">
                         <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                             {!! $content->content !!}
                         </div>
@@ -629,7 +641,7 @@
                     @if($section === 'laboratory')
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Laboratory Facilities</h2>
                     <div class="section-divider w-24 mx-auto mb-12"></div>
-                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift">
+                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift overflow-x-auto">
                         <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                             {!! $content->content !!}
                         </div>
@@ -640,7 +652,7 @@
                     @if($section === 'mou')
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 text-center">Memorandum of Understanding</h2>
                     <div class="section-divider w-24 mx-auto mb-12"></div>
-                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift">
+                    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 hover-lift overflow-x-auto">
                         <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
                             {!! $content->content !!}
                         </div>
