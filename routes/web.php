@@ -38,6 +38,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    // Analytics
+    Route::get('/analytics', [\App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('/analytics/data', [\App\Http\Controllers\Admin\AnalyticsController::class, 'getData'])->name('analytics.data');
+    
     // Departments
     Route::resource('departments', AdminDepartmentController::class);
     
