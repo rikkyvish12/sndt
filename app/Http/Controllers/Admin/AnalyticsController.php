@@ -105,15 +105,26 @@ class AnalyticsController extends Controller
      */
     protected function getTrendData($startDate, $endDate)
     {
+        $driver = DB::getDriverName();
+        
+        // Use database-specific date function
+        $dateFunction = $driver === 'sqlite' 
+            ? "date(started_at)" 
+            : "DATE(started_at)";
+        
         $visitorsByDate = AnalyticsVisit::whereBetween('started_at', [$startDate, $endDate])
-            ->select(DB::raw('DATE(started_at) as date'), DB::raw('count(distinct session_id) as visitors'))
+            ->select(DB::raw("{$dateFunction} as date"), DB::raw('count(distinct session_id) as visitors'))
             ->groupBy('date')
             ->orderBy('date')
             ->get()
             ->pluck('visitors', 'date');
 
+        $dateFunctionViews = $driver === 'sqlite' 
+            ? "date(viewed_at)" 
+            : "DATE(viewed_at)";
+        
         $pageViewsByDate = AnalyticsPageView::whereBetween('viewed_at', [$startDate, $endDate])
-            ->select(DB::raw('DATE(viewed_at) as date'), DB::raw('count(*) as views'))
+            ->select(DB::raw("{$dateFunctionViews} as date"), DB::raw('count(*) as views'))
             ->groupBy('date')
             ->orderBy('date')
             ->get()
@@ -145,8 +156,15 @@ class AnalyticsController extends Controller
      */
     protected function getPeakHoursData($startDate, $endDate)
     {
+        $driver = DB::getDriverName();
+        
+        // Use database-specific hour extraction function
+        $hourFunction = $driver === 'sqlite' 
+            ? "cast(strftime('%H', started_at) as integer)" 
+            : "HOUR(started_at)";
+        
         $hourlyData = AnalyticsVisit::whereBetween('started_at', [$startDate, $endDate])
-            ->select(DB::raw('HOUR(started_at) as hour'), DB::raw('count(*) as count'))
+            ->select(DB::raw("{$hourFunction} as hour"), DB::raw('count(*) as count'))
             ->groupBy('hour')
             ->orderBy('hour')
             ->get()
