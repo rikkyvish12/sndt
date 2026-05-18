@@ -240,12 +240,14 @@
                         
                         <!-- CTA Buttons -->
                         <div class="flex flex-wrap justify-center gap-4">
+                            @if(isset($dynamicContents['courses']))
                             <a href="#courses-section" class="inline-flex items-center px-10 py-5 bg-white text-purple-700 font-bold text-lg rounded-full hover:bg-purple-50 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1">
                                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
                                 Explore Programs
                             </a>
+                            @endif
                             <a href="{{ route('contact') }}" class="inline-flex items-center px-10 py-5 bg-transparent border-3 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-purple-700 transition-all duration-300 transform hover:-translate-y-1">
                                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
@@ -706,11 +708,16 @@
                     @if($content->content)
                     <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 hover-lift">
                         <div class="prose prose-lg max-w-none">
-                            <ul class="space-y-4">
-                                @php
-                                // Parse the content to extract list items
-                                $lines = explode("\n", strip_tags($content->content));
+                            @php
+                            // Check if content contains HTML list tags
+                            if (strpos($content->content, '<li') !== false || strpos($content->content, '<ul') !== false || strpos($content->content, '<ol') !== false) {
+                                // Content already has HTML formatting, render it as-is
+                                echo $content->content;
+                            } else {
+                                // Plain text content - split by newlines and create list
+                                $lines = explode("\n", $content->content);
                                 $hasList = false;
+                                echo '<ul class="space-y-4">';
                                 foreach($lines as $line) {
                                     $line = trim($line);
                                     if(!empty($line)) {
@@ -723,11 +730,12 @@
                                         echo '</li>';
                                     }
                                 }
+                                echo '</ul>';
                                 if(!$hasList) {
-                                    echo '<div class="text-gray-700 text-lg leading-relaxed">' . $content->content . '</div>';
+                                    echo '<div class="text-gray-700 text-lg leading-relaxed">' . e($content->content) . '</div>';
                                 }
-                                @endphp
-                            </ul>
+                            }
+                            @endphp
                         </div>
                     </div>
                     @endif
@@ -906,6 +914,23 @@
             if (e.key === 'Escape') {
                 closeLightbox();
             }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
         });
     </script>
 </body>
