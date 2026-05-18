@@ -99,6 +99,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.analytics.*') ? 'active' : 'text-white' }}" 
+                               href="{{ route('admin.analytics.index') }}">
+                                <i class="material-icons">analytics</i> Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : 'text-white' }}" 
                                href="{{ route('admin.departments.index') }}">
                                 <i class="material-icons">business</i> Departments
