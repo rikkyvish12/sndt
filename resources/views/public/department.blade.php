@@ -709,10 +709,40 @@
                     <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-10 hover-lift">
                         <div class="prose prose-lg max-w-none">
                             @php
-                            // Check if content contains HTML list tags
-                            if (strpos($content->content, '<li') !== false || strpos($content->content, '<ul') !== false || strpos($content->content, '<ol') !== false) {
-                                // Content already has HTML formatting, render it as-is
-                                echo $content->content;
+                            // Check if content contains HTML tags
+                            if (preg_match('/<\/?[a-z][\s\S]*>/i', $content->content)) {
+                                // Content has HTML tags - render it properly
+                                // Convert <p> tags to styled list items if they contain simple text
+                                if (strpos($content->content, '<p>') !== false && strpos($content->content, '<li') === false) {
+                                    // Extract text from <p> tags and create styled list
+                                    $dom = new DOMDocument();
+                                    @$dom->loadHTML('<?xml encoding="utf-8" ?>' . $content->content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                                    $paragraphs = $dom->getElementsByTagName('p');
+                                    $items = [];
+                                    foreach ($paragraphs as $p) {
+                                        $text = trim($p->textContent);
+                                        if (!empty($text)) {
+                                            $items[] = $text;
+                                        }
+                                    }
+                                    if (!empty($items)) {
+                                        echo '<ul class="space-y-4">';
+                                        foreach ($items as $item) {
+                                            echo '<li class="flex items-start group">';
+                                            echo '<span class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4 mt-1 group-hover:scale-110 transition-transform">';
+                                            echo '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                                            echo '</span>';
+                                            echo '<span class="text-gray-700 text-lg font-medium">' . e($item) . '</span>';
+                                            echo '</li>';
+                                        }
+                                        echo '</ul>';
+                                    } else {
+                                        echo $content->content;
+                                    }
+                                } else {
+                                    // Content has proper HTML list structure or other HTML
+                                    echo $content->content;
+                                }
                             } else {
                                 // Plain text content - split by newlines and create list
                                 $lines = explode("\n", $content->content);
